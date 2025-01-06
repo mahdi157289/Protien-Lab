@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import homeImage from "../assets/home_image.jpg";
+import homeImage from "../assets/images/home/home_image.jpg";
 
 const WelcomeScreen = ({ onAuthClick }) => {
   return (

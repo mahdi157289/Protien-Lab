@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import logo from '../assets/bodysync.svg';
+import logo from '../assets/images/common/bodysync.svg';
 
 const Navbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);

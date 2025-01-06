@@ -1,9 +1,9 @@
-import workoutImage from "../assets/workout.png";
-import dietImage from "../assets/diet.png";
-import supplementImage from "../assets/supplement.png";
+import workoutImage from "../assets/images/home/workout.png";
+import dietImage from "../assets/images/home/diet.png";
+import supplementImage from "../assets/images/home/supplement.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell, faUtensils, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const OurServices = () => {
 

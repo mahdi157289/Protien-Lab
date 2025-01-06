@@ -1,6 +1,6 @@
 import { Plus, List } from 'lucide-react';
-import dashboardWorkoutImage from '../assets/ud-workout.jpg';
-import dashboardDietImage from '../assets/ud-diet.jpg';
+import dashboardWorkoutImage from '../assets/images/dashobard/ud-workout.jpg';
+import dashboardDietImage from '../assets/images/dashobard/ud-diet.jpg';
 
 const Dashboard = () => {
   return (

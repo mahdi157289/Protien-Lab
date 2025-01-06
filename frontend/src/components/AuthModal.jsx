@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { UserIcon, EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
-import signUpImage from '../assets/signup.jpg'
-import signInImage from '../assets/signin.jpg'
+import signUpImage from '../assets/images/common/signup.jpg'
+import signInImage from '../assets/images/common/signin.jpg'
 
 const formVariants = {
   initial: { x: -20, opacity: 0 },
