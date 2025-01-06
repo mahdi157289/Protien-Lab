@@ -24,7 +24,7 @@ function App() {
     <Router>
       <div>
         <Navbar onAuthClick={handleAuthModal} />
-        <main className="pt-20">
+        <main className="pt-[73px]">
           <Routes>
             <Route path="/" element={<Home onAuthClick={handleAuthModal} />} />
             <Route path="/exercises" element={<Exercises />} />

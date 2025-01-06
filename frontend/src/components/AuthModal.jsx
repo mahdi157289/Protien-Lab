@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { UserIcon, EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
+import signUpImage from '../assets/signup.jpg'
+import signInImage from '../assets/signin.jpg'
 
 const formVariants = {
   initial: { x: -20, opacity: 0 },
@@ -44,12 +46,12 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 flex items-center justify-center p-4 bg-black z-3 bg-opacity-70"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-70"
           onClick={onClose}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.5 }}
         >
           <motion.div
             className="relative flex flex-col w-full max-w-lg sm:max-w-xl md:max-w-4xl min-h-[500px] max-h-screen overflow-hidden bg-secondary rounded-[40px] md:flex-row"
@@ -57,11 +59,11 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3}}
+            transition={{ duration: 0.5}}
           >
             {/* Close Button */}
-            <motion.button 
-              onClick={onClose} 
+            <motion.button
+              onClick={onClose}
               className="absolute text-3xl text-accent right-6 top-6 hover:text-primary"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -82,7 +84,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: 0.5 }}
                   >
                     <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">Sign Up</h2>
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
@@ -143,9 +145,9 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           className="w-full p-2 pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent sm:pl-[calc(2rem+8px)]"
                         />
                       </div>
-                      <motion.button 
-                        type="submit" 
-                        className="block px-8 py-3 mx-auto text-base transition duration-300 text-accent rounded-xl bg-primary hover:bg-red-600 md:text-lg"
+                      <motion.button
+                        type="submit"
+                        className="block px-8 py-3 mx-auto text-base transition duration-500 text-accent rounded-xl bg-primary hover:bg-red-600 md:text-lg"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -161,7 +163,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: 0.5 }}
                   >
                     <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">Sign In</h2>
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
@@ -187,9 +189,9 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           className="w-full p-2 pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent sm:pl-[calc(2rem+8px)]"
                         />
                       </div>
-                      <motion.button 
-                        type="submit" 
-                        className="block px-8 py-3 mx-auto text-base transition duration-300 text-accent rounded-xl bg-primary hover:bg-red-600 md:text-lg"
+                      <motion.button
+                        type="submit"
+                        className="block px-8 py-3 mx-auto text-base transition duration-500 text-accent rounded-xl bg-primary hover:bg-red-600 md:text-lg"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -204,8 +206,8 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
             {/* Right Section */}
             <div className={`transition-all duration-500 ease-in-out w-full md:w-1/2 ${isSignUp ? 'order-2' : 'order-1'}`}>
               <div
-                className="h-full bg-center bg-cover"
-                style={{ backgroundImage: 'url("/path/to/your/image.jpg")' }}
+                className="h-full bg-center bg-cover rounded-[40px]"
+                style={{ backgroundImage: `url(${isSignUp ? signUpImage : signInImage})` }}
               >
                 <AnimatePresence mode="wait">
                   <motion.div
@@ -215,7 +217,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                     initial="initial"
                     animate="animate"
                     exit="exit"
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: 0.5 }}
                   >
                     {isSignUp ? (
                       <>
@@ -224,7 +226,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         <div className="mt-6 text-center">
                           <motion.button
                             onClick={() => setIsSignUp(!isSignUp)}
-                            className="w-full px-8 py-3 text-base transition duration-300 rounded-xl text-primary bg-secondary border-primary hover:bg-primary hover:text-accent md:text-lg"
+                            className="w-full px-8 py-3 text-base transition duration-500 rounded-xl text-primary bg-secondary border-primary hover:bg-primary hover:text-accent md:text-lg"
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                           >
@@ -239,7 +241,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         <div className="mt-6 text-center">
                           <motion.button
                             onClick={() => setIsSignUp(!isSignUp)}
-                            className="w-full px-8 py-3 text-base transition duration-300 rounded-xl text-primary bg-secondary border-primary hover:bg-primary hover:text-accent md:text-lg"
+                            className="w-full px-8 py-3 text-base transition duration-500 rounded-xl text-primary bg-secondary border-primary hover:bg-primary hover:text-accent md:text-lg"
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                           >

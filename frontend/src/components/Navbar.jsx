@@ -29,7 +29,7 @@ const Navbar = ({ onAuthClick }) => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full px-6 py-4 z-2 bg-secondary">
+    <nav className="fixed top-0 z-40 w-full px-6 py-4 bg-dark bg-opacity-95">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -118,7 +118,7 @@ const Navbar = ({ onAuthClick }) => {
                 onClick={closeMenu}
                 className={({ isActive }) =>
                   `text-accent hover:text-primary transition-all duration-500 relative
-                  ${isActive 
+                  ${isActive
                     ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300' 
                     : 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100'
                   }`

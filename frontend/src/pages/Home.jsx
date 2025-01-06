@@ -1,18 +1,23 @@
 import PropTypes from 'prop-types';
+import WelcomeScreen from '../components/WelcomeScreen';
+import StatsBanner from '../components/StatsBanner';
+import AboutUs from '../components/AboutUs';
+import OurServices from '../components/OurServices'
+import Faq from '../components/FAQ';
+import Feedback from '../components/Feedback';
+import UserDashboard from '../components/UserDashboard';
 
 const Home = ({ onAuthClick }) => {
   return (
-    <div>
-      <h1>Welcome to BodySync</h1>
-
-      {/* Sign Up Button */}
-      <button
-        onClick={() => onAuthClick(true, 'signup')}  // Changed to pass 'signup' string
-        className="bg-secondary text-primary border border-primary px-6 py-1.5 rounded-lg hover:bg-primary hover:text-accent transition-all text-base"
-      >
-        Sign Up
-      </button>
-    </div>
+    <>
+      <WelcomeScreen onAuthClick={onAuthClick} />
+      <StatsBanner/>
+      <AboutUs/>
+      <OurServices />
+      <Faq />
+      <Feedback />
+      <UserDashboard />
+    </>
   );
 };
 
