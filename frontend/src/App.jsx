@@ -7,7 +7,7 @@ import Exercises from './pages/Exercises';
 import Workout from './pages/Workout';
 import DietPlan from './pages/DietPlan';
 import Store from './pages/Store';
-import VictoryWall from './pages/VictoryWall';
+import VictoryWall from './pages/VictoryWall'; 
 
 function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -30,7 +30,7 @@ function App() {
             <Route path="/exercises" element={<Exercises />} />
             <Route path="/workouts" element={<Workout />} />
             <Route path="/diet-plan" element={<DietPlan />} />
-            <Route path="/store" element={<Store />} />
+            <Route path="/store/*" element={<Store />} />
             <Route path="/victory-wall" element={<VictoryWall />} />
           </Routes>
         </main>
