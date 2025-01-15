@@ -7,16 +7,12 @@ import Exercises from './pages/Exercises';
 import Workout from './pages/Workout';
 import DietPlan from './pages/DietPlan';
 import Store from './pages/Store';
-<<<<<<< Updated upstream
-import VictoryWall from './pages/VictoryWall'; 
-import Footer from './components/common/Footer';
-=======
 import VictoryWall from './pages/VictoryWall';
+import Footer from './components/common/Footer';
 import Dashboard from './pages/UserDashboard';
 import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './components/Profile';
->>>>>>> Stashed changes
 
 function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -53,11 +49,8 @@ function App() {
           authType={authType}
         />
       </div>
-<<<<<<< Updated upstream
       <Footer />
-=======
       </AuthProvider>
->>>>>>> Stashed changes
     </Router>
   );
 }
