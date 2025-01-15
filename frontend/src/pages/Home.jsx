@@ -5,7 +5,6 @@ import AboutUs from '../components/AboutUs';
 import OurServices from '../components/OurServices'
 import Faq from '../components/FAQ';
 import Feedback from '../components/Feedback';
-import UserDashboard from '../components/UserDashboard';
 
 const Home = ({ onAuthClick }) => {
   return (
@@ -16,7 +15,6 @@ const Home = ({ onAuthClick }) => {
       <OurServices />
       <Faq />
       <Feedback />
-      <UserDashboard />
     </>
   );
 };
