@@ -14,8 +14,8 @@ function Store() {
           <Route path="products" element={<ProductList />} /> {/* Matches "/store/products" */}
         </Routes>
       </div>
-      {/* Footer */}
-      <Footer />
+     
+     
     </div>
   );
 }

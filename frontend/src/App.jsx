@@ -8,6 +8,7 @@ import Workout from './pages/Workout';
 import DietPlan from './pages/DietPlan';
 import Store from './pages/Store';
 import VictoryWall from './pages/VictoryWall'; 
+import Footer from './components/common/Footer';
 
 function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -41,6 +42,7 @@ function App() {
           authType={authType}
         />
       </div>
+      <Footer />
     </Router>
   );
 }

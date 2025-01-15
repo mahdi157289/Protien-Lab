@@ -1,6 +1,8 @@
+import DietPlanner from "../components/Diet plan/DietPlan"
+
 function DietPlan() {
   return (
-    <div>DietPlan</div>
+    <div><DietPlanner/></div>
   )
 }
 
