@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { UserCircle, LogOut, User } from 'lucide-react'; // Add User icon for profile
-import { useAuth } from '../contexts/AuthContext';
-import logo from '../assets/images/common/bodysync.svg';
+import { UserCircle, LogOut, Settings } from 'lucide-react';
+import { useAdminAuth } from '../../contexts/AdminAuthContext';
+import logo from '../../assets/images/common/bodysync.svg';
 
-const Navbar = ({ onAuthClick }) => {
+const AdminNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user, logout } = useAuth();
-  const [logoutConfirm, setLogoutConfirm] = useState(false); // For logout confirmation
+  const { admin, logout } = useAdminAuth();
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -19,39 +19,24 @@ const Navbar = ({ onAuthClick }) => {
     setIsOpen(false);
   };
 
-  const handleAuthClick = () => {
-    onAuthClick(true, 'login');
-    closeMenu();
-  };
-
   const handleLogout = async () => {
-    setLogoutConfirm(false); // Close the confirmation dialog
+    setLogoutConfirm(false);
     try {
-      await logout();
-      navigate('/'); // Redirect to home after logout
+      logout();
+      navigate('/admin/login'); // Redirect to admin login page
       closeMenu();
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
 
-  const navItems = user
-    ? [
-        { label: 'Dashboard', path: '/dashboard' },
-        { label: 'Exercises', path: '/exercises' },
-        { label: 'Workouts', path: '/workouts' },
-        { label: 'Diet Plan', path: '/diet-plan' },
-        { label: 'Store', path: '/store' },
-        { label: 'Victory Wall', path: '/victory-wall' },
-      ]
-    : [
-        { label: 'Home', path: '/' },
-        { label: 'Exercises', path: '/exercises' },
-        { label: 'Workouts', path: '/workouts' },
-        { label: 'Diet Plan', path: '/diet-plan' },
-        { label: 'Store', path: '/store' },
-        { label: 'Victory Wall', path: '/victory-wall' },
-      ];
+  const navItems = [
+    { label: 'Dashboard', path: '/admin/dashboard' },
+    { label: 'Exercises', path: '/admin/exercises' },
+    { label: 'Victory Wall', path: '/admin/victory-wall' },
+    { label: 'Store', path: '/admin/store' },
+    { label: 'Users', path: '/admin/users' },
+  ];
 
   return (
     <nav className="fixed top-0 z-40 w-full px-6 py-4 bg-dark bg-opacity-95">
@@ -59,8 +44,8 @@ const Navbar = ({ onAuthClick }) => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <NavLink to="/" className="h-8">
-              <img src={logo} alt="BodySync" className="h-full" />
+            <NavLink to="/admin/dashboard" className="h-8">
+              <img src={logo} alt="BodySync Admin" className="h-full" />
             </NavLink>
           </div>
 
@@ -83,9 +68,9 @@ const Navbar = ({ onAuthClick }) => {
             ))}
           </div>
 
-          {/* User Menu */}
+          {/* Admin Menu */}
           <div className="hidden md:block">
-            {user ? (
+            {admin ? (
               <div className="flex items-center gap-4">
                 <div className="relative group">
                   <button className="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-secondary text-accent hover:text-primary">
@@ -93,15 +78,15 @@ const Navbar = ({ onAuthClick }) => {
                   </button>
                   <div className="absolute right-0 invisible w-48 px-5 py-5 mt-6 space-y-4 transition-all transform scale-95 opacity-0 rounded-xl bg-dark group-hover:visible group-hover:opacity-100 group-hover:scale-100">
                     <button
-                      onClick={() => navigate('/profile')} // Navigate to Profile page
+                      onClick={() => navigate('/admin/profile')}
                       className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
                     >
-                      <User className="w-6 h-6" />
-                      Profile
+                      <Settings className="w-6 h-6" />
+                      Settings
                     </button>
                     <hr className="border-t border-accent" />
                     <button
-                      onClick={() => setLogoutConfirm(true)} // Open logout confirmation
+                      onClick={() => setLogoutConfirm(true)}
                       className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
                     >
                       <LogOut className="w-6 h-6" />
@@ -112,7 +97,7 @@ const Navbar = ({ onAuthClick }) => {
               </div>
             ) : (
               <button
-                onClick={handleAuthClick}
+                onClick={onAuthClick}
                 className="bg-secondary text-primary border border-primary px-6 py-1.5 rounded-lg hover:bg-primary hover:text-accent transition-all text-base md:text-lg"
               >
                 Login
@@ -171,13 +156,13 @@ const Navbar = ({ onAuthClick }) => {
                 {item.label}
               </NavLink>
             ))}
-            {user ? (
+            {admin ? (
               <>
                 <button
-                  onClick={() => navigate('/profile')}
+                  onClick={() => navigate('/admin/profile')}
                   className="text-left transition-all duration-500 text-accent hover:text-primary"
                 >
-                  Profile
+                  Settings
                 </button>
                 <button
                   onClick={() => setLogoutConfirm(true)}
@@ -188,7 +173,7 @@ const Navbar = ({ onAuthClick }) => {
               </>
             ) : (
               <button
-                onClick={handleAuthClick}
+                onClick={onAuthClick}
                 className="bg-secondary text-primary border border-primary px-6 py-1.5 rounded hover:bg-primary hover:text-accent transition-all"
               >
                 Login
@@ -202,7 +187,7 @@ const Navbar = ({ onAuthClick }) => {
       {logoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
           <div className="p-6 text-center text-white shadow-lg rounded-2xl bg-dark">
-          <h2 className="mb-3 text-2xl font-bold">Log Out</h2>
+            <h2 className="mb-3 text-2xl font-bold">Log Out</h2>
             <p className="mb-4">Are you sure you want to log out of your account?</p>
             <div className="flex justify-center gap-10">
               <button
@@ -225,8 +210,8 @@ const Navbar = ({ onAuthClick }) => {
   );
 };
 
-Navbar.propTypes = {
-  onAuthClick: PropTypes.func.isRequired,
+AdminNavbar.propTypes = {
+  onAuthClick: PropTypes.func,
 };
 
-export default Navbar;
+export default AdminNavbar;

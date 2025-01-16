@@ -32,13 +32,13 @@ export const AuthProvider = ({ children }) => {
       });
 
       const { token, ...userData } = response.data;
-      
+
       localStorage.setItem('userToken', token);
       localStorage.setItem('user', JSON.stringify(userData));
-      
+
       // Set the authorization header for all future requests
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
+
       setUser(userData);
       return { success: true };
     } catch (error) {
@@ -52,15 +52,15 @@ export const AuthProvider = ({ children }) => {
   const signup = async (userData) => {
     try {
       const response = await api.post('/users/signup', userData);
-      
+
       const { token, ...newUserData } = response.data;
-      
+
       localStorage.setItem('userToken', token);
       localStorage.setItem('user', JSON.stringify(newUserData));
-      
+
       // Set the authorization header for all future requests
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
+
       setUser(newUserData);
       return { success: true };
     } catch (error) {

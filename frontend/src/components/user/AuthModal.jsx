@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { UserIcon, EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
-import signUpImage from '../assets/images/common/signup.jpg'
-import signInImage from '../assets/images/common/signin.jpg'
-import  {useAuth} from '../contexts/AuthContext'
+import signUpImage from '../../assets/images/common/signup.jpg'
+import signInImage from '../../assets/images/common/signin.jpg'
+import  {useAuth} from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom';
 
 const formVariants = {

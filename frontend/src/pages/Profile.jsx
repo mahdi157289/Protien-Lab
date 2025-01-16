@@ -1,4 +1,4 @@
-import Profilee from "../components/Profile";
+import Profilee from "../components/user/Profile";
 const Profile = () => {
     return (
       <>

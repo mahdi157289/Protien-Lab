@@ -1,7 +1,7 @@
 import { Plus, List } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import dashboardWorkoutImage from '../assets/images/dashobard/ud-workout.jpg';
-import dashboardDietImage from '../assets/images/dashobard/ud-diet.jpg';
+import { useAuth } from '../../contexts/AuthContext';
+import dashboardWorkoutImage from '../../assets/images/dashobard/ud-workout.jpg';
+import dashboardDietImage from '../../assets/images/dashobard/ud-diet.jpg';
 import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {

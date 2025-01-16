@@ -1,12 +1,11 @@
 import { useState, useEffect, memo } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import api from '../config/api';
+import { useAuth } from '../../contexts/AuthContext';
+import api from '../../config/api';
 import PropTypes from 'prop-types';
 
-// Memoized InputField component to prevent unnecessary re-renders
 const InputField = memo(({ label, name, value, onChange, isEditing, type = "text", width = "full" }) => (
   <div className={`mb-6 w-${width}`}>
-    <label className="block mb-2 text-sm text-white">
+    <label className="block mb-2 text-sm">
       {label}
     </label>
     <input
@@ -15,7 +14,7 @@ const InputField = memo(({ label, name, value, onChange, isEditing, type = "text
       value={value || ''}
       onChange={onChange}
       disabled={!isEditing}
-      className="bg-[#1a1a1a] text-white w-full p-2 rounded border border-gray-700 focus:outline-none focus:border-gray-500"
+      className="w-full p-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
     />
   </div>
 ));
@@ -142,26 +141,26 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#121212] flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#121212] p-8">
-      <div className="max-w-4xl mx-auto bg-[#1E1E1E] rounded-lg p-8">
+    <div className="min-h-[calc(100vh-4rem)] py-16">
+      <div className="max-w-4xl p-8 mx-auto rounded-3xl bg-dark">
         {error && (
-          <div className="p-4 mb-4 text-white bg-red-500 rounded">
+          <div className="p-4 mb-4 rounded bg-primary">
             {error}
           </div>
         )}
 
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-white">My Profile</h1>
+          <h1 className="pl-8 text-3xl font-bold ">My Profile</h1>
           <button
             onClick={handleEdit}
-            className="flex items-center gap-2 bg-[#1a1a1a] text-white px-4 py-2 rounded hover:bg-[#2a2a2a] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 transition-colors rounded-lg bg-secondary hover:bg-secondary/50"
           >
             <svg
               className="w-4 h-4"
@@ -182,10 +181,10 @@ const Profile = () => {
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           <div className="flex flex-col items-center">
-            <div className="w-48 h-48 rounded-full overflow-hidden mb-4 bg-[#1a1a1a]">
+            <div className="w-48 h-48 mb-4 overflow-hidden rounded-full bg-secondary">
               <img
-                src={imagePreview || 
-                     (formData.profileImage ? `${import.meta.env.VITE_API_URL}/uploads/${formData.profileImage}` : "/api/placeholder/192/192")}
+                src={imagePreview ||
+                     (formData.profileImage ? `${import.meta.env.VITE_IMAGE_URL}/${formData.profileImage}` : "/api/placeholder/192/192")}
                 alt="Profile"
                 className="object-cover w-full h-full"
               />
@@ -201,7 +200,7 @@ const Profile = () => {
                 />
                 <label
                   htmlFor="profile-image-input"
-                  className="cursor-pointer bg-[#1a1a1a] text-white px-4 py-2 rounded hover:bg-[#2a2a2a] transition-colors"
+                  className="px-4 py-2 transition-colors rounded-lg cursor-pointer bg-secondary hover:bg-secondary/50"
                 >
                   Choose Image
                 </label>
@@ -273,7 +272,7 @@ const Profile = () => {
                 />
               </div>
               <div className="mb-6">
-                <label className="block mb-2 text-sm text-white">
+                <label className="block mb-2 text-sm">
                   Gender
                 </label>
                 <select
@@ -281,7 +280,7 @@ const Profile = () => {
                   value={formData.gender || ''}
                   onChange={handleChange}
                   disabled={!isEditing}
-                  className="bg-[#1a1a1a] text-white w-full p-2 rounded border border-gray-700 focus:outline-none focus:border-gray-500"
+                  className="w-full p-2 border rounded border-accent/50 bg-secondary focus:outline-none focus:border-accent"
                 >
                   <option value="">Select Gender</option>
                   <option value="male">Male</option>
@@ -296,7 +295,7 @@ const Profile = () => {
           <div className="flex justify-end mt-8">
             <button
               onClick={handleSubmit}
-              className="px-6 py-2 text-white transition-colors bg-blue-600 rounded hover:bg-blue-700"
+              className="px-4 py-2 transition-colors border rounded-lg bg-primary hover:bg-red-600 hover:border-primary"
             >
               Save Changes
             </button>

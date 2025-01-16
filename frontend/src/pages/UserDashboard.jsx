@@ -1,13 +1,11 @@
-import Footer from '../components/common/Footer';
-import Feedback from '../components/Feedback';
-import Dashboard from '../components/UserDashboard';
+import Feedback from '../components/user/Feedback';
+import Dashboard from '../components/user/UserDashboard';
 
 const UserDashboard = () => {
   return (
     <>
         <Dashboard />
         <Feedback />
-        <Footer />
     </>
   );
 };
