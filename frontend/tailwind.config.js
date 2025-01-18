@@ -19,7 +19,4 @@ export default {
   plugins: [
     tailwindScrollbar,
   ],
-  variants: {
-    scrollbar: ['rounded'],
-  },
 };
