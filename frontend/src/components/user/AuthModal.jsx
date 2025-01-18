@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { UserIcon, EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
-import signUpImage from '../assets/images/common/signup.jpg'
-import signInImage from '../assets/images/common/signin.jpg'
+import signUpImage from '../../assets/images/common/signup.jpg'
+import signInImage from '../../assets/images/common/signin.jpg'
+import  {useAuth} from '../../contexts/AuthContext'
+import { useNavigate } from 'react-router-dom';
 
 const formVariants = {
   initial: { x: -20, opacity: 0 },
@@ -17,9 +19,26 @@ const sideContentVariants = {
   exit: { x: -20, opacity: 0 }
 };
 
+
+
 const AuthModal = ({ isOpen, onClose, authType }) => {
   const [isSignUp, setIsSignUp] = useState(authType === 'signup');
-  useEffect(() => { setIsSignUp(authType === 'signup'); }, [authType]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { login, signup } = useAuth();
+
+  useEffect(() => {
+    setIsSignUp(authType === 'signup');
+    setFormData({
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+    });
+    setError('');
+  }, [authType]);
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -35,12 +54,97 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
       ...prev,
       [name]: value,
     }));
+    setError('');
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log('Form submitted:', formData);
+  const validateForm = () => {
+    if (isSignUp) {
+      if (!formData.firstName || !formData.lastName) {
+        setError('Please enter both first and last name');
+        return false;
+      }
+      if (formData.password !== formData.confirmPassword) {
+        setError('Passwords do not match');
+        return false;
+      }
+    }
+    if (!formData.email) {
+      setError('Please enter your email');
+      return false;
+    }
+    if (!formData.password) {
+      setError('Please enter your password');
+      return false;
+    }
+    return true;
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!validateForm()) return;
+  
+    setLoading(true);
+    setError('');
+  
+    try {
+      let response;
+      if (isSignUp) {
+        response = await signup({
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          password: formData.password,
+          confirmPassword: formData.confirmPassword
+        });
+  
+        if (response.success) {
+          // After successful signup, switch to login form
+          setIsSignUp(false);
+          setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            confirmPassword: '',
+          });
+          // Optional: Show success message
+          setError('Successfully registered! Please login to continue.');
+        } else {
+          setError(response.error);
+        }
+      } else {
+        response = await login(formData.email, formData.password);
+        
+        if (response.success) {
+          onClose();
+          navigate('/dashboard');
+        } else {
+          setError(response.error);
+        }
+      }
+    } catch (err) {
+      setError(err.response?.data?.message || 'An error occurred. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const StatusMessage = () => (
+    error && (
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className={`p-2 mb-4 text-sm text-center rounded ${
+          error.includes('Successfully registered') 
+            ? 'text-green-500 bg-green-100'
+            : 'text-red-500 bg-red-100'
+        }`}
+      >
+        {error}
+      </motion.div>
+    )
+  );
 
   return (
     <AnimatePresence>
@@ -88,6 +192,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                   >
                     <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">Sign Up</h2>
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
+                    <StatusMessage />
                       <div className="grid grid-cols-1 gap-2 sm:gap-4 sm:grid-cols-2">
                         <div className="relative">
                           <UserIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
@@ -167,6 +272,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                   >
                     <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">Sign In</h2>
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
+                    <StatusMessage />
                       <div className="relative">
                         <EnvelopeIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
@@ -191,11 +297,12 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                       </div>
                       <motion.button
                         type="submit"
-                        className="block px-8 py-3 mx-auto text-base transition duration-500 text-accent rounded-xl bg-primary hover:bg-red-600 md:text-lg"
+                        disabled={loading}
+                        className={`block px-8 py-3 mx-auto text-base transition duration-500 text-accent rounded-xl bg-primary ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-red-600'} md:text-lg`}
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        Sign In
+                        {loading ? 'Signing in...' : 'Sign In'}
                       </motion.button>
                     </form>
                   </motion.div>

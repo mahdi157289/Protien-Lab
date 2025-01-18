@@ -1,6 +1,8 @@
+import WorkoutPlan from "../components/Workout/WorkoutPlan"
+
 function Workout() {
   return (
-    <div>Workout</div>
+    <div><WorkoutPlan /></div>
   )
 }
 

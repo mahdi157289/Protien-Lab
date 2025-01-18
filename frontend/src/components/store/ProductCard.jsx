@@ -12,7 +12,7 @@ function ProductCard({ image, title, price, description, features }) {
   const togglePopup = () => setSelectedProduct(null); // Close the popup by setting the selected product to null
 
   return (
-    <div className="w-80 h-[500px] bg-[#1C1C1C] text-white rounded-lg shadow-lg overflow-hidden border-[10px] border-[#1C1C1C] rounded-[15px]">
+    <div className="w-80 h-[450px] bg-[#1C1C1C] text-white rounded-lg shadow-lg overflow-hidden border-[10px] border-[#1C1C1C] rounded-[15px]">
       {/* Product Image */}
       <div className="bg-[#29292A] flex justify-center items-center p-4 rounded-[10px]">
         <img className="h-48 object-contain" src={image} alt={title} />

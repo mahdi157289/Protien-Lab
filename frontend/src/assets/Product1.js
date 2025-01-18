@@ -122,7 +122,7 @@ const products = [
     image: p9img,
     title: "Mutant Whey",
     price: 30000,
-    description: "100% gourmet whey protein mix.",
+    description: "100% gourmet whey protein mix Real protein to help build real muscle.",
     features: [
       "Packed with 22g protein per scoop",
       "Enhanced with digestive enzymes",
