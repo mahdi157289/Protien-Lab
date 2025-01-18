@@ -10,6 +10,7 @@ import AdminUsers from '../components/admin/AdminUsers';
 import AdminVictoryWall from '../components/admin/AdminVictoryWall';
 import AdminNavbar from '../components/common/AdminNavbar';
 import AdminProtectedRoute from '../components/admin/AdminProtectedRoute';
+import DietPlanManagement from '../components/admin/DietPlanManagement';
 
 const AdminRoutes = () => {
   const { admin } = useAdminAuth();
@@ -22,6 +23,7 @@ const AdminRoutes = () => {
         <Route path="register" element={<AdminRegister />} />
         <Route path="dashboard"element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>}/>
         <Route path="exercises" element={<AdminProtectedRoute><AdminExercises /></AdminProtectedRoute>}/>
+        <Route path="diet-plan" element={<AdminProtectedRoute><DietPlanManagement/></AdminProtectedRoute>}/>
         <Route path="store" element={<AdminProtectedRoute><AdminStore /></AdminProtectedRoute>}/>
         <Route path="users" element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>}/>
         <Route path="victory-wall" element={<AdminProtectedRoute><AdminVictoryWall /></AdminProtectedRoute>}/>

@@ -3,5 +3,19 @@
 @tailwind utilities;
 
 body {
-    @apply bg-[#29292A] text-[#FFFCF9];
+  @apply bg-[#29292A] text-[#FFFCF9];
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 10px; /* Thinner scrollbar width */
+  height: 10px; ;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded-xl bg-primary/80 hover:bg-primary; /* Apply primary color and rounded corners */
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-secondary ; /* Apply secondary color for the track */
 }

@@ -1,3 +1,5 @@
+import tailwindScrollbar from 'tailwind-scrollbar';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -14,6 +16,10 @@ export default {
       },
     },
   },
-  plugins: [],
-}
-
+  plugins: [
+    tailwindScrollbar,
+  ],
+  variants: {
+    scrollbar: ['rounded'],
+  },
+};

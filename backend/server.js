@@ -2,8 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/db');
 const userRoutes = require('./routes/authRoutes');
-const profileRoutes = require('./routes/profileRoutes'); // Add this line
+const profileRoutes = require('./routes/profileRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const dietPlanRoutes = require('./routes/dietPlanRoutes');
 const path = require('path');
 const cors = require('cors');
 
@@ -13,7 +14,8 @@ connectDB();
 
 app.use(express.json());
 app.use('/api/users', userRoutes);
-app.use('/api/profile', profileRoutes); // Add this line
+app.use('/api/profile', profileRoutes);
+app.use('/api/diet-plans', dietPlanRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/admin', adminRoutes);
 

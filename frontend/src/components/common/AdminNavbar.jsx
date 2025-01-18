@@ -33,6 +33,7 @@ const AdminNavbar = ({ onAuthClick }) => {
   const navItems = [
     { label: 'Dashboard', path: '/admin/dashboard' },
     { label: 'Exercises', path: '/admin/exercises' },
+    { label: 'Diet Plan', path: '/admin/diet-plan' },
     { label: 'Victory Wall', path: '/admin/victory-wall' },
     { label: 'Store', path: '/admin/store' },
     { label: 'Users', path: '/admin/users' },
