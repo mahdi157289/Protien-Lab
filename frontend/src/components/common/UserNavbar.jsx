@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { UserCircle, LogOut, User } from 'lucide-react'; // Add User icon for profile
+import { UserCircle, LogOut, User } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import logo from '../../assets/images/common/bodysync.svg';
 
 const UserNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
-  const [logoutConfirm, setLogoutConfirm] = useState(false); // For logout confirmation
+  const [logoutConfirm, setLogoutConfirm] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -25,10 +26,10 @@ const UserNavbar = ({ onAuthClick }) => {
   };
 
   const handleLogout = async () => {
-    setLogoutConfirm(false); // Close the confirmation dialog
+    setLogoutConfirm(false);
     try {
       await logout();
-      navigate('/'); // Redirect to home after logout
+      navigate('/');
       closeMenu();
     } catch (error) {
       console.error('Logout failed:', error);
@@ -52,6 +53,8 @@ const UserNavbar = ({ onAuthClick }) => {
         { label: 'Store', path: '/store' },
         { label: 'Victory Wall', path: '/victory-wall' },
       ];
+
+  const shouldShowImage = user?.profileImage && !imageError;
 
   return (
     <nav className="fixed top-0 z-40 w-full px-6 py-4 bg-dark bg-opacity-95">
@@ -88,12 +91,21 @@ const UserNavbar = ({ onAuthClick }) => {
             {user ? (
               <div className="flex items-center gap-4">
                 <div className="relative group">
-                  <button className="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-secondary text-accent hover:text-primary">
-                    <UserCircle className="w-10 h-10" />
+                  <button className="flex items-center justify-center w-10 h-10 overflow-hidden transition-colors border-2 rounded-full bg-secondary text-accent hover:text-primary border-secondary">
+                    {shouldShowImage ? (
+                      <img
+                      src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`}
+                      alt="Profile"
+                      className="object-cover w-10 h-10 "
+                      onError={() => setImageError(true)}
+                    />
+                    ) : (
+                      <UserCircle className="w-10 h-10" />
+                    )}
                   </button>
                   <div className="absolute right-0 invisible w-48 px-5 py-5 mt-6 space-y-4 transition-all transform scale-95 opacity-0 rounded-xl bg-dark group-hover:visible group-hover:opacity-100 group-hover:scale-100">
                     <button
-                      onClick={() => navigate('/profile')} // Navigate to Profile page
+                      onClick={() => navigate('/profile')}
                       className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
                     >
                       <User className="w-6 h-6" />
@@ -101,7 +113,7 @@ const UserNavbar = ({ onAuthClick }) => {
                     </button>
                     <hr className="border-t border-accent" />
                     <button
-                      onClick={() => setLogoutConfirm(true)} // Open logout confirmation
+                      onClick={() => setLogoutConfirm(true)}
                       className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
                     >
                       <LogOut className="w-6 h-6" />
@@ -202,7 +214,7 @@ const UserNavbar = ({ onAuthClick }) => {
       {logoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
           <div className="p-6 text-center text-white shadow-lg rounded-2xl bg-dark">
-          <h2 className="mb-3 text-2xl font-bold">Log Out</h2>
+            <h2 className="mb-3 text-2xl font-bold">Log Out</h2>
             <p className="mb-4">Are you sure you want to log out of your account?</p>
             <div className="flex justify-center gap-10">
               <button

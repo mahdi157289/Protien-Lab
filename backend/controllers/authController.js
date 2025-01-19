@@ -53,6 +53,12 @@ const login = async (req, res) => {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
+                address: user.address,
+                number: user.number,
+                gender: user.gender,
+                height: user.height,
+                weight: user.weight,
+                profileImage: user.profileImage,
                 token: generateToken(user._id)
             });
         } else {

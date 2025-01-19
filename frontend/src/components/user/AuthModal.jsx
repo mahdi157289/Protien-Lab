@@ -19,8 +19,6 @@ const sideContentVariants = {
   exit: { x: -20, opacity: 0 }
 };
 
-
-
 const AuthModal = ({ isOpen, onClose, authType }) => {
   const [isSignUp, setIsSignUp] = useState(authType === 'signup');
   const [error, setError] = useState('');
@@ -81,12 +79,12 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!validateForm()) return;
-  
+
     setLoading(true);
     setError('');
-  
+
     try {
       let response;
       if (isSignUp) {
@@ -97,7 +95,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
           password: formData.password,
           confirmPassword: formData.confirmPassword
         });
-  
+
         if (response.success) {
           // After successful signup, switch to login form
           setIsSignUp(false);
@@ -115,7 +113,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
         }
       } else {
         response = await login(formData.email, formData.password);
-        
+
         if (response.success) {
           onClose();
           navigate('/dashboard');
@@ -198,6 +196,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           <UserIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                           <input
                             type="text"
+                            id="firstName"
                             name="firstName"
                             placeholder="First Name"
                             value={formData.firstName}
@@ -209,6 +208,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           <UserIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                           <input
                             type="text"
+                            id="lastName"
                             name="lastName"
                             placeholder="Last Name"
                             value={formData.lastName}
@@ -221,6 +221,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         <EnvelopeIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="email"
+                          id="email"
                           name="email"
                           placeholder="Email"
                           value={formData.email}
@@ -232,6 +233,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         <LockClosedIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="password"
+                          id="password"
                           name="password"
                           placeholder="Password"
                           value={formData.password}
@@ -243,6 +245,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         <LockClosedIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="password"
+                          id="confirm-password"
                           name="confirmPassword"
                           placeholder="Confirm Password"
                           value={formData.confirmPassword}
@@ -277,6 +280,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         <EnvelopeIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="email"
+                          id="email"
                           name="email"
                           placeholder="Email"
                           value={formData.email}
@@ -288,6 +292,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         <LockClosedIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="password"
+                          id="password"
                           name="password"
                           placeholder="Password"
                           value={formData.password}

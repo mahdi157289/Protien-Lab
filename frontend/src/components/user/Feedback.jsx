@@ -35,6 +35,8 @@ const Feedback = () => {
           <form onSubmit={handleSubmit} className="flex flex-col w-full gap-4 sm:flex-row md:w-full">
             <input
               type="text"
+              name="feedback"
+              id="feedback"
               value={suggestion}
               onChange={(e) => setSuggestion(e.target.value)}
               placeholder="Type your Suggestion here.."
