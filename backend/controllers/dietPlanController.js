@@ -1,6 +1,9 @@
 const DietPlan = require('../models/dietPlan');
 const UserDietPlan = require('../models/userDietPlan');
 
+/**
+ * Calculate daily calorie needs based on user metrics
+ */
 const calculateCalorieNeeds = (weight, height, age, gender, activityLevel) => {
     // BMR calculation using Mifflin-St Jeor Equation
     let bmr = (10 * weight) + (6.25 * height) - (5 * age);
@@ -9,13 +12,16 @@ const calculateCalorieNeeds = (weight, height, age, gender, activityLevel) => {
     // Activity multipliers
     const multipliers = {
         'sedentary': 1.2,
-        'moderate activity': 1.55,
+        'moderate': 1.55,
         'active': 1.725
     };
 
     return Math.round(bmr * multipliers[activityLevel.toLowerCase()]);
 };
 
+/**
+ * Find the closest matching diet plan based on calories and goals
+ */
 const findClosestPlan = async (targetCalories, goal, activityLevel) => {
     // Find all plans matching goal and activity level
     const allMatchingPlans = await DietPlan.find({
@@ -38,10 +44,21 @@ const findClosestPlan = async (targetCalories, goal, activityLevel) => {
     }, null);
 };
 
+/**
+ * Generate a new diet plan for user
+ */
 const getDietPlanForUser = async (req, res) => {
     try {
         const { age, gender, height, weight, goal, activityLevel } = req.body;
         const userId = req.user._id;
+
+        // Input validation
+        if (!age || !gender || !height || !weight || !goal || !activityLevel) {
+            return res.status(400).json({
+                success: false,
+                message: 'All fields are required'
+            });
+        }
 
         console.log('User input:', { age, gender, height, weight, goal, activityLevel });
 
@@ -63,7 +80,7 @@ const getDietPlanForUser = async (req, res) => {
         }
         console.log('Target calories:', targetCalories);
 
-        // First try to find exact matching plan
+        // Find matching plan
         let matchingPlan = await DietPlan.findOne({
             type: { $regex: new RegExp(goal, 'i') },
             activityLevel: { $regex: new RegExp(activityLevel, 'i') },
@@ -85,22 +102,16 @@ const getDietPlanForUser = async (req, res) => {
             });
         }
 
-        // Deactivate any existing active plan
-        await UserDietPlan.updateMany(
-            { userId, active: true },
-            { active: false }
-        );
-
         // Create new user diet plan
         const userDietPlan = await UserDietPlan.create({
             userId,
             dietPlanId: matchingPlan._id,
             userDetails: { age, gender, height, weight, goal, activityLevel },
             calculatedCalories: targetCalories,
-            active: true
+            active: true,
+            createdAt: new Date()
         });
 
-        // Populate diet plan details
         await userDietPlan.populate('dietPlanId');
 
         res.status(200).json({
@@ -121,28 +132,74 @@ const getDietPlanForUser = async (req, res) => {
     }
 };
 
-const getUserCurrentDietPlan = async (req, res) => {
+/**
+ * Get all diet plans for a user with pagination
+ */
+const getAllUserDietPlans = async (req, res) => {
     try {
         const userId = req.user._id;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
 
-        const currentPlan = await UserDietPlan.findOne({
-            userId,
-            active: true
+        const plans = await UserDietPlan.find({ userId })
+            .populate('dietPlanId')
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+
+        const totalPlans = await UserDietPlan.countDocuments({ userId });
+
+        res.status(200).json({
+            success: true,
+            data: {
+                plans,
+                pagination: {
+                    currentPage: page,
+                    totalPages: Math.ceil(totalPlans / limit),
+                    totalPlans,
+                    hasMore: skip + plans.length < totalPlans
+                }
+            }
+        });
+
+    } catch (error) {
+        console.error('Error in getAllUserDietPlans:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error fetching diet plans',
+            error: error.message
+        });
+    }
+};
+
+/**
+ * Get a specific diet plan by ID
+ */
+const getDietPlanById = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { planId } = req.params;
+
+        const plan = await UserDietPlan.findOne({
+            _id: planId,
+            userId
         }).populate('dietPlanId');
 
-        if (!currentPlan) {
+        if (!plan) {
             return res.status(404).json({ 
                 success: false,
-                message: 'No active diet plan found' 
+                message: 'Diet plan not found' 
             });
         }
 
         res.status(200).json({
             success: true,
-            data: currentPlan
+            data: plan
         });
 
     } catch (error) {
+        console.error('Error in getDietPlanById:', error);
         res.status(500).json({
             success: false,
             message: 'Error fetching diet plan',
@@ -151,10 +208,13 @@ const getUserCurrentDietPlan = async (req, res) => {
     }
 };
 
+/**
+ * Delete a specific diet plan
+ */
 const deleteDietPlan = async (req, res) => {
     try {
-        const userId = req.user._id; // Get user ID from the authenticated request
-        const { dietPlanId } = req.params; // Get the diet plan ID from the request parameters
+        const userId = req.user._id;
+        const { dietPlanId } = req.params;
 
         // Check if the plan exists and belongs to the user
         const plan = await UserDietPlan.findOne({
@@ -188,6 +248,7 @@ const deleteDietPlan = async (req, res) => {
 
 module.exports = {
     getDietPlanForUser,
-    getUserCurrentDietPlan,
-    deleteDietPlan,
+    getAllUserDietPlans,
+    getDietPlanById,
+    deleteDietPlan
 };

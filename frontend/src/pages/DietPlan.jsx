@@ -1,4 +1,4 @@
-import DietPlanner from "../components/Diet plan/DietPlan"
+import DietPlanner from "../components/diet-plan/DietPlanner"
 
 function DietPlan() {
   return (
