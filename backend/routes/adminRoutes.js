@@ -13,6 +13,12 @@ const {
   updateDietPlan,
   deleteDietPlan
 } = require('../controllers/adminDietPlanController');
+const {
+  getAllPosts,
+  getPostAnalytics,
+  deletePost,
+  getPostDetails
+} = require('../controllers/adminPostController');
 const adminAuth = require('../middlewares/adminAuth');
 
 // Admin Authentication Routes
@@ -27,5 +33,11 @@ router.get('/diet-plans', adminAuth, getAllDietPlans);
 router.get('/diet-plans/:id', adminAuth, getDietPlan);
 router.put('/diet-plans/:id', adminAuth, updateDietPlan);
 router.delete('/diet-plans/:id', adminAuth, deleteDietPlan);
+
+// Admin routes for Victory Wall management
+router.get('/posts', adminAuth, getAllPosts);
+router.get('/posts/analytics', adminAuth, getPostAnalytics);
+router.get('/posts/:id', adminAuth, getPostDetails);
+router.delete('/posts/:id', adminAuth, deletePost);
 
 module.exports = router;
