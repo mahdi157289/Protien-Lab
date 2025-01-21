@@ -20,9 +20,9 @@ const InputField = memo(({ label, name, value, onChange, isEditing, type = "text
 
 InputField.propTypes = {
   label: PropTypes.string, // Label is optional
-  name: PropTypes.string.isRequired, // Name is required
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Value can be a string or number
-  onChange: PropTypes.func.isRequired, // onChange must be a function
+  name: PropTypes.string, // Name is required
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Value can be a string or number
+  onChange: PropTypes.func, // onChange must be a function
   isEditing: PropTypes.bool.isRequired, // isEditing must be a boolean
   type: PropTypes.string, // Type is optional and defaults to "text"
 };
