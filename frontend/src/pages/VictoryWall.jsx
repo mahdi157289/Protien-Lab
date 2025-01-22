@@ -1,20 +1,23 @@
-import React, { useState, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { useAuth } from '../contexts/AuthContext';
+import api from '../config/api';
 import { Image, Heart, Users, PlusSquare, X, MoreVertical, Trash2, Edit2 } from 'lucide-react';
+
 // Confirmation Dialog Component
 const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
-        onClick={onClose} />
-      <div className="relative z-50 w-full max-w-md bg-gray-800 rounded-lg shadow-xl m-4 p-6">
-        <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-        <p className="text-gray-300 mb-6">{message}</p>
+      <div className="fixed inset-0 transition-opacity bg-black bg-opacity-50" onClick={onClose} />
+      <div className="relative z-50 w-full max-w-md p-6 m-4 bg-gray-800 rounded-lg shadow-xl">
+        <h3 className="mb-2 text-xl font-semibold text-white">{title}</h3>
+        <p className="mb-6 text-gray-300">{message}</p>
         <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg bg-secondary text-accent hover:bg-gray-600 transition-colors duration-200">
+            className="px-4 py-2 transition-colors duration-200 rounded-lg bg-secondary text-accent hover:bg-gray-600"
+          >
             Cancel
           </button>
           <button
@@ -22,7 +25,8 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
               onConfirm();
               onClose();
             }}
-            className="px-4 py-2 rounded-lg bg-red-600 text-accent hover:bg-primary transition-colors duration-200">
+            className="px-4 py-2 transition-colors duration-200 bg-red-600 rounded-lg text-accent hover:bg-primary"
+          >
             Delete
           </button>
         </div>
@@ -30,28 +34,37 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
     </div>
   );
 };
-// Menu Dropdown Component (Updated with Edit)
+
+ConfirmationDialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+};
+
+// Menu Dropdown Component
 const MenuDropdown = ({ onDelete, onEdit }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-1 rounded-full hover:bg-gray-700 transition-colors duration-200" >
+        className="p-1 transition-colors duration-200 rounded-full hover:bg-gray-700"
+      >
         <MoreVertical size={20} className="text-gray-400" />
-      </button>  
+      </button>
       {isOpen && (
         <>
-          <div
-            className="fixed inset-0 z-10"
-            onClick={() => setIsOpen(false)}/>
-          <div className="absolute right-0 mt-1 w-48 bg-gray-800 rounded-lg shadow-lg overflow-hidden z-20 border border-gray-700">
+          <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
+          <div className="absolute right-0 z-20 w-48 mt-1 overflow-hidden bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
             <button
               onClick={() => {
                 onEdit();
                 setIsOpen(false);
               }}
-              className="w-full px-4 py-2 text-left text-blue-500 hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2">
+              className="flex items-center w-full gap-2 px-4 py-2 text-left text-blue-500 transition-colors duration-200 hover:bg-gray-700"
+            >
               <Edit2 size={16} />
               Edit Post
             </button>
@@ -60,7 +73,8 @@ const MenuDropdown = ({ onDelete, onEdit }) => {
                 onDelete();
                 setIsOpen(false);
               }}
-              className="w-full px-4 py-2 text-left text-red-500 hover:bg-gray-700 transition-colors duration-200 flex items-center gap-2">
+              className="flex items-center w-full gap-2 px-4 py-2 text-left text-red-500 transition-colors duration-200 hover:bg-gray-700"
+            >
               <Trash2 size={16} />
               Delete Post
             </button>
@@ -70,59 +84,85 @@ const MenuDropdown = ({ onDelete, onEdit }) => {
     </div>
   );
 };
+
+MenuDropdown.propTypes = {
+  onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+};
+
 // Dialog Components
 const Dialog = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div 
-        className="fixed inset-0 bg-black bg-opacity-50 transition-opacity"
-        onClick={onClose}/>
-      <div className="relative z-50 w-full max-w-2xl bg-gray-800 rounded-lg shadow-xl m-4">
+      <div className="fixed inset-0 transition-opacity bg-black bg-opacity-50" onClick={onClose} />
+      <div className="relative z-50 w-full max-w-2xl m-4 bg-gray-800 rounded-lg shadow-xl">
         {children}
       </div>
     </div>
   );
 };
+
+Dialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
+};
+
 const DialogHeader = ({ children }) => (
-  <div className="mb-4">
-    {children}
-  </div>
+  <div className="mb-4">{children}</div>
 );
+
+DialogHeader.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 const DialogTitle = ({ children }) => (
-  <h2 className="text-xl font-semibold text-white">
-    {children}
-  </h2>
+  <h2 className="text-xl font-semibold text-white">{children}</h2>
 );
+
+DialogTitle.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 // Create Post Modal Component
 const CreatePostModal = ({ isOpen, onClose, onPost }) => {
+  const { user } = useAuth();
   const [isDragging, setIsDragging] = useState(false);
   const [postText, setPostText] = useState('');
   const [selectedImages, setSelectedImages] = useState([]);
   const fileInputRef = useRef(null);
+
   const handleDragOver = useCallback((e) => {
     e.preventDefault();
-    setIsDragging(true);}, []);
+    setIsDragging(true);
+  }, []);
+
   const handleDragLeave = useCallback((e) => {
     e.preventDefault();
-    setIsDragging(false);}, []);
+    setIsDragging(false);
+  }, []);
+
   const handleDrop = useCallback((e) => {
     e.preventDefault();
     setIsDragging(false);
-    const files = Array.from(e.dataTransfer.files).filter(file => 
-      file.type.startsWith('image/') );
-    handleImageSelection(files);}, []);
+    const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+    handleImageSelection(files);
+  }, []);
+
   const handleImageSelection = (files) => {
     const newImages = files.map(file => ({
       file,
       preview: URL.createObjectURL(file)
     }));
-    setSelectedImages(prev => [...prev, ...newImages]);};
+    setSelectedImages(prev => [...prev, ...newImages]);
+  };
+
   const handleFileSelect = (e) => {
-    const files = Array.from(e.target.files).filter(file => 
-      file.type.startsWith('image/')
-    );
-    handleImageSelection(files);};
+    const files = Array.from(e.target.files).filter(file => file.type.startsWith('image/'));
+    handleImageSelection(files);
+  };
+
   const removeImage = (index) => {
     setSelectedImages(prev => {
       const newImages = [...prev];
@@ -131,43 +171,60 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
       return newImages;
     });
   };
-  const handlePost = () => {
-    const newPost = {
-      id: Date.now(),
-      author: 'Sadeepa Bandara',
-      timeAgo: 'Just now',
-      text: postText,
-      tags: ['bodysync', 'fitness'],
-      images: selectedImages.map(img => img.preview),
-      likes: 0,
-      isLiked: false
-    };
-    onPost(newPost);
-    setPostText('');
-    setSelectedImages([]);
-    onClose();
+
+  const handlePost = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('text', postText);
+      if (selectedImages.length > 0) {
+        formData.append('image', selectedImages[0].file);
+      }
+
+      const { data } = await api.post('/posts', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      onPost(data);
+      setPostText('');
+      setSelectedImages([]);
+      onClose();
+    } catch (error) {
+      console.error('Error creating post:', error);
+    }
   };
+
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <div className="bg-gray-800 border-gray-700 text-white">
+      <div className="text-white bg-gray-800 border-gray-700">
         <DialogHeader className="p-4 border-b border-gray-700">
           <DialogTitle className="text-xl font-semibold text-center text-white">
             Create Post
           </DialogTitle>
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 text-gray-400 hover:text-white transition-colors duration-200">
+            className="absolute text-gray-400 transition-colors duration-200 right-4 top-4 hover:text-white"
+          >
             <X size={20} />
           </button>
         </DialogHeader>
         <div className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gray-600"></div>
+            <div className="w-12 h-12 bg-gray-600 rounded-full">
+              {user?.profileImage && (
+                <img
+                  src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`}
+                  alt="Profile"
+                  className="object-cover w-full h-full rounded-full"
+                />
+              )}
+            </div>
             <div>
-              <h2 className="text-white font-semibold">Sadeepa Bandara</h2>
-              <div className="flex items-center gap-2 bg-gray-700 rounded-md px-3 py-1 mt-1">
+              <h2 className="font-semibold text-white">{user?.firstName} {user?.lastName}</h2>
+              <div className="flex items-center gap-2 px-3 py-1 mt-1 bg-gray-700 rounded-md">
                 <Users size={16} className="text-gray-400" />
-                <span className="text-gray-300 text-sm">Everyone</span>
+                <span className="text-sm text-gray-300">Everyone</span>
               </div>
             </div>
           </div>
@@ -177,21 +234,23 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
             placeholder="What's on your mind..."
             value={postText}
             onChange={(e) => setPostText(e.target.value)}
-            className="w-full bg-transparent text-white placeholder-gray-400 outline-none resize-none hover:bg-gray-700 transition-colors duration-200 p-2 rounded-lg"
+            className="w-full p-2 text-white placeholder-gray-400 transition-colors duration-200 bg-transparent rounded-lg outline-none resize-none hover:bg-gray-700"
             rows={3}
           />
         </div>
         {selectedImages.length > 0 && (
-          <div className="p-4 grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 p-4">
             {selectedImages.map((image, index) => (
               <div key={index} className="relative group">
                 <img
                   src={image.preview}
                   alt={`Selected ${index + 1}`}
-                  className="w-full h-48 object-cover rounded-lg"/>
+                  className="object-cover w-full h-48 rounded-lg"
+                />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute top-2 right-2 bg-gray-900 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-gray-800">
+                  className="absolute p-1 transition-opacity duration-200 bg-gray-900 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
+                >
                   <X size={16} className="text-white" />
                 </button>
               </div>
@@ -207,20 +266,22 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              onClick={() => fileInputRef.current?.click()}>
+              onClick={() => fileInputRef.current?.click()}
+            >
               <input
                 type="file"
                 ref={fileInputRef}
                 onChange={handleFileSelect}
                 accept="image/*"
                 multiple
-                className="hidden"/>
+                className="hidden"
+              />
               <div className="flex flex-col items-center justify-center text-center">
-                <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
+                <div className="flex items-center justify-center w-16 h-16 mb-4 bg-gray-700 rounded-full">
                   <PlusSquare size={24} className="text-gray-400" />
                 </div>
-                <h3 className="text-white text-lg font-medium mb-2">Add photos/videos</h3>
-                <p className="text-gray-400 text-sm">or drag and drop</p>
+                <h3 className="mb-2 text-lg font-medium text-white">Add photos/videos</h3>
+                <p className="text-sm text-gray-400">or drag and drop</p>
               </div>
             </div>
           </div>
@@ -233,7 +294,8 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
                 : 'bg-blue-600 text-white hover:bg-blue-700'
             }`}
             onClick={handlePost}
-            disabled={!postText && selectedImages.length === 0}>
+            disabled={!postText && selectedImages.length === 0}
+          >
             Post
           </button>
         </div>
@@ -241,20 +303,26 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
     </Dialog>
   );
 };
+
+CreatePostModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onPost: PropTypes.func.isRequired,
+};
+
 // Edit Post Modal Component
 const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
   const [postText, setPostText] = useState(post?.text || '');
   const [selectedImages, setSelectedImages] = useState(
-    post?.images ? post.images.map(url => ({ preview: url })) :
-    post?.imageUrl ? [{ preview: post.imageUrl }] : []
+    post?.image ? [{ preview: `${import.meta.env.VITE_IMAGE_URL}${post.image}` }] : []
   );
   const fileInputRef = useRef(null);
+
   const handleFileSelect = (e) => {
-    const files = Array.from(e.target.files).filter(file => 
-      file.type.startsWith('image/')
-    );
+    const files = Array.from(e.target.files).filter(file => file.type.startsWith('image/'));
     handleImageSelection(files);
   };
+
   const handleImageSelection = (files) => {
     const newImages = files.map(file => ({
       file,
@@ -262,6 +330,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
     }));
     setSelectedImages(prev => [...prev, ...newImages]);
   };
+
   const removeImage = (index) => {
     setSelectedImages(prev => {
       const newImages = [...prev];
@@ -270,26 +339,40 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
       }
       newImages.splice(index, 1);
       return newImages;
-    });};
-  const handleSave = () => {
-    const updatedPost = {
-      ...post,
-      text: postText,
-      images: selectedImages.map(img => img.preview),
-      imageUrl: undefined // Convert to using images array instead
-    };
-    onSave(updatedPost);
+    });
   };
+
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append('text', postText);
+      if (selectedImages[0]?.file) {
+        formData.append('image', selectedImages[0].file);
+      }
+
+      const { data } = await api.put(`/posts/${post._id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      onSave(data);
+    } catch (error) {
+      console.error('Error updating post:', error);
+    }
+  };
+
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <div className="bg-gray-800 border-gray-700 text-white">
+      <div className="text-white bg-gray-800 border-gray-700">
         <DialogHeader className="p-4 border-b border-gray-700">
           <DialogTitle className="text-xl font-semibold text-center text-white">
             Edit Post
           </DialogTitle>
           <button
             onClick={onClose}
-            className="absolute right-4 top-4 text-gray-400 hover:text-white transition-colors duration-200" >
+            className="absolute text-gray-400 transition-colors duration-200 right-4 top-4 hover:text-white"
+          >
             <X size={20} />
           </button>
         </DialogHeader>
@@ -298,21 +381,23 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
             placeholder="What's on your mind..."
             value={postText}
             onChange={(e) => setPostText(e.target.value)}
-            className="w-full bg-transparent text-white placeholder-gray-400 outline-none resize-none hover:bg-gray-700 transition-colors duration-200 p-2 rounded-lg"
+            className="w-full p-2 text-white placeholder-gray-400 transition-colors duration-200 bg-transparent rounded-lg outline-none resize-none hover:bg-gray-700"
             rows={3}
           />
         </div>
         {selectedImages.length > 0 && (
-          <div className="p-4 grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 p-4">
             {selectedImages.map((image, index) => (
               <div key={index} className="relative group">
                 <img
-                  src={image.preview}
+                  src={image.preview || `${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
                   alt={`Selected ${index + 1}`}
-                  className="w-full h-48 object-cover rounded-lg"/>
+                  className="object-cover w-full h-48 rounded-lg"
+                />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute top-2 right-2 bg-gray-900 rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-gray-800">
+                  className="absolute p-1 transition-opacity duration-200 bg-gray-900 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
+                >
                   <X size={16} className="text-white" />
                 </button>
               </div>
@@ -322,14 +407,16 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
         <div className="p-4">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="w-full py-2 px-4 rounded-lg border-2 border-dashed border-gray-600 hover:border-gray-500 transition-colors duration-200">
+            className="w-full px-4 py-2 transition-colors duration-200 border-2 border-gray-600 border-dashed rounded-lg hover:border-gray-500"
+          >
             <input
               type="file"
               ref={fileInputRef}
               onChange={handleFileSelect}
               accept="image/*"
               multiple
-              className="hidden"/>
+              className="hidden"
+            />
             <div className="flex items-center justify-center gap-2 text-gray-400">
               <PlusSquare size={20} />
               <span>Add More Photos</span>
@@ -338,8 +425,9 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
         </div>
         <div className="p-4 border-t border-gray-700">
           <button 
-            className="w-full py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-all duration-200"
-            onClick={handleSave}>
+            className="w-full py-2 text-white transition-all duration-200 bg-blue-600 rounded-lg hover:bg-blue-700"
+            onClick={handleSave}
+          >
             Save Changes
           </button>
         </div>
@@ -347,91 +435,108 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
     </Dialog>
   );
 };
+
+EditPostModal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  post: PropTypes.object,
+  onSave: PropTypes.func.isRequired,
+};
+
 // Main VictoryWall Component
 const VictoryWall = () => {
+  const { user } = useAuth();
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
   const [postToEdit, setPostToEdit] = useState(null);
-  const [posts, setPosts] = useState([
-    {
-      id: 1,
-      author: 'Geethaka Kalhara',
-      timeAgo: '1h',
-      text: 'Thank you bodysync for guiding me.',
-      tags: ['bodysync', 'fitness', 'gymfever'],
-      imageUrl: '/api/placeholder/800/600',
-      likes: 42,
-      isLiked: false
-    },
-    {
-      id: 2,
-      author: 'Sadeepa Bandara',
-      timeAgo: '45 min',
-      text: 'Thank you bodysync!!!',
-      tags: ['bodysync', 'fitness', 'gymfever'],
-      imageUrl: '/api/placeholder/800/600',
-      likes: 24,
-      isLiked: false
-    }
-  ]);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleLike = (postId) => {
-    setPosts(posts.map(post => {
-      if (post.id === postId) {
-        return {
-          ...post,
-          likes: post.isLiked ? post.likes - 1 : post.likes + 1,
-          isLiked: !post.isLiked
-        };
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const { data } = await api.get('/posts');
+        setPosts(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        setLoading(false);
       }
-      return post;
-    }));
+    };
+    fetchPosts();
+  }, []);
+
+  const handleLike = async (postId) => {
+    try {
+      const { data } = await api.put(`/posts/${postId}/like`);
+      setPosts(posts.map(post =>
+        post._id === postId ? data : post
+      ));
+    } catch (error) {
+      console.error('Error toggling like:', error);
+    }
   };
+
   const handleNewPost = (newPost) => {
     setPosts(prevPosts => [newPost, ...prevPosts]);
   };
-  const handleEditClick = (postId) => {
-    const post = posts.find(p => p.id === postId);
-    setPostToEdit(post);
-    setIsEditModalOpen(true);
-  };
+
   const handleEditSave = (updatedPost) => {
     setPosts(prevPosts =>
       prevPosts.map(post =>
-        post.id === updatedPost.id ? updatedPost : post
+        post._id === updatedPost._id ? updatedPost : post
       )
     );
     setPostToEdit(null);
     setIsEditModalOpen(false);
   };
-  const handleDeleteClick = (postId) => {
-    setPostToDelete(postId);
-    setIsConfirmDeleteOpen(true);
-  };
-  const handleDeleteConfirm = () => {
-    if (postToDelete) {
-      setPosts(prevPosts => prevPosts.filter(post => post.id !== postToDelete));
-      setPostToDelete(null);
+
+  const handleDeleteConfirm = async () => {
+    try {
+      if (postToDelete) {
+        await api.delete(`/posts/${postToDelete}`);
+        setPosts(prevPosts => prevPosts.filter(post => post._id !== postToDelete));
+        setPostToDelete(null);
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
     }
   };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen p-4 bg-gray-900">
+        <div className="text-white">Loading posts...</div>
+      </div>
+    );
+  }
+
   return (
-    <div className="bg-gray-900 min-h-screen p-4">
+    <div className="min-h-screen p-4 bg-gray-900">
       <div className="max-w-2xl mx-auto space-y-4">
         {/* Create Post Section */}
-        <div className="bg-gray-800 rounded-lg p-4 hover:shadow-lg transition-shadow duration-200">
+        <div className="p-4 transition-shadow duration-200 bg-gray-800 rounded-lg hover:shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gray-600"></div>
+            <div className="w-10 h-10 bg-gray-600 rounded-full">
+              {user?.profileImage && (
+                <img 
+                  src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`} 
+                  alt="Profile" 
+                  className="object-cover w-full h-full rounded-full"
+                />
+              )}
+            </div>
             <input
               type="text"
               placeholder="What's on your mind..."
-              className="bg-gray-700 text-white rounded-full py-2 px-4 flex-1 focus:outline-none cursor-pointer hover:bg-gray-600 transition-colors duration-200"
+              className="flex-1 px-4 py-2 text-white transition-colors duration-200 bg-gray-700 rounded-full cursor-pointer focus:outline-none hover:bg-gray-600"
               onClick={() => setIsPostModalOpen(true)}
               readOnly
             />
           </div>
-          <div className="mt-3 flex justify-end">
+          <div className="flex justify-end mt-3">
             <button 
               onClick={() => setIsPostModalOpen(true)}
               className="flex items-center gap-2 bg-gray-700 px-3 py-1.5 rounded-lg transition-all duration-200 hover:bg-gray-600 hover:scale-105 active:scale-95"
@@ -441,12 +546,14 @@ const VictoryWall = () => {
             </button>
           </div>
         </div>
+
         {/* Create Post Modal */}
         <CreatePostModal 
           isOpen={isPostModalOpen} 
           onClose={() => setIsPostModalOpen(false)}
           onPost={handleNewPost}
         />
+
         {/* Edit Post Modal */}
         {postToEdit && (
           <EditPostModal
@@ -459,6 +566,7 @@ const VictoryWall = () => {
             onSave={handleEditSave}
           />
         )}
+
         {/* Confirmation Dialog */}
         <ConfirmationDialog
           isOpen={isConfirmDeleteOpen}
@@ -467,65 +575,76 @@ const VictoryWall = () => {
           title="Delete Post"
           message="Are you sure you want to delete this post? This action cannot be undone."
         />
+
         {/* Posts List */}
         {posts.map((post) => (
-          <div key={post.id} className="bg-gray-800 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-200">
+          <div key={post._id} className="overflow-hidden transition-shadow duration-200 bg-gray-800 rounded-lg hover:shadow-lg">
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-600"></div>
+                  <div className="w-10 h-10 bg-gray-600 rounded-full">
+                    {post.user?.profileImage && (
+                      <img 
+                        src={`${import.meta.env.VITE_IMAGE_URL}/${post.user.profileImage}`} 
+                        alt="Profile" 
+                        className="object-cover w-full h-full rounded-full"
+                      />
+                    )}
+                  </div>
                   <div>
-                    <h3 className="text-white font-semibold hover:text-gray-300 transition-colors duration-200 cursor-pointer">
-                      {post.author}
+                    <h3 className="font-semibold text-white transition-colors duration-200 cursor-pointer hover:text-gray-300">
+                      {post.user?.firstName} {post.user?.lastName}
                     </h3>
-                    <p className="text-gray-400 text-sm">{post.timeAgo}</p>
+                    <p className="text-sm text-gray-400">
+                      {new Date(post.createdAt).toLocaleDateString('en-US', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </p>
                   </div>
                 </div>
-                <MenuDropdown 
-                  onDelete={() => handleDeleteClick(post.id)}
-                  onEdit={() => handleEditClick(post.id)}
-                />
+                {post.user?._id === user?._id && (
+                  <MenuDropdown 
+                    onDelete={() => {
+                      setPostToDelete(post._id);
+                      setIsConfirmDeleteOpen(true);
+                    }}
+                    onEdit={() => {
+                      setPostToEdit(post);
+                      setIsEditModalOpen(true);
+                    }}
+                  />
+                )}
               </div>
-              <p className="text-white mt-3">{post.text}</p>
+              <p className="mt-3 text-white">{post.text}</p>
               <div className="flex gap-2 mt-2">
-                {post.tags.map((tag) => (
+                {post.tags?.map((tag) => (
                   <span
                     key={tag}
-                    className="text-blue-400 text-sm hover:text-blue-300 cursor-pointer transition-colors duration-200"
+                    className="text-sm text-blue-400 transition-colors duration-200 cursor-pointer hover:text-blue-300"
                   >
                     #{tag}
                   </span>
                 ))}
               </div>
             </div>
-            {post.imageUrl ? (
+            {post.image && (
               <img
-                src={post.imageUrl}
+                src={`${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
                 alt="Post"
-                className="w-full object-cover max-h-96 hover:opacity-90 transition-opacity duration-200"
+                className="object-cover w-full transition-opacity duration-200 max-h-96 hover:opacity-90"
               />
-            ) : post.images && post.images.length > 0 && (
-              <div className={`grid ${post.images.length > 1 ? 'grid-cols-2' : 'grid-cols-1'} gap-1`}>
-                {post.images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Post ${index + 1}`}
-                    className="w-full object-cover max-h-96 hover:opacity-90 transition-opacity duration-200"
-                  />
-                ))}
-              </div>
             )}
             <div className="p-4">
               <button 
-                onClick={() => handleLike(post.id)}
-                className="flex items-center gap-2 hover:opacity-80 transition-all duration-200 transform hover:scale-105 active:scale-95"
+                onClick={() => handleLike(post._id)}
+                className="flex items-center gap-2 transition-all duration-200 transform hover:opacity-80 hover:scale-105 active:scale-95"
               >
                 <Heart 
                   size={20} 
-                  className={post.isLiked ? "fill-red-500 text-red-500" : "text-gray-300"} 
+                  className={post.likes.some(like => like._id === user?._id) ? "fill-red-500 text-red-500" : "text-gray-300"} 
                 />
-                <span className="text-gray-300">{post.likes}</span>
+                <span className="text-gray-300">{post.likes.length}</span>
               </button>
             </div>
           </div>
