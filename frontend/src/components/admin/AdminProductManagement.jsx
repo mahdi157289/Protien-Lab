@@ -180,11 +180,13 @@ const AdminProductManagement = () => {
               key={product._id} 
               className="p-4 rounded-lg shadow-md bg-dark"
             >
-              <img 
-                src={`${import.meta.env.VITE_IMAGE_URL}/${product.image}`} 
-                alt={product.name} 
-                className="object-cover w-full h-48 rounded-t-lg"
-              />
+      <div className="bg-[#29292A] flex justify-center items-center p-4 rounded-[10px]">
+        <img
+          className="object-contain h-48"
+          src={`${import.meta.env.VITE_IMAGE_URL}/${product.image}`}
+          alt={product.name}
+        />
+      </div>
               <div className="mt-4">
                 <h2 className="text-xl font-bold text-accent">{product.name}</h2>
                 <p className="text-gray-400 line-clamp-2">{product.descriptionShort}</p>
