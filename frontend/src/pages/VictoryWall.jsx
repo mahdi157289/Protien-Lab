@@ -197,10 +197,10 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <div className="text-white bg-gray-800 border-gray-700">
+      <div className="text-white bg-dark border-gray-700 rounded-lg">
         <DialogHeader className="p-4 border-b border-gray-700">
-          <DialogTitle className="text-xl font-semibold text-center text-white">
-            Create Post
+          <DialogTitle className="text-xl font-semibold text-center text-white padding-20px">
+              Create Post
           </DialogTitle>
           <button
             onClick={onClose}
@@ -211,7 +211,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
         </DialogHeader>
         <div className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gray-600 rounded-full">
+            <div className="w-12 h-12 bg-secondary rounded-full">
               {user?.profileImage && (
                 <img
                   src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`}
@@ -222,7 +222,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
             </div>
             <div>
               <h2 className="font-semibold text-white">{user?.firstName} {user?.lastName}</h2>
-              <div className="flex items-center gap-2 px-3 py-1 mt-1 bg-gray-700 rounded-md">
+              <div className="flex items-center gap-2 px-3 py-1 mt-1 bg-secondary rounded-md">
                 <Users size={16} className="text-gray-400" />
                 <span className="text-sm text-gray-300">Everyone</span>
               </div>
@@ -234,7 +234,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
             placeholder="What's on your mind..."
             value={postText}
             onChange={(e) => setPostText(e.target.value)}
-            className="w-full p-2 text-white placeholder-gray-400 transition-colors duration-200 bg-transparent rounded-lg outline-none resize-none hover:bg-gray-700"
+            className="w-full p-2 text-white placeholder-gray-400 transition-colors duration-200 rounded-lg outline-none resize-none bg-secondary/70 hover:bg-secondary/8"
             rows={3}
           />
         </div>
@@ -249,7 +249,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
                 />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute p-1 transition-opacity duration-200 bg-gray-900 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
+                  className="absolute p-1 transition-opacity duration-200 bg-secondary rounded-full opacity-0 top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
                 >
                   <X size={16} className="text-white" />
                 </button>
@@ -261,7 +261,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
           <div className="p-4">
             <div
               className={`border-2 border-dashed rounded-lg p-8 cursor-pointer group transition-all duration-200 ${
-                isDragging ? 'border-blue-500 bg-blue-500/10' : 'border-gray-600 hover:border-gray-500'
+                isDragging ? 'border-blue-500 bg-secondary' : 'border-gray-600 hover:border-gray-500'
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -277,7 +277,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
                 className="hidden"
               />
               <div className="flex flex-col items-center justify-center text-center">
-                <div className="flex items-center justify-center w-16 h-16 mb-4 bg-gray-700 rounded-full">
+                <div className="flex items-center justify-center w-16 h-16 mb-4 bg-secondary rounded-full">
                   <PlusSquare size={24} className="text-gray-400" />
                 </div>
                 <h3 className="mb-2 text-lg font-medium text-white">Add photos/videos</h3>
@@ -364,7 +364,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <div className="text-white bg-gray-800 border-gray-700">
+      <div className="text-white bg-secondary border-gray-700">
         <DialogHeader className="p-4 border-b border-gray-700">
           <DialogTitle className="text-xl font-semibold text-center text-white">
             Edit Post
@@ -396,7 +396,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
                 />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute p-1 transition-opacity duration-200 bg-gray-900 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
+                  className="absolute p-1 transition-opacity duration-200 bg-secondary rounded-full opacity-0 top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
                 >
                   <X size={16} className="text-white" />
                 </button>
@@ -417,7 +417,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
               multiple
               className="hidden"
             />
-            <div className="flex items-center justify-center gap-2 text-gray-400">
+            <div className="flex items-center justify-center gap-2 ">
               <PlusSquare size={20} />
               <span>Add More Photos</span>
             </div>
@@ -507,19 +507,19 @@ const VictoryWall = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen p-4 bg-gray-900">
+      <div className="flex items-center justify-center min-h-screen p-4 bg-secondary">
         <div className="text-white">Loading posts...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-4 bg-gray-900">
+    <div className="min-h-screen p-4 ">
       <div className="max-w-2xl mx-auto space-y-4">
         {/* Create Post Section */}
-        <div className="p-4 transition-shadow duration-200 bg-gray-800 rounded-lg hover:shadow-lg">
+        <div className="p-4 transition-shadow duration-200 bg-dark rounded-lg hover:shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gray-600 rounded-full">
+            <div className="w-10 h-10 bg-secondary rounded-full">
               {user?.profileImage && (
                 <img 
                   src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`} 
@@ -531,7 +531,7 @@ const VictoryWall = () => {
             <input
               type="text"
               placeholder="What's on your mind..."
-              className="flex-1 px-4 py-2 text-white transition-colors duration-200 bg-gray-700 rounded-full cursor-pointer focus:outline-none hover:bg-gray-600"
+              className="flex-1 px-4 py-2 text-white transition-colors duration-200 bg-secondary/50 rounded-full cursor-pointer focus:outline-none hover:bg-secondary"
               onClick={() => setIsPostModalOpen(true)}
               readOnly
             />
@@ -578,11 +578,11 @@ const VictoryWall = () => {
 
         {/* Posts List */}
         {posts.map((post) => (
-          <div key={post._id} className="overflow-hidden transition-shadow duration-200 bg-gray-800 rounded-lg hover:shadow-lg">
+          <div key={post._id} className="overflow-hidden transition-shadow duration-200 bg-dark rounded-lg hover:shadow-lg">
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gray-600 rounded-full">
+                  <div className="w-10 h-10 bg-secondary rounded-full">
                     {post.user?.profileImage && (
                       <img 
                         src={`${import.meta.env.VITE_IMAGE_URL}/${post.user.profileImage}`} 
