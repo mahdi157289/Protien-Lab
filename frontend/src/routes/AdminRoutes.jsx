@@ -24,7 +24,7 @@ const AdminRoutes = () => {
         <Route path="dashboard"element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>}/>
         <Route path="exercises" element={<AdminProtectedRoute><AdminExercises /></AdminProtectedRoute>}/>
         <Route path="diet-plan" element={<AdminProtectedRoute><DietPlanManagement/></AdminProtectedRoute>}/>
-        <Route path="store" element={<AdminProtectedRoute><AdminStore /></AdminProtectedRoute>}/>
+        <Route path="store/*" element={<AdminProtectedRoute><AdminStore /></AdminProtectedRoute>}/>
         <Route path="users" element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>}/>
         <Route path="victory-wall" element={<AdminProtectedRoute><AdminVictoryWall /></AdminProtectedRoute>}/>
         <Route path="profile" element={<AdminProtectedRoute><AdminProfile /></AdminProtectedRoute>}/>
