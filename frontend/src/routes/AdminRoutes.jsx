@@ -6,7 +6,7 @@ import { useAdminAuth } from '../contexts/AdminAuthContext';
 import AdminDashboard from '../components/admin/AdminDashboard';
 import AdminExercises from '../components/admin/AdminExercises';
 import AdminStore from '../components/admin/AdminStore';
-import AdminUsers from '../components/admin/AdminUsers';
+import AdminUsers from '../components/admin/AdminUserManagement';
 import AdminVictoryWall from '../components/admin/AdminVictoryWall';
 import AdminNavbar from '../components/common/AdminNavbar';
 import AdminProtectedRoute from '../components/admin/AdminProtectedRoute';
