@@ -12,9 +12,9 @@ function ProductCard({ product }) {
   const togglePopup = () => setSelectedProduct(null);
 
   return (
-    <div className="w-80 h-[450px] bg-[#1C1C1C] text-white rounded-lg shadow-lg overflow-hidden border-[10px] border-[#1C1C1C] rounded-[15px]">
+    <div className="w-80 h-[450px] bg-[#1C1C1C] text-white rounded-xl shadow-lg overflow-hidden border-[10px] border-[#1C1C1C]">
       {/* Product Image */}
-      <div className="bg-[#29292A] flex justify-center items-center p-4 rounded-[10px]">
+      <div className="bg-[#29292A] flex justify-center items-center p-4 rounded-lg">
         <img
           className="object-contain h-48"
           src={`${import.meta.env.VITE_IMAGE_URL}/${product.image}`}

@@ -9,14 +9,14 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="fixed inset-0 transition-opacity bg-black bg-opacity-50" onClick={onClose} />
-      <div className="relative z-50 w-full max-w-md p-6 m-4 bg-gray-800 rounded-lg shadow-xl">
-        <h3 className="mb-2 text-xl font-semibold text-white">{title}</h3>
-        <p className="mb-6 text-gray-300">{message}</p>
-        <div className="flex justify-end gap-3">
+      <div className="fixed inset-0 transition-opacity bg-black bg-opacity-80" onClick={onClose} />
+      <div className="relative z-50 w-full max-w-md p-6 m-4 rounded-lg shadow-xl bg-dark">
+        <h3 className="mb-2 text-xl font-semibold text-center text-white">{title}</h3>
+        <p className="mb-6 text-center text-accent/80">{message}</p>
+        <div className="flex justify-center gap-10">
           <button
             onClick={onClose}
-            className="px-4 py-2 transition-colors duration-200 rounded-lg bg-dark text-accent hover:bg-secondary-600"
+            className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
           >
             Cancel
           </button>
@@ -25,7 +25,7 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
               onConfirm();
               onClose();
             }}
-            className="px-4 py-2 transition-colors duration-200 bg-red-600 rounded-lg text-accent hover:bg-primary"
+            className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
           >
             Delete
           </button>
@@ -50,20 +50,20 @@ const MenuDropdown = ({ onDelete, onEdit }) => {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-1 transition-colors duration-200 rounded-full hover:bg-gray-700"
+        className="p-1 transition-colors duration-200 rounded-full hover:bg-secondary"
       >
-        <MoreVertical size={20} className="text-gray-400" />
+        <MoreVertical size={20} className="text-accent" />
       </button>
       {isOpen && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 z-20 w-48 mt-1 overflow-hidden bg-gray-800 border border-gray-700 rounded-lg shadow-lg">
+          <div className="absolute right-0 z-20 w-48 mt-1 overflow-hidden rounded-lg shadow-lg bg-secondary">
             <button
               onClick={() => {
                 onEdit();
                 setIsOpen(false);
               }}
-              className="flex items-center w-full gap-2 px-4 py-2 text-left text-blue-500 transition-colors duration-200 hover:bg-gray-700"
+              className="flex items-center w-full gap-2 px-4 py-2 text-left transition-colors duration-200 hover:bg-accent/10"
             >
               <Edit2 size={16} />
               Edit Post
@@ -73,7 +73,7 @@ const MenuDropdown = ({ onDelete, onEdit }) => {
                 onDelete();
                 setIsOpen(false);
               }}
-              className="flex items-center w-full gap-2 px-4 py-2 text-left text-red-500 transition-colors duration-200 hover:bg-gray-700"
+              className="flex items-center w-full gap-2 px-4 py-2 text-left text-red-500 transition-colors duration-200 hover:bg-red-500/10"
             >
               <Trash2 size={16} />
               Delete Post
@@ -277,7 +277,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
                 className="hidden"
               />
               <div className="flex flex-col items-center justify-center text-center ">
-                <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-secondary   ">
+                <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-secondary ">
                   <PlusSquare size={24} className="text-accent/80 group-hover:text-accent" />
                 </div>
                 <h3 className="mb-2 text-lg font-medium ">Add photos/videos</h3>
@@ -364,16 +364,16 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <div className=" rounded-lg bg-dark">
-        <div className=" border-b border-accent/50">
+      <div className="rounded-lg bg-dark">
+        <div className="border-b border-accent/50">
           <div className="p-4 text-xl font-semibold ">
             Edit Post
           </div>
           <button
             onClick={onClose}
-            className="absolute text-gray-400 transition-colors duration-200 right-4 top-4 hover:text-white"
+            className="absolute transition-colors duration-200 right-4 top-4 hover:text-primary"
           >
-            <X size={20} />
+            <X className='w-6 h-6' />
           </button>
         </div>
         <div className="p-4">
@@ -390,7 +390,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
             {selectedImages.map((image, index) => (
               <div key={index} className="relative group">
                 <img
-                  src={image.preview || `${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
+                  src={`${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
                   alt={`Selected ${index + 1}`}
                   className="object-cover w-full h-48 rounded-lg"
                 />
@@ -592,10 +592,10 @@ const VictoryWall = () => {
                     )}
                   </div>
                   <div>
-                    <h3 className="font-semibold text-white transition-colors duration-200 cursor-pointer hover:text-gray-300">
+                    <h3 className="font-semibold text-white transition-colors duration-200 cursor-pointer hover:text-accent">
                       {post.user?.firstName} {post.user?.lastName}
                     </h3>
-                    <p className="text-sm text-gray-400">
+                    <p className="text-sm text-accent/80">
                       {new Date(post.createdAt).toLocaleDateString('en-US', {
                         hour: '2-digit',
                         minute: '2-digit'

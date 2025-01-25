@@ -299,7 +299,7 @@ const AdminProductManagement = () => {
                 <p className="text-accent/80 line-clamp-2">{product.descriptionShort}</p>
                 <div className="flex items-center justify-between mt-4">
                   <div>
-                    <span className="font-bold text-primary">${product.price}</span>
+                    <span className="font-bold text-primary">Rs. {product.price}</span>
                     <p className="text-sm text-accent/80">Stock: {product.stock}</p>
                   </div>
                   <div className="flex space-x-2">

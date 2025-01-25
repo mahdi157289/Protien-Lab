@@ -88,11 +88,11 @@ function ProductPopup({ product, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
       <div className="bg-[#1C1C1C] text-white rounded-lg shadow-lg w-full max-w-4xl p-6 relative">
         {/* Close Button */}
         <button
-          className="absolute text-4xl font-bold text-white top-4 right-4 hover:text-gray-400"
+          className="absolute text-4xl font-semibold top-4 right-4 hover:text-primary"
           onClick={onClose}
         >
           &times;
@@ -231,7 +231,7 @@ function ProductPopup({ product, onClose }) {
           {/* Order Button */}
           <div className="flex justify-end mt-6">
             <button
-              className="px-8 py-2 font-bold text-white bg-red-500 rounded hover:bg-red-600"
+              className="px-8 py-2 font-bold transition bg-red-500 rounded hover:bg-red-600"
               onClick={handleOrderNow}
               disabled={loading}
             >

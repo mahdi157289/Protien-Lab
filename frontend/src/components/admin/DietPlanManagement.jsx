@@ -193,13 +193,13 @@ const DietPlanManagement = () => {
                 <div className="flex gap-2">
                   <button
                     onClick={() => handleEdit(plan)}
-                    className="p-2 rounded-full hover:bg-dark"
+                    className="p-2 text-yellow-500 rounded-full hover:bg-yellow-500/10"
                   >
                     <Edit className="w-5 h-5" />
                   </button>
                   <button
                     onClick={() => setDeleteConfirmation({ isOpen: true, planId: plan._id })}
-                    className="p-2 rounded-full hover:bg-dark text-primary"
+                    className="p-2 rounded-full text-primary hover:bg-primary/10"
                   >
                     <Trash2 className="w-5 h-5" />
                   </button>
@@ -209,10 +209,6 @@ const DietPlanManagement = () => {
                 <p>Type: {plan.type}</p>
                 <p>Calories: {plan.calorieRange.min} - {plan.calorieRange.max}</p>
                 <p>Activity Level: {plan.activityLevel}</p>
-                <div className={`inline-flex items-center ${plan.isActive ? 'text-green-500' : 'text-primary'}`}>
-                  <span className="mr-2">Status:</span>
-                  {plan.isActive ? 'Active' : 'Inactive'}
-                </div>
               </div>
             </div>
           ))}
@@ -364,13 +360,13 @@ const DietPlanManagement = () => {
                   <button
                     type="button"
                     onClick={() => setShowModal(false)}
-                    className="px-4 py-2 rounded-lg bg-secondary hover:bg-opacity-90"
+                    className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 rounded-lg bg-primary hover:bg-opacity-90"
+                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
                   >
                     {currentPlan ? 'Update' : 'Create'} Diet Plan
                   </button>
@@ -384,22 +380,22 @@ const DietPlanManagement = () => {
         <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
             <div className="w-full max-w-md p-6 rounded-lg bg-dark">
             <div className="text-center">
-                <h3 className="mb-2 text-lg font-semibold">
+                <h3 className="mb-2 text-lg font-semibold text-center">
                 Delete Diet Plan
                 </h3>
-                <p className="mb-6 ">
+                <p className="mb-6 text-center">
                 Are you sure you want to delete this diet plan? This action cannot be undone.
                 </p>
-                <div className="flex justify-center gap-4">
+                <div className="flex justify-center gap-10">
                 <button
                     onClick={() => setDeleteConfirmation({ isOpen: false, planId: null })}
-                    className="px-4 py-2 rounded-lg bg-secondary hover:bg-opacity-90"
+                    className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
                 >
                     Cancel
                 </button>
                 <button
                     onClick={handleDelete}
-                    className="px-4 py-2 rounded-lg bg-primary hover:bg-opacity-90"
+                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
                 >
                     Delete
                 </button>

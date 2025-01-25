@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Loader, X, RefreshCw, Search, Eye } from 'lucide-react';
+import { ArrowLeft, Loader, X, CheckCircle, Search, Eye } from 'lucide-react';
 
 const AdminOrderManagement = () => {
   const { token } = useAdminAuth();
@@ -209,29 +209,39 @@ const AdminOrderManagement = () => {
               <tr key={order._id} className="border-b border-secondary">
                 <td className="p-3 truncate max-w-[200px]">{order._id}</td>
                 <td className="p-3">{order.user?.firstName} {order.user?.lastName}</td>
-                <td className="p-3">${order.totalAmount}</td>
+                <td className="p-3">Rs. {order.totalAmount}</td>
                 <td className="p-3">
-                  <span className={`px-2 py-1 rounded-full text-sm ${order.status === 'Pending' ? 'bg-yellow-500' : order.status === 'Processing' ? 'bg-blue-500' : order.status === 'Shipped' ? 'bg-green-500' : order.status === 'Delivered' ? 'bg-purple-500' : 'bg-red-500'}`}>
+                  <span className={`px-2 py-1 rounded-lg text-sm ${order.status === 'Pending' ? 'bg-yellow-500' : order.status === 'Processing' ? 'bg-blue-500' : order.status === 'Shipped' ? 'bg-green-500' : order.status === 'Delivered' ? 'bg-purple-500' : 'bg-red-500'}`}>
                     {order.status}
                   </span>
                 </td>
                 <td className="flex gap-2 p-3">
                   <button
                     onClick={() => openViewModal(order)}
-                    className="flex items-center gap-1 px-3 py-1 rounded-md bg-primary text-accent"
+                    className="flex items-center gap-1 px-3 py-1 transition bg-blue-500 rounded-md text-accent hover:bg-blue-600"
                   >
                     <Eye size={16} /> View
                   </button>
-                  <button
-                    onClick={() => openStatusModal(order)}
-                    className="flex items-center gap-1 px-3 py-1 rounded-md bg-primary text-accent"
-                  >
-                    <RefreshCw size={16} /> Update
-                  </button>
+                  {order.status !== 'Cancelled' && order.status !== 'Delivered' && (
+                    <button
+                      onClick={() => openStatusModal(order)}
+                      className="flex items-center gap-1 px-3 py-1 transition bg-green-500 rounded-md text-accent hover:bg-green-600"
+                    >
+                      <CheckCircle size={16} /> Update
+                    </button>
+                  )}
+                  {order.status === 'Cancelled' && (
+                    <button
+                      disabled
+                      className="flex items-center gap-1 px-3 py-1 bg-gray-500 rounded-md opacity-50 cursor-not-allowed text-accent"
+                    >
+                      <X size={16} /> Cannot Update
+                    </button>
+                  )}
                   {order.status !== 'Cancelled' && order.status !== 'Delivered' && (
                     <button
                       onClick={() => openCancelModal(order)}
-                      className="flex items-center gap-1 px-3 py-1 bg-red-500 rounded-md text-accent"
+                      className="flex items-center gap-1 px-3 py-1 transition bg-red-500 rounded-md text-accent hover:bg-red-600"
                     >
                       <X size={16} /> Cancel
                     </button>
@@ -245,8 +255,8 @@ const AdminOrderManagement = () => {
 
       {/* Update Status Modal */}
       {isStatusModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-secondary text-accent">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
+          <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-dark text-accent">
             <div className="flex justify-end">
               <button onClick={() => setIsStatusModalOpen(false)} className="text-accent hover:text-primary">
                 <X size={24} />
@@ -256,7 +266,7 @@ const AdminOrderManagement = () => {
             <select
               value={newStatus}
               onChange={(e) => setNewStatus(e.target.value)}
-              className="w-full p-2 mb-4 rounded-md bg-dark text-accent"
+              className="w-full p-2 mb-4 rounded-md bg-secondary text-accent"
             >
               <option value="Pending">Pending</option>
               <option value="Processing">Processing</option>
@@ -265,7 +275,7 @@ const AdminOrderManagement = () => {
             </select>
             <button
               onClick={updateOrderStatus}
-              className="px-4 py-2 rounded-md bg-primary text-accent"
+              className="px-4 py-2 bg-red-500 rounded-md text-accent hover:bg-red-600"
             >
               Update Status
             </button>
@@ -275,20 +285,20 @@ const AdminOrderManagement = () => {
 
       {/* Cancel Order Modal */}
       {isCancelModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-secondary text-accent">
-            <h2 className="mb-4 text-2xl font-bold">Cancel Order</h2>
-            <p className="mb-6">Are you sure you want to cancel this order?</p>
-            <div className="flex justify-end gap-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
+          <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-dark text-accent">
+            <h2 className="mb-4 text-2xl font-bold text-center">Cancel Order</h2>
+            <p className="mb-6 text-center">Are you sure you want to cancel this order?</p>
+            <div className="flex justify-center gap-10">
               <button
                 onClick={() => setIsCancelModalOpen(false)}
-                className="px-4 py-2 bg-gray-500 rounded-md text-accent hover:bg-gray-600"
+                className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
               >
                 Cancel
               </button>
               <button
                 onClick={cancelOrder}
-                className="px-4 py-2 bg-red-500 rounded-md text-accent hover:bg-red-600"
+                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
               >
                 Confirm
               </button>
@@ -299,37 +309,83 @@ const AdminOrderManagement = () => {
 
       {/* View Order Details Modal */}
       {isViewModalOpen && selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="w-full max-w-4xl p-6 rounded-lg shadow-lg bg-secondary text-accent">
-            <div className="flex justify-end">
-              <button onClick={() => setIsViewModalOpen(false)} className="text-accent hover:text-primary">
-                <X size={24} />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80">
+          <div className="w-full max-w-4xl overflow-hidden shadow-2xl bg-dark rounded-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 ">
+              <h2 className="text-3xl font-bold text-primary">Order #{selectedOrder._id?.slice(-6)}</h2>
+              <button 
+                onClick={() => setIsViewModalOpen(false)} 
+                className="transition-colors duration-300 text-accent hover:text-primary"
+              >
+                <X size={28} strokeWidth={2} />
               </button>
             </div>
-            <h2 className="mb-4 text-2xl font-bold">Order Details</h2>
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {/* User Details */}
+
+            {/* Modal Content */}
+            <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-2">
+              {/* User Details Section */}
               <div>
-                <h3 className="mb-2 text-xl font-semibold">User Details</h3>
-                <div className="p-4 rounded-lg bg-dark">
-                  <p><strong>Name:</strong> {selectedOrder.user?.firstName} {selectedOrder.user?.lastName}</p>
-                  <p><strong>Email:</strong> {selectedOrder.user?.email}</p>
-                  <p><strong>Phone:</strong> {selectedOrder.shippingAddress?.phoneNumber}</p>
-                  <p><strong>Address:</strong> {selectedOrder.shippingAddress?.address}</p>
+                <div className="p-6 space-y-4 bg-secondary rounded-xl">
+                  <h3 className="pb-2 text-xl font-semibold text-accent">
+                    Customer Information
+                  </h3>
+                  <div className="space-y-2">
+                    <div className="flex justify-between">
+                      <span className="text-accent opacity-70">Name</span>
+                      <span className="font-medium text-accent">
+                        {selectedOrder.user?.firstName} {selectedOrder.user?.lastName}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-accent opacity-70">Email</span>
+                      <span className="font-medium text-accent">
+                        {selectedOrder.user?.email}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-accent opacity-70">Phone</span>
+                      <span className="font-medium text-accent">
+                        {selectedOrder.shippingAddress?.phoneNumber}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-accent opacity-70">Address</span>
+                      <span className="font-medium text-right text-accent">
+                        {selectedOrder.shippingAddress?.address}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Product Details */}
-              <div>
-                <h3 className="mb-2 text-xl font-semibold">Product Details</h3>
-                <div className="p-4 rounded-lg bg-dark">
-                  {selectedOrder.orderItems.map((item, index) => (
-                    <div key={index} className="mb-4">
-                      <p><strong>Product Name:</strong> {item.product?.name}</p>
-                      <p><strong>Quantity:</strong> {item.quantity}</p>
-                      <p><strong>Price:</strong> ${item.price}</p>
-                    </div>
-                  ))}
+              {/* Product Details Section */}
+              <div className="space-y-2">
+                <div className="p-6 space-y-2 bg-secondary rounded-xl">
+                  <h3 className="pb-2 text-xl font-semibold text-accent">
+                    Order Items
+                  </h3>
+                  <div className="space-y-2">
+                    {selectedOrder.orderItems.map((item, index) => (
+                      <div 
+                        key={index} 
+                        className="flex items-center justify-between pb-0 last:pb-0"
+                      >
+                        <div>
+                          <p className="font-medium text-accent">{item.product?.name}</p>
+                          <p className="text-accent opacity-70">Qty: {item.quantity}</p>
+                        </div>
+                        <span className="font-semibold text-accent">
+                          Rs. {item.price} x {item.quantity}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className='p-6 bg-secondary rounded-xl'>
+                  <span className="font-medium text-md text-primary">
+                    Total Amount: Rs. {selectedOrder.totalAmount}
+                  </span>
                 </div>
               </div>
             </div>

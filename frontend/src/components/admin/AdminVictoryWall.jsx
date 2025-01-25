@@ -8,20 +8,20 @@ const DeleteModal = ({ isOpen, onClose, onConfirm }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
       <div className="w-full max-w-md p-6 mx-4 rounded-lg bg-dark">
-        <h2 className="mb-4 text-xl font-bold text-accent">Confirm Delete</h2>
-        <p className="mb-6 text-accent/80">Are you sure you want to delete this post? This action cannot be undone.</p>
-        <div className="flex justify-end gap-4">
+        <h2 className="mb-4 text-xl font-bold text-center">Confirm Delete</h2>
+        <p className="mb-6 text-center text-accent/80">Are you sure you want to delete this post? This action cannot be undone.</p>
+        <div className="flex justify-center gap-10">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-lg bg-secondary text-accent hover:bg-secondary/80"
+            className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 rounded-lg bg-primary text-accent hover:opacity-90"
+            className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
           >
             Delete
           </button>

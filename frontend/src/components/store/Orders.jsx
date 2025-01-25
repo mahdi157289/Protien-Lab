@@ -80,7 +80,7 @@ function OrderPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#29292A] py-10 px-8">
+    <div className="min-h-screen px-8 py-10 bg-secondary">
       {/* Page Heading */}
       <h1 className="mb-8 text-4xl font-bold text-center text-white">Your Orders</h1>
       <p className="px-4 mb-8 text-center text-accent/80">
@@ -119,7 +119,7 @@ function OrderPage() {
                   <h2 className="font-bold text-red-500">Order #{order._id.slice(-5).toUpperCase()}</h2>
                   <p className="text-sm text-gray-400">Placed on: {formatDate(order.createdAt)}</p>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-sm ${
+                <span className={`px-2 py-1 rounded-lg text-sm ${
                   order.status === 'Pending' ? 'bg-yellow-500' :
                   order.status === 'Processing' ? 'bg-blue-500' :
                   order.status === 'Shipped' ? 'bg-green-500' :
@@ -149,7 +149,7 @@ function OrderPage() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => openOrderDetails(order)}
-                          className="px-4 py-2 text-white rounded-md bg-primary hover:bg-opacity-90"
+                          className="px-4 py-2 text-white transition bg-blue-500 rounded-md hover:bg-blue-600"
                         >
                           View Details
                         </button>
@@ -157,7 +157,7 @@ function OrderPage() {
                         {order.status === 'Pending' || order.status === 'Processing' ? (
                           <button
                             onClick={() => openConfirmationModal(order, 'cancel')}
-                            className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+                            className="px-4 py-2 text-white transition bg-red-500 rounded-md hover:bg-red-600"
                           >
                             Cancel Order
                           </button>
@@ -182,9 +182,9 @@ function OrderPage() {
       {/* Order Details Modal */}
       {isModalOpen && selectedOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="bg-[#1C1C1C] text-white rounded-lg shadow-lg w-full max-w-4xl p-6 relative">
+          <div className="relative w-full max-w-4xl p-6 rounded-lg shadow-lg bg-dark">
             <button
-              className="absolute text-xl font-bold text-white top-4 right-4 hover:text-gray-400"
+              className="absolute text-xl font-bold top-4 right-4 hover:text-primary"
               onClick={() => setIsModalOpen(false)}
             >
               <X size={24} />
@@ -229,32 +229,32 @@ function OrderPage() {
 
       {/* Confirmation Modal */}
       {isConfirmationModalOpen && selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="bg-[#1C1C1C] text-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
+          <div className="relative w-full max-w-md p-6 rounded-lg shadow-lg bg-dark">
             <button
-              className="absolute text-xl font-bold text-white top-4 right-4 hover:text-gray-400"
+              className="absolute text-xl font-bold top-4 right-4 hover:text-primary"
               onClick={() => setIsConfirmationModalOpen(false)}
             >
               <X size={24} />
             </button>
 
-            <h2 className="mb-4 text-2xl font-bold">
+            <h2 className="mb-4 text-2xl font-bold text-center">
               {actionType === 'cancel' ? 'Cancel Order' : 'Delete Order'}
             </h2>
-            <p className="mb-6 text-gray-300">
+            <p className="mb-6 text-center text-accent/80">
               Are you sure you want to {actionType} this order?
             </p>
 
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-center gap-10">
               <button
                 onClick={() => setIsConfirmationModalOpen(false)}
-                className="px-6 py-2 text-white bg-gray-500 rounded-md hover:bg-gray-600"
+                className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
               >
                 No, Go Back
               </button>
               <button
                 onClick={handleConfirmAction}
-                className="px-6 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
               >
                 Yes, {actionType === 'cancel' ? 'Cancel' : 'Delete'}
               </button>
