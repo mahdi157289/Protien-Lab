@@ -8,6 +8,7 @@ const orderController = require('../controllers/adminOrderController');
 const upload = require('../config/uploadProduct');
 const adminAuth = require('../middlewares/adminAuth');
 const adminUserController = require('../controllers/adminUserController');
+const { getAllFeedbacks } = require('../controllers/adminFeedbackController');
 
 
 // Admin Authentication Routes
@@ -47,5 +48,8 @@ router.get('/users/:id', adminAuth, adminUserController.getUserById);
 router.put('/users/:id', adminAuth, adminUserController.updateUserById);
 router.delete('/users/:id', adminAuth, adminUserController.deleteUserById);
 router.get('/users/search', adminAuth, adminUserController.searchUsers);
+
+// Feedback routes
+router.get('/feedback', adminAuth, getAllFeedbacks);
 
 module.exports = router;

@@ -197,21 +197,21 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <div className="text-white bg-dark border-gray-700 rounded-lg">
-        <DialogHeader className="p-4 border-b border-gray-700">
-          <DialogTitle className="text-xl font-semibold text-center text-white padding-20px">
+      <div className="rounded-lg bg-dark">
+        <div className="border-b border-accent/50 ">
+          <div className="p-4 text-xl font-semibold ">
               Create Post
-          </DialogTitle>
+          </div>
           <button
             onClick={onClose}
-            className="absolute text-gray-400 transition-colors duration-200 right-4 top-4 hover:text-white"
+            className="absolute transition-colors duration-200 right-4 top-4 hover:text-primary"
           >
-            <X size={20} />
+            <X className='w-6 h-6' />
           </button>
-        </DialogHeader>
+        </div>
         <div className="p-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-secondary rounded-full">
+            <div className="w-12 h-12 rounded-full bg-secondary">
               {user?.profileImage && (
                 <img
                   src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`}
@@ -222,7 +222,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
             </div>
             <div>
               <h2 className="font-semibold text-white">{user?.firstName} {user?.lastName}</h2>
-              <div className="flex items-center gap-2 px-3 py-1 mt-1 bg-secondary rounded-md">
+              <div className="flex items-center gap-2 px-3 py-1 mt-1 rounded-md bg-secondary">
                 <Users size={16} className="text-gray-400" />
                 <span className="text-sm text-gray-300">Everyone</span>
               </div>
@@ -249,7 +249,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
                 />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute p-1 transition-opacity duration-200 bg-secondary rounded-full opacity-0 top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
+                  className="absolute p-1 transition-opacity duration-200 rounded-full opacity-0 bg-secondary top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
                 >
                   <X size={16} className="text-white" />
                 </button>
@@ -261,7 +261,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
           <div className="p-4">
             <div
               className={`border-2 border-dashed rounded-lg p-8 cursor-pointer group transition-all duration-200 ${
-                isDragging ? 'border-blue-500 bg-secondary' : 'border-gray-600 hover:border-gray-500'
+                isDragging ? 'border-blue-500 bg-secondary' : 'border-accent/40 hover:border-accent/60'
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -277,16 +277,16 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
                 className="hidden"
               />
               <div className="flex flex-col items-center justify-center text-center">
-                <div className="flex items-center justify-center w-16 h-16 mb-4 bg-secondary rounded-full">
-                  <PlusSquare size={24} className="text-gray-400" />
+                <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-secondary">
+                  <PlusSquare size={24} className="text-accent/80" />
                 </div>
                 <h3 className="mb-2 text-lg font-medium text-white">Add photos/videos</h3>
-                <p className="text-sm text-gray-400">or drag and drop</p>
+                <p className="text-sm text-accent/50">or drag and drop</p>
               </div>
             </div>
           </div>
         )}
-        <div className="p-4 border-t border-gray-700">
+        <div className="p-4 border-t border-accent/50">
           <button 
             className={`w-full py-2 rounded-lg transition-all duration-200 ${
               (!postText && selectedImages.length === 0) 
@@ -364,7 +364,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <div className="text-white bg-secondary border-gray-700">
+      <div className="text-white border-gray-700 bg-secondary">
         <DialogHeader className="p-4 border-b border-gray-700">
           <DialogTitle className="text-xl font-semibold text-center text-white">
             Edit Post
@@ -381,7 +381,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
             placeholder="What's on your mind..."
             value={postText}
             onChange={(e) => setPostText(e.target.value)}
-            className="w-full p-2 text-white placeholder-gray-400 transition-colors duration-200 bg-transparent rounded-lg outline-none resize-none hover:bg-gray-700"
+            className="w-full p-2 text-white transition-colors duration-200 rounded-lg outline-none resize-none bg-secondary/70 placeholder-accent/80 hover:bg-secondary"
             rows={3}
           />
         </div>
@@ -396,7 +396,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
                 />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute p-1 transition-opacity duration-200 bg-secondary rounded-full opacity-0 top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
+                  className="absolute p-1 transition-opacity duration-200 rounded-full opacity-0 bg-secondary top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
                 >
                   <X size={16} className="text-white" />
                 </button>
@@ -517,9 +517,9 @@ const VictoryWall = () => {
     <div className="min-h-screen p-4 ">
       <div className="max-w-2xl mx-auto space-y-4">
         {/* Create Post Section */}
-        <div className="p-4 transition-shadow duration-200 bg-dark rounded-lg hover:shadow-lg">
+        <div className="p-4 transition-shadow duration-200 rounded-lg bg-dark hover:shadow-lg">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-secondary rounded-full">
+            <div className="w-10 h-10 rounded-full bg-secondary">
               {user?.profileImage && (
                 <img 
                   src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`} 
@@ -531,7 +531,7 @@ const VictoryWall = () => {
             <input
               type="text"
               placeholder="What's on your mind..."
-              className="flex-1 px-4 py-2 text-white transition-colors duration-200 bg-secondary/50 rounded-full cursor-pointer focus:outline-none hover:bg-secondary"
+              className="flex-1 px-4 py-2 transition-colors duration-200 rounded-full cursor-pointer placeholder-accent/80 bg-secondary/70 focus:outline-none hover:bg-secondary"
               onClick={() => setIsPostModalOpen(true)}
               readOnly
             />
@@ -539,10 +539,10 @@ const VictoryWall = () => {
           <div className="flex justify-end mt-3">
             <button 
               onClick={() => setIsPostModalOpen(true)}
-              className="flex items-center gap-2 bg-gray-700 px-3 py-1.5 rounded-lg transition-all duration-200 hover:bg-gray-600 hover:scale-105 active:scale-95"
+              className="flex items-center gap-2 bg-secondary/70 px-3 py-1.5 rounded-lg transition-all duration-200 hover:bg-secondary hover:scale-105 active:scale-95"
             >
-              <Image size={20} className="text-green-400" />
-              <span className="text-sm text-green-400">Media</span>
+              <Image size={20} className="text-accent" />
+              <span className="text-sm text-accent">Media</span>
             </button>
           </div>
         </div>
@@ -578,11 +578,11 @@ const VictoryWall = () => {
 
         {/* Posts List */}
         {posts.map((post) => (
-          <div key={post._id} className="overflow-hidden transition-shadow duration-200 bg-dark rounded-lg hover:shadow-lg">
+          <div key={post._id} className="overflow-hidden transition-shadow duration-200 rounded-lg bg-dark hover:shadow-lg">
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-secondary rounded-full">
+                  <div className="w-10 h-10 rounded-full bg-secondary">
                     {post.user?.profileImage && (
                       <img 
                         src={`${import.meta.env.VITE_IMAGE_URL}/${post.user.profileImage}`} 

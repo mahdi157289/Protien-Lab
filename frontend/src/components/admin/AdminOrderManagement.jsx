@@ -123,15 +123,14 @@ const AdminOrderManagement = () => {
         <h1 className="text-3xl font-bold">Order Management</h1>
         <button
           onClick={() => navigate('/admin/store/products')}
-          className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-accent"
+          className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-red-600"
         >
-          <ArrowLeft size={20} /> Go to Products
+          <ArrowLeft className='mr-2 size-5' /> Go to Products
         </button>
       </div>
 
       {/* Filters */}
-      <div className="p-6 mb-6 rounded-lg shadow-lg bg-dark">
-        <h3 className="mb-4 text-xl font-semibold text-accent">Filter Orders</h3>
+      <div className="p-4 mb-6 rounded-lg shadow-lg bg-dark">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {/* Search Input */}
           <div className="relative">
@@ -141,9 +140,9 @@ const AdminOrderManagement = () => {
               placeholder="Search Orders"
               value={filters.search}
               onChange={handleFilterChange}
-              className="w-full px-2 py-2 placeholder-gray-400 rounded-md bg-secondary text-accent focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full px-4 py-2 border rounded-lg bg-secondary placeholder-accent/80 text-accent border-accent/50 focus:outline-none focus:border-accent"
             />
-            <Search className="absolute right-3 top-3.5 text-gray-400" size={20} />
+            <Search className="absolute right-3 top-3 text-accent/80" size={20} />
           </div>
 
           {/* Status Dropdown */}
@@ -151,7 +150,7 @@ const AdminOrderManagement = () => {
             name="status"
             value={filters.status}
             onChange={handleFilterChange}
-            className="w-full px-2 py-1 rounded-md bg-secondary text-accent focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-2 border rounded-lg bg-secondary placeholder-accent/80 text-accent border-accent/50 focus:outline-none focus:border-accent"
           >
             <option value="">All Statuses</option>
             <option value="Pending">Pending</option>
@@ -167,7 +166,9 @@ const AdminOrderManagement = () => {
             name="startDate"
             value={filters.startDate}
             onChange={handleFilterChange}
-            className="w-full px-2 py-1 rounded-md bg-secondary text-accent focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-2 border rounded-lg bg-secondary placeholder-accent/80 text-accent border-accent/50 focus:outline-none focus:border-accent
+                      [&::-webkit-calendar-picker-indicator]:invert-[0.5]
+                      [&::-webkit-calendar-picker-indicator]:brightness-125"
           />
 
           {/* End Date Input */}
@@ -176,15 +177,17 @@ const AdminOrderManagement = () => {
             name="endDate"
             value={filters.endDate}
             onChange={handleFilterChange}
-            className="w-full px-2 py-1 rounded-md bg-secondary text-accent focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full px-4 py-2 border rounded-lg bg-secondary placeholder-accent/80 text-accent border-accent/50 focus:outline-none focus:border-accent
+                      [&::-webkit-calendar-picker-indicator]:invert-[0.5]
+                      [&::-webkit-calendar-picker-indicator]:brightness-125"
           />
 
           {/* Search Button */}
           <button
             onClick={applyFilters}
-            className="flex items-center justify-center w-full gap-2 px-3 py-2 transition-all rounded-md bg-primary text-accent hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex items-center justify-center w-full px-2 py-2 transition-all rounded-md bg-primary text-accent hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary"
           >
-            <Search size={20} /> Search
+            Search
           </button>
         </div>
       </div>

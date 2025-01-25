@@ -178,7 +178,7 @@ const DietPlanManagement = () => {
           <h1 className="text-3xl font-bold ">Diet Plans Management</h1>
           <button
             onClick={() => {resetForm();setShowModal(true);}}
-            className="flex items-center px-4 py-3 rounded-lg bg-primary hover:bg-opacity-90 "
+            className="flex items-center px-4 py-3 rounded-lg bg-primary hover:bg-red-600"
           >
             <span className="mr-2"><Plus className="w-5 h-5" /></span>
             Add New Diet Plan

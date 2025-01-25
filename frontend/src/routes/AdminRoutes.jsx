@@ -11,6 +11,7 @@ import AdminVictoryWall from '../components/admin/AdminVictoryWall';
 import AdminNavbar from '../components/common/AdminNavbar';
 import AdminProtectedRoute from '../components/admin/AdminProtectedRoute';
 import DietPlanManagement from '../components/admin/DietPlanManagement';
+import AdminFeedbackPage from '../components/admin/AdminFeedbackPage';
 
 const AdminRoutes = () => {
   const { admin } = useAdminAuth();
@@ -27,6 +28,7 @@ const AdminRoutes = () => {
         <Route path="store/*" element={<AdminProtectedRoute><AdminStore /></AdminProtectedRoute>}/>
         <Route path="users" element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>}/>
         <Route path="victory-wall" element={<AdminProtectedRoute><AdminVictoryWall /></AdminProtectedRoute>}/>
+        <Route path="feedback" element={<AdminProtectedRoute><AdminFeedbackPage /></AdminProtectedRoute>}/>
         <Route path="profile" element={<AdminProtectedRoute><AdminProfile /></AdminProtectedRoute>}/>
         <Route path="" element={admin ? <Navigate to="dashboard" replace /> : <Navigate to="login" replace />}/>
       </Routes>

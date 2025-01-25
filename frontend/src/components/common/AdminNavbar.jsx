@@ -37,6 +37,7 @@ const AdminNavbar = ({ onAuthClick }) => {
     { label: 'Victory Wall', path: '/admin/victory-wall' },
     { label: 'Store', path: '/admin/store' },
     { label: 'Users', path: '/admin/users' },
+    { label: 'Feedback', path: '/admin/feedback' },
   ];
 
   return (

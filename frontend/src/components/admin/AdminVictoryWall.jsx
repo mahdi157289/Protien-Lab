@@ -169,7 +169,7 @@ const VictoryWallAdmin = () => {
         <h1 className="text-3xl font-bold text-accent">Victory Wall Management</h1>
         <button
           onClick={() => setShowAnalytics(!showAnalytics)}
-          className="flex items-center px-6 py-3 transition-opacity rounded-lg text-md bg-primary text-accent hover:opacity-90"
+          className="flex items-center px-6 py-3 transition-opacity rounded-lg text-md bg-primary text-accent hover:bg-red-600"
         >
           <BarChart2 className="w-5 h-5 mr-2" />
           {showAnalytics ? 'Show Posts' : 'Show Analytics'}

@@ -3,6 +3,7 @@ const router = express.Router();
 const { signup, login } = require('../controllers/authController');
 const userProductController = require('../controllers/userProductController');
 const userOrderController = require('../controllers/userOrderController');
+const { createFeedback } = require('../controllers/userFeedbackController');
 const { protect } = require('../middlewares/authMiddleware');
 
 router.post('/signup', signup);
@@ -18,5 +19,8 @@ router.get('/orders', protect, userOrderController.getUserOrders);
 router.get('/orders/:id', protect, userOrderController.getOrderById);
 router.delete('/orders/:id/cancel', protect, userOrderController.cancelOrder);
 router.delete('/orders/:id/delete', protect, userOrderController.deleteCancelledOrder);
+
+// Feedback routes (protected)
+router.post('/feedback', protect, createFeedback);
 
 module.exports = router;

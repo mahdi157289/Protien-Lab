@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Edit, Trash2, Search, Eye, X } from "lucide-react";
+import { Eye, X, User, UserCircle2, Calendar, Phone, MapPin, Ruler, Search, Trash2, Edit } from "lucide-react";
+import PropTypes from "prop-types";
 
 const AdminUserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -69,73 +70,92 @@ const AdminUserManagement = () => {
 
   // View Modal
   const ViewModal = () => (
-    <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
-      <div className="relative w-full max-w-2xl rounded-lg bg-secondary">
-        <button
-          onClick={() => setIsViewModalOpen(false)}
-          className="absolute top-4 right-4 text-accent hover:text-primary"
-        >
-          <X size={24} />
-        </button>
-        <div className="p-6">
-          <h2 className="mb-6 text-2xl font-bold text-accent">User Details</h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm font-medium text-accent/80">Full Name</p>
-                <p className="text-lg font-semibold text-accent">
-                  {selectedUser.firstName} {selectedUser.lastName}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-accent/80">Email</p>
-                <p className="text-lg font-semibold break-all text-accent">
-                  {selectedUser.email}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-accent/80">Gender</p>
-                <p className="text-lg font-semibold capitalize text-accent">
-                  {selectedUser.gender}
-                </p>
-              </div>
+    <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
+      <div className="relative w-full max-w-3xl overflow-hidden shadow-2xl rounded-xl bg-dark ">
+        <div className="p-6 border-b bg-dark backdrop-blur-sm border-accent/10">
+          <div className="flex items-center justify-between">
+            <h2 className="flex items-center text-2xl font-bold text-accent">
+              <Eye className="mr-3 " size={28} /> User Profile
+            </h2>
+            <button
+              onClick={() => setIsViewModalOpen(false)}
+              className="transition-colors duration-300 text-accent hover:text-primary"
+            >
+              <X size={24} />
+            </button>
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-1 gap-6 p-6 md:grid-cols-3">
+          <div className="flex flex-col items-center md:col-span-1">
+            <div className="flex items-center justify-center w-32 h-32 mb-4 rounded-full bg-secondary">
+              <User className="w-16 h-16 text-accent/70" />
             </div>
-            <div className="space-y-4">
-              <div>
-                <p className="text-sm font-medium text-accent/80">Address</p>
-                <p className="text-lg font-semibold text-accent">
-                  {selectedUser.address || "N/A"}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-accent/80">Phone</p>
-                <p className="text-lg font-semibold text-accent">
-                  {selectedUser.number || "N/A"}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-accent/80">
-                  Height & Weight
-                </p>
-                <p className="text-lg font-semibold text-accent">
-                  {selectedUser.height || "N/A"} cm,{" "}
-                  {selectedUser.weight || "N/A"} kg
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-accent/80">
-                  Registration Date
-                </p>
-                <p className="text-lg font-semibold text-accent">
-                  {new Date(selectedUser.createdAt).toLocaleDateString()}
-                </p>
-              </div>
+            <h3 className="text-xl font-semibold text-center text-accent">
+              {selectedUser.firstName} {selectedUser.lastName}
+            </h3>
+            <p className="text-sm text-accent/70">{selectedUser.email}</p>
+          </div>
+
+          <div className="space-y-4 md:col-span-2">
+            <div className="grid grid-cols-2 gap-4">
+              <DetailCard
+                label="Gender"
+                value={selectedUser.gender}
+                icon={<UserCircle2 className="text-accent" />}
+              />
+              <DetailCard
+                label="Registration Date"
+                value={new Date(selectedUser.createdAt).toLocaleDateString()}
+                icon={<Calendar className="text-accent" />}
+              />
             </div>
+            <div className="grid grid-cols-2 gap-4">
+              <DetailCard 
+                label="Phone" 
+                value={selectedUser.number || "N/A"} 
+                icon={<Phone className="text-accent" />} 
+              />
+              <DetailCard 
+                label="Address" 
+                value={selectedUser.address || "N/A"} 
+                icon={<MapPin className="text-accent" />} 
+              />
+            </div>
+            <DetailCard 
+              label="Physical Details" 
+              value={`${selectedUser.height || 'N/A'} cm, ${selectedUser.weight || 'N/A'} kg`} 
+              icon={<Ruler className="text-accent" />} 
+              fullWidth 
+            />
           </div>
         </div>
       </div>
     </div>
   );
+  
+  // Utility Component for Consistent Detail Rendering
+  const DetailCard = ({ label, value, icon, fullWidth = false }) => (
+    <div className={`bg-secondary p-4 rounded-lg flex items-center ${fullWidth ? 'col-span-2' : ''}`}>
+      <div className="mr-4">{icon}</div>
+      <div>
+        <p className="text-xs tracking-wider uppercase text-accent/70">{label}</p>
+        <p className="font-medium text-accent">{value}</p>
+      </div>
+    </div>
+  );
+
+  DetailCard.propTypes = {
+    label: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    icon: PropTypes.node,
+    fullWidth: PropTypes.bool,
+  };
+
+  DetailCard.defaultProps = {
+    icon: null,
+    fullWidth: false,
+  };
 
   // Edit Modal
   const EditModal = () => {
@@ -165,32 +185,32 @@ const AdminUserManagement = () => {
     };
 
     return (
-      <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
-        <div className="w-full max-w-2xl rounded-lg bg-secondary">
+      <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
+        <div className="w-full max-w-2xl rounded-lg bg-dark">
           <div className="p-6">
-            <h2 className="mb-6 text-2xl font-bold text-accent">Edit User</h2>
+            <h2 className="mb-6 text-2xl font-bold ">Edit User</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block text-accent">First Name</label>
+                  <label className="block ">First Name</label>
                   <input
                     type="text"
                     value={formData.firstName}
                     onChange={(e) =>
                       setFormData({ ...formData, firstName: e.target.value })
                     }
-                    className="w-full p-2 mt-1 rounded bg-dark text-accent"
+                    className="w-full p-2 mt-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                   />
                 </div>
                 <div>
-                  <label className="block text-accent">Last Name</label>
+                  <label className="block ">Last Name</label>
                   <input
                     type="text"
                     value={formData.lastName}
                     onChange={(e) =>
                       setFormData({ ...formData, lastName: e.target.value })
                     }
-                    className="w-full p-2 mt-1 rounded bg-dark text-accent"
+                    className="w-full p-2 mt-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                   />
                 </div>
                 <div>
@@ -199,7 +219,7 @@ const AdminUserManagement = () => {
                     type="email"
                     value={formData.email}
                     disabled
-                    className="w-full p-2 mt-1 rounded opacity-50 bg-dark text-accent"
+                    className="w-full p-2 mt-2 border rounded bg-secondary/50 border-accent/20 focus:outline-none text-accent/50"
                   />
                 </div>
                 <div>
@@ -209,7 +229,7 @@ const AdminUserManagement = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, gender: e.target.value })
                     }
-                    className="w-full p-2 mt-1 rounded bg-dark text-accent"
+                    className="w-full p-2 mt-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                   >
                     <option value="male">Male</option>
                     <option value="female">Female</option>
@@ -223,7 +243,7 @@ const AdminUserManagement = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, address: e.target.value })
                     }
-                    className="w-full p-2 mt-1 rounded bg-dark text-accent"
+                    className="w-full p-2 mt-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                   />
                 </div>
                 <div>
@@ -234,7 +254,7 @@ const AdminUserManagement = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, number: e.target.value })
                     }
-                    className="w-full p-2 mt-1 rounded bg-dark text-accent"
+                    className="w-full p-2 mt-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                   />
                 </div>
                 <div>
@@ -245,7 +265,7 @@ const AdminUserManagement = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, height: e.target.value })
                     }
-                    className="w-full p-2 mt-1 rounded bg-dark text-accent"
+                    className="w-full p-2 mt-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                   />
                 </div>
                 <div>
@@ -256,7 +276,7 @@ const AdminUserManagement = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, weight: e.target.value })
                     }
-                    className="w-full p-2 mt-1 rounded bg-dark text-accent"
+                    className="w-full p-2 mt-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                   />
                 </div>
               </div>
@@ -264,13 +284,13 @@ const AdminUserManagement = () => {
                 <button
                   type="button"
                   onClick={() => setIsEditModalOpen(false)}
-                  className="px-4 py-2 rounded bg-dark text-accent"
+                  className="px-6 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded bg-primary text-accent"
+                  className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
                 >
                   Save
                 </button>
@@ -287,22 +307,22 @@ const AdminUserManagement = () => {
     <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
       <div className="w-full max-w-md rounded-lg bg-dark">
         <div className="p-6">
-          <h2 className="mb-4 text-2xl font-bold ">
+          <h2 className="mb-4 text-2xl font-bold text-center ">
             Confirm Delete
           </h2>
-          <p className="mb-6 text-accent">
+          <p className="mb-6 text-center text-accent">
             Are you sure you want to delete this user?
           </p>
-          <div className="flex justify-end space-x-2">
+          <div className="flex justify-center gap-10">
             <button
               onClick={() => setIsDeleteModalOpen(false)}
-              className="px-4 py-2 rounded bg-dark text-accent"
+              className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
             >
               Cancel
             </button>
             <button
               onClick={() => handleDelete(selectedUser._id)}
-              className="px-4 py-2 bg-red-500 rounded text-accent"
+              className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
             >
               Confirm
             </button>
@@ -415,27 +435,27 @@ const AdminUserManagement = () => {
                       setSelectedUser(user);
                       setIsViewModalOpen(true);
                     }}
-                    className="text-accent hover:text-primary"
+                    className="p-2 text-blue-500 transition-colors rounded-full hover:bg-blue-500/10"
                   >
-                    <Eye size={20} />
+                    <Eye className="w-5 h-5" />
                   </button>
                   <button
                     onClick={() => {
                       setSelectedUser(user);
                       setIsEditModalOpen(true);
                     }}
-                    className="text-accent hover:text-primary"
+                    className="p-2 text-yellow-500 transition-colors rounded-full hover:bg-yellow-500/10"
                   >
-                    <Edit size={20} />
+                    <Edit className="w-5 h-5" />
                   </button>
                   <button
                     onClick={() => {
                       setSelectedUser(user);
                       setIsDeleteModalOpen(true);
                     }}
-                    className="text-accent hover:text-red-500"
+                    className="p-2 transition-colors rounded-full text-primary hover:bg-primary/10"
                   >
-                    <Trash2 size={20} />
+                    <Trash2 className="w-5 h-5" />
                   </button>
                 </td>
               </tr>
