@@ -16,7 +16,7 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
         <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 transition-colors duration-200 rounded-lg bg-secondary text-accent hover:bg-gray-600"
+            className="px-4 py-2 transition-colors duration-200 rounded-lg bg-dark text-accent hover:bg-secondary-600"
           >
             Cancel
           </button>
@@ -234,7 +234,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
             placeholder="What's on your mind..."
             value={postText}
             onChange={(e) => setPostText(e.target.value)}
-            className="w-full p-2 text-white placeholder-gray-400 transition-colors duration-200 rounded-lg outline-none resize-none bg-secondary/70 hover:bg-secondary/8"
+            className="w-full p-2 text-white placeholder-gray-400 transition-colors duration-200 rounded-lg outline-none resize-none bg-secondary/70 hover:bg-secondary"
             rows={3}
           />
         </div>
@@ -249,7 +249,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
                 />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute p-1 transition-opacity duration-200 rounded-full opacity-0 bg-secondary top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
+                  className="absolute p-1 transition-opacity duration-200 rounded-full opacity-0 bg-secondary top-2 right-2 group-hover:opacity-100 hover:bg-secondary"
                 >
                   <X size={16} className="text-white" />
                 </button>
@@ -261,7 +261,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
           <div className="p-4">
             <div
               className={`border-2 border-dashed rounded-lg p-8 cursor-pointer group transition-all duration-200 ${
-                isDragging ? 'border-blue-500 bg-secondary' : 'border-accent/40 hover:border-accent/60'
+                isDragging ? 'border-500 bg-secondary' : 'border-accent/40 hover:border-accent/60'
               }`}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -276,11 +276,11 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
                 multiple
                 className="hidden"
               />
-              <div className="flex flex-col items-center justify-center text-center">
-                <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-secondary">
-                  <PlusSquare size={24} className="text-accent/80" />
+              <div className="flex flex-col items-center justify-center text-center ">
+                <div className="flex items-center justify-center w-16 h-16 mb-4 rounded-full bg-secondary   ">
+                  <PlusSquare size={24} className="text-accent/80 group-hover:text-accent" />
                 </div>
-                <h3 className="mb-2 text-lg font-medium text-white">Add photos/videos</h3>
+                <h3 className="mb-2 text-lg font-medium ">Add photos/videos</h3>
                 <p className="text-sm text-accent/50">or drag and drop</p>
               </div>
             </div>
@@ -364,18 +364,18 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
 
   return (
     <Dialog isOpen={isOpen} onClose={onClose}>
-      <div className="text-white border-gray-700 bg-secondary">
-        <DialogHeader className="p-4 border-b border-gray-700">
-          <DialogTitle className="text-xl font-semibold text-center text-white">
+      <div className=" rounded-lg bg-dark">
+        <div className=" border-b border-accent/50">
+          <div className="p-4 text-xl font-semibold ">
             Edit Post
-          </DialogTitle>
+          </div>
           <button
             onClick={onClose}
             className="absolute text-gray-400 transition-colors duration-200 right-4 top-4 hover:text-white"
           >
             <X size={20} />
           </button>
-        </DialogHeader>
+        </div>
         <div className="p-4">
           <textarea
             placeholder="What's on your mind..."
@@ -396,7 +396,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
                 />
                 <button
                   onClick={() => removeImage(index)}
-                  className="absolute p-1 transition-opacity duration-200 rounded-full opacity-0 bg-secondary top-2 right-2 group-hover:opacity-100 hover:bg-gray-800"
+                  className="absolute p-1 transition-opacity duration-200 rounded-full opacity-0 bg-secondary top-2 right-2 group-hover:opacity-100 hover:bg-secondary-800"
                 >
                   <X size={16} className="text-white" />
                 </button>
