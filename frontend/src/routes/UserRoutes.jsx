@@ -29,7 +29,7 @@ const UserRoutes = () => {
       <Navbar onAuthClick={handleAuthModal} />
         <Routes>
           <Route path="/" element={<Home onAuthClick={handleAuthModal} />} />
-          <Route path="/exercises" element={<Exercises />} />
+          <Route path="/exercises/*" element={<Exercises />} />
           <Route path="/workouts" element={<ProtectedRoute onAuthClick={handleAuthModal}><Workout /></ProtectedRoute>} />
           <Route path="/diet-plan" element={<ProtectedRoute onAuthClick={handleAuthModal}><DietPlan /></ProtectedRoute>} />
           <Route path="/store/*" element={<Store />} />
