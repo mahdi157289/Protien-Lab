@@ -6,6 +6,7 @@ const userOrderController = require('../controllers/userOrderController');
 const { createFeedback } = require('../controllers/userFeedbackController');
 const { protect } = require('../middlewares/authMiddleware');
 const userExerciseController = require('../controllers/userExerciseController');
+const { generateWorkoutPlan, getUserWorkoutPlans, deleteWorkoutPlan, getWorkoutPlanById } = require('../controllers/userWorkoutController');
 
 router.post('/signup', signup);
 router.post('/login', login);
@@ -28,5 +29,11 @@ router.post('/feedback', protect, createFeedback);
 router.get('/exercises/categories', userExerciseController.getAllCategories);
 router.get('/exercises/category/:category', userExerciseController.getExercisesByCategory);
 router.get('/exercises/:id', userExerciseController.getExerciseDetails);
+
+// Workout Plan routes (protected)
+router.post('/workouts/generate', protect, generateWorkoutPlan);
+router.get('/workouts', protect, getUserWorkoutPlans);
+router.get('/workouts/:id', protect, getWorkoutPlanById);
+router.delete('/workouts/:id', protect, deleteWorkoutPlan);
 
 module.exports = router;

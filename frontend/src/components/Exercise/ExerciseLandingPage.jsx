@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../config/api';
+import PropTypes from "prop-types";
 
 const ExerciseLandingPage = () => {
   const navigate = useNavigate();
@@ -81,5 +82,13 @@ const CategoryCard = ({ category, onClick }) => (
     </div>
   </div>
 );
+
+CategoryCard.propTypes = {
+  category: PropTypes.shape({
+    name: PropTypes.string,
+    image: PropTypes.string,
+  }).isRequired,
+  onClick: PropTypes.func,
+};
 
 export default ExerciseLandingPage;

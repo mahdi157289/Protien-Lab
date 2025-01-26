@@ -6,12 +6,12 @@ const path = require('path');
 // Create new exercise
 exports.createExercise = [
   exerciseUpload.fields([
-    { name: 'image', maxCount: 1 }, 
+    { name: 'image', maxCount: 1 },
     { name: 'categoryImage', maxCount: 1 }
   ]),
   async (req, res) => {
     try {
-      const { name, category, youtubeLink } = req.body;
+    const { name, category, youtubeLink } = req.body;
       
       if (!req.files || !req.files.image || !req.files.categoryImage) {
         return res.status(400).json({ message: 'Both exercise and category images are required' });

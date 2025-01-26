@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../config/api';
+import PropTypes from "prop-types";
 
 const CategoryExercisesPage = () => {
   const { category } = useParams();
@@ -62,5 +63,13 @@ const ExerciseCard = ({ exercise, onClick }) => (
     </div>
   </div>
 );
+
+ExerciseCard.propTypes = {
+  exercise: PropTypes.shape({
+    name: PropTypes.string,
+    image: PropTypes.string,
+  }).isRequired,
+  onClick: PropTypes.func,
+};
 
 export default CategoryExercisesPage;

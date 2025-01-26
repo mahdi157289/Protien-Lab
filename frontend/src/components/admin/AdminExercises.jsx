@@ -1,14 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import axios from 'axios';
-import { 
-  Trash2, 
-  Edit2, 
-  Plus, 
-  Filter, 
-  Upload, 
-  Image as ImageIcon 
-} from 'lucide-react';
+import { Trash2, Edit2, Filter, Upload } from 'lucide-react';
 
 const CATEGORIES = [
   'Abs Exercises', 'Chest Exercises', 'Biceps Exercises', 
@@ -57,7 +50,7 @@ const ImageUploader = ({
               : `${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${preview}`
             } 
             alt="Preview" 
-            className="w-full h-full object-cover rounded-lg"
+            className="object-cover w-full h-full rounded-lg"
           />
         ) : (
           <div className="text-center">
@@ -73,9 +66,9 @@ const ImageUploader = ({
             />
             <label 
               htmlFor={`file-upload-${name}`} 
-              className="cursor-pointer flex flex-col items-center"
+              className="flex flex-col items-center cursor-pointer"
             >
-              <Upload className="w-10 h-10 text-accent/50 mb-2" />
+              <Upload className="w-10 h-10 mb-2 text-accent/50" />
               <p className="text-accent/70">
                 Upload {label.toLowerCase()}
               </p>
@@ -92,9 +85,9 @@ const ConfirmModal = ({ isOpen, onClose, onConfirm, message }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-secondary/90 backdrop-blur-sm">
-      <div className="w-96 p-8 rounded-2xl bg-secondary border border-dark shadow-2xl">
+      <div className="p-8 border shadow-2xl w-96 rounded-2xl bg-secondary border-dark">
         <div className="flex items-center justify-center mb-6">
-          <div className="p-4 bg-primary/30 rounded-full">
+          <div className="p-4 rounded-full bg-primary/30">
             <Trash2 className="w-8 h-8 text-primary" />
           </div>
         </div>
@@ -102,13 +95,13 @@ const ConfirmModal = ({ isOpen, onClose, onConfirm, message }) => {
         <div className="flex justify-center space-x-4">
           <button 
             onClick={onConfirm} 
-            className="flex items-center px-4 py-2 text-accent bg-primary rounded-lg hover:opacity-90 transition"
+            className="flex items-center px-4 py-2 transition rounded-lg text-accent bg-primary hover:opacity-90"
           >
             Confirm
           </button>
           <button 
             onClick={onClose} 
-            className="flex items-center px-4 py-2 text-accent/70 bg-dark rounded-lg hover:opacity-90 transition"
+            className="flex items-center px-4 py-2 transition rounded-lg text-accent/70 bg-dark hover:opacity-90"
           >
             Cancel
           </button>
@@ -223,7 +216,7 @@ const AdminExercises = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary text-accent p-8">
+    <div className="min-h-screen p-8 bg-secondary text-accent">
       <ConfirmModal
         isOpen={!!confirmDelete}
         onClose={() => setConfirmDelete(null)}
@@ -231,16 +224,16 @@ const AdminExercises = () => {
         message="Delete this exercise?"
       />
 
-      <div className="container mx-auto max-w-6xl">
+      <div className="container max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-4xl font-bold text-accent">Exercise Management</h1>
          
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Exercise Form */}
-          <div className="lg:col-span-1 bg-dark rounded-2xl p-6 border border-dark">
-            <h2 className="text-2xl font-semibold mb-6 text-accent">
+          <div className="p-6 border lg:col-span-1 bg-dark rounded-2xl border-dark">
+            <h2 className="mb-6 text-2xl font-semibold text-accent">
               {editingExercise ? 'Edit Exercise' : 'Create Exercise'}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -250,14 +243,14 @@ const AdminExercises = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Exercise Name"
-                className="w-full px-3 py-2 bg-secondary text-accent rounded-lg border border-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3 py-2 border rounded-lg bg-secondary text-accent border-dark focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 bg-secondary text-accent rounded-lg border border-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3 py-2 border rounded-lg bg-secondary text-accent border-dark focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               >
                 <option value="">Select Category</option>
@@ -271,7 +264,7 @@ const AdminExercises = () => {
                 value={formData.youtubeLink}
                 onChange={handleInputChange}
                 placeholder="YouTube Tutorial Link"
-                className="w-full px-3 py-2 bg-secondary text-accent rounded-lg border border-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                className="w-full px-3 py-2 border rounded-lg bg-secondary text-accent border-dark focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
               <div className="grid grid-cols-2 gap-4">
@@ -293,7 +286,7 @@ const AdminExercises = () => {
               <div className="grid grid-cols-2 gap-4 pt-4">
                 <button
                   type="submit"
-                  className="w-full py-2 bg-primary text-accent rounded-lg hover:opacity-90 transition"
+                  className="w-full py-2 transition rounded-lg bg-primary text-accent hover:opacity-90"
                 >
                   {editingExercise ? 'Update Exercise' : 'Add Exercise'}
                 </button>
@@ -301,7 +294,7 @@ const AdminExercises = () => {
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="w-full py-2 bg-dark text-accent/70 rounded-lg hover:opacity-90 transition"
+                    className="w-full py-2 transition rounded-lg bg-dark text-accent/70 hover:opacity-90"
                   >
                     Cancel
                   </button>
@@ -311,14 +304,14 @@ const AdminExercises = () => {
           </div>
 
           {/* Exercise List */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             <div className="flex items-center space-x-4">
               <div className="flex items-center flex-grow">
                 <Filter className="w-5 h-5 mr-2 text-accent/50" />
                 <select
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  className="w-full px-3 py-2 bg-dark text-accent rounded-lg border border-dark focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 border rounded-lg bg-dark text-accent border-dark focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   <option value="">All Categories</option>
                   {CATEGORIES.map(cat => (
@@ -331,13 +324,13 @@ const AdminExercises = () => {
               {exercises.map(exercise => (
                 <div 
                   key={exercise._id} 
-                  className="flex items-center justify-between bg-dark rounded-xl p-4 border border-dark hover:border-primary/50 transition"
+                  className="flex items-center justify-between p-4 transition border bg-dark rounded-xl border-dark hover:border-primary/50"
                 >
                   <div className="flex items-center space-x-6">
                     <img 
                       src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${exercise.image}`}
                       alt={exercise.name} 
-                      className="w-16 h-16 object-cover rounded-lg"
+                      className="object-cover w-16 h-16 rounded-lg"
                       
                     />
                     <div>
@@ -348,13 +341,13 @@ const AdminExercises = () => {
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleEdit(exercise)}
-                      className="p-2 text-primary hover:bg-secondary rounded-lg transition"
+                      className="p-2 transition rounded-lg text-primary hover:bg-secondary"
                     >
                       <Edit2 className="w-5 h-5" />
                     </button>
                     <button
                       onClick={() => setConfirmDelete(exercise._id)}
-                      className="p-2 text-primary hover:bg-secondary rounded-lg transition"
+                      className="p-2 transition rounded-lg text-primary hover:bg-secondary"
                     >
                       <Trash2 className="w-5 h-5" />
                     </button>
