@@ -13,18 +13,18 @@ const InputField = memo(({ label, name, value, onChange, isEditing, type = "text
       value={value || ''}
       onChange={onChange}
       disabled={!isEditing}
-      className="w-full p-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
+      className="w-full p-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent "
     />
   </div>
 ));
 
 InputField.propTypes = {
-  label: PropTypes.string, // Label is optional
-  name: PropTypes.string, // Name is required
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Value can be a string or number
-  onChange: PropTypes.func, // onChange must be a function
-  isEditing: PropTypes.bool.isRequired, // isEditing must be a boolean
-  type: PropTypes.string, // Type is optional and defaults to "text"
+  label: PropTypes.string,
+  name: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onChange: PropTypes.func,
+  isEditing: PropTypes.bool.isRequired,
+  type: PropTypes.string,
 };
 
 InputField.displayName = 'InputField';
@@ -36,7 +36,7 @@ const Profile = () => {
   const [error, setError] = useState('');
   const [imageError, setImageError] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: '', lastName: '', email: '', address: '', 
+    firstName: '', lastName: '', email: '', address: '',
     mobileNumber: '', gender: '', weight: '', height: '', profileImage: ''
   });
   const [selectedImage, setSelectedImage] = useState(null);
@@ -163,7 +163,7 @@ const Profile = () => {
           <div className="grid grid-cols-1 gap-6 md:col-span-2 md:grid-cols-2">
             <div>
               <InputField label="First Name" name="firstName" value={formData.firstName} onChange={e => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))} isEditing={isEditing} />
-              <InputField label="Email" name="email" value={formData.email} onChange={e => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))} isEditing={isEditing} type="email" />
+              <InputField label="Email" name="email" value={formData.email} onChange={e => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))} isEditing={false} type="email" />
               <InputField label="Address" name="address" value={formData.address} onChange={e => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))} isEditing={isEditing} />
               <InputField label="Mobile Number" name="mobileNumber" value={formData.mobileNumber} onChange={e => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))} isEditing={isEditing} type="tel" />
             </div>

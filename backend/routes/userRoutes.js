@@ -5,6 +5,7 @@ const userProductController = require('../controllers/userProductController');
 const userOrderController = require('../controllers/userOrderController');
 const { createFeedback } = require('../controllers/userFeedbackController');
 const { protect } = require('../middlewares/authMiddleware');
+const userExerciseController = require('../controllers/userExerciseController');
 
 router.post('/signup', signup);
 router.post('/login', login);
@@ -22,5 +23,10 @@ router.delete('/orders/:id/delete', protect, userOrderController.deleteCancelled
 
 // Feedback routes (protected)
 router.post('/feedback', protect, createFeedback);
+
+// Get Exercises
+router.get('/exercises/categories', userExerciseController.getAllCategories);
+router.get('/exercises/category/:category', userExerciseController.getExercisesByCategory);
+router.get('/exercises/:id', userExerciseController.getExerciseDetails);
 
 module.exports = router;

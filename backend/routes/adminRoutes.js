@@ -9,7 +9,7 @@ const upload = require('../config/uploadProduct');
 const adminAuth = require('../middlewares/adminAuth');
 const adminUserController = require('../controllers/adminUserController');
 const { getAllFeedbacks } = require('../controllers/adminFeedbackController');
-
+const exerciseController = require('../controllers/adminExerciseController');
 
 // Admin Authentication Routes
 router.post('/register', registerAdmin);
@@ -51,5 +51,12 @@ router.get('/users/search', adminAuth, adminUserController.searchUsers);
 
 // Feedback routes
 router.get('/feedback', adminAuth, getAllFeedbacks);
+
+// Exercise routes
+router.post('/exercises', adminAuth, exerciseController.createExercise);
+router.get('/exercises', exerciseController.getAllExercises);
+router.get('/exercises/category/:category', exerciseController.getExercisesByCategory);
+router.put('/exercises/:id', adminAuth, exerciseController.updateExercise);
+router.delete('/exercises/:id', adminAuth, exerciseController.deleteExercise);
 
 module.exports = router;
