@@ -310,7 +310,7 @@ const WorkoutPlanner = () => {
                         setSelectedPlan(plan._id);
                         setSelectedDay(plan.days?.[0] || null);
                       }}
-                      className="px-4 py-1 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+                      className="px-4 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-600"
                     >
                       View
                     </button>
@@ -353,7 +353,7 @@ const WorkoutPlanner = () => {
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   selectedDay === day 
                     ? 'bg-red-500 text-white' 
-                    : 'bg-secondary text-gray-300 hover:bg-gray-700'
+                    : 'bg-secondary  hover:bg-secondary/60'
                 }`}
               >
                 Day {day.day}
@@ -374,15 +374,15 @@ const WorkoutPlanner = () => {
                 {selectedDay.exercises?.map((exercise, exerciseIndex) => (
                   <div 
                     key={exerciseIndex} 
-                    className="flex items-center justify-between p-4 transition-colors rounded-lg bg-dark hover:bg-gray-800"
+                    className="flex items-center justify-between p-4 transition-colors rounded-lg bg-dark hover:bg-dark/60"
                   >
                     <div className="flex items-center space-x-4">
                     <div className="flex items-center justify-center w-10 h-10 text-white bg-red-500 rounded-full">
                         {exerciseIndex + 1}
                       </div>
                       <div>
-                        <h4 className="font-medium text-gray-200">{exercise.name}</h4>
-                        <p className="text-sm text-gray-400">{exercise.category}</p>
+                        <h4 className="font-medium text">{exercise.name}</h4>
+                        <p className="text-sm ">{exercise.category}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
