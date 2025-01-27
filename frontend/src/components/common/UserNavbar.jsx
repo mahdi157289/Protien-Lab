@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react'; // Add useRef and useEffect
 import PropTypes from 'prop-types';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserCircle, LogOut, User } from 'lucide-react';
@@ -7,10 +7,28 @@ import logo from '../../assets/images/common/bodysync.svg';
 
 const UserNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false); // State for user menu visibility
   const { user, logout } = useAuth();
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
+
+  // Ref for the user menu dropdown
+  const userMenuRef = useRef(null);
+
+  // Close user menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -90,36 +108,48 @@ const UserNavbar = ({ onAuthClick }) => {
           <div className="hidden md:block">
             {user ? (
               <div className="flex items-center gap-4">
-                <div className="relative group">
-                  <button className="flex items-center justify-center w-10 h-10 overflow-hidden transition-colors border-2 rounded-full bg-secondary text-accent hover:text-primary border-secondary">
+                <div className="relative" ref={userMenuRef}>
+                  <button
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} // Toggle user menu on click
+                    className="flex items-center justify-center w-10 h-10 overflow-hidden transition-colors border-2 rounded-full bg-secondary text-accent hover:text-primary border-secondary"
+                  >
                     {shouldShowImage ? (
                       <img
-                      src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`}
-                      alt="Profile"
-                      className="object-cover w-10 h-10 "
-                      onError={() => setImageError(true)}
-                    />
+                        src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`}
+                        alt="Profile"
+                        className="object-cover w-10 h-10"
+                        onError={() => setImageError(true)}
+                      />
                     ) : (
                       <UserCircle className="w-10 h-10" />
                     )}
                   </button>
-                  <div className="absolute right-0 invisible w-48 px-5 py-5 mt-6 space-y-4 transition-all transform scale-95 opacity-0 rounded-xl bg-dark group-hover:visible group-hover:opacity-100 group-hover:scale-100">
-                    <button
-                      onClick={() => navigate('/profile')}
-                      className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
-                    >
-                      <User className="w-6 h-6" />
-                      Profile
-                    </button>
-                    <hr className="border-t border-accent" />
-                    <button
-                      onClick={() => setLogoutConfirm(true)}
-                      className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
-                    >
-                      <LogOut className="w-6 h-6" />
-                      Logout
-                    </button>
-                  </div>
+                  {/* User Menu Dropdown */}
+                  {isUserMenuOpen && (
+                    <div className="absolute right-0 w-48 px-5 py-5 mt-6 space-y-4 rounded-xl bg-dark">
+                      <button
+                        onClick={() => {
+                          navigate('/profile');
+                          setIsUserMenuOpen(false); // Close menu after navigation
+                        }}
+                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
+                      >
+                        <User className="w-6 h-6" />
+                        Profile
+                      </button>
+                      <hr className="border-t border-accent" />
+                      <button
+                        onClick={() => {
+                          setLogoutConfirm(true);
+                          setIsUserMenuOpen(false); // Close menu after clicking logout
+                        }}
+                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
+                      >
+                        <LogOut className="w-6 h-6" />
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react'; // Add useRef and useEffect
 import PropTypes from 'prop-types';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserCircle, LogOut, Settings } from 'lucide-react';
@@ -7,9 +7,27 @@ import logo from '../../assets/images/common/bodysync.svg';
 
 const AdminNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false); // State for admin menu visibility
   const { admin, logout } = useAdminAuth();
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const navigate = useNavigate();
+
+  // Ref for the admin menu dropdown
+  const adminMenuRef = useRef(null);
+
+  // Close admin menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (adminMenuRef.current && !adminMenuRef.current.contains(event.target)) {
+        setIsAdminMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -74,27 +92,39 @@ const AdminNavbar = ({ onAuthClick }) => {
           <div className="hidden md:block">
             {admin ? (
               <div className="flex items-center gap-4">
-                <div className="relative group">
-                  <button className="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-secondary text-accent hover:text-primary">
+                <div className="relative" ref={adminMenuRef}>
+                  <button
+                    onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)} // Toggle admin menu on click
+                    className="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-secondary text-accent hover:text-primary"
+                  >
                     <UserCircle className="w-10 h-10" />
                   </button>
-                  <div className="absolute right-0 invisible w-48 px-5 py-5 mt-6 space-y-4 transition-all transform scale-95 opacity-0 rounded-xl bg-dark group-hover:visible group-hover:opacity-100 group-hover:scale-100">
-                    <button
-                      onClick={() => navigate('/admin/profile')}
-                      className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
-                    >
-                      <Settings className="w-6 h-6" />
-                      Settings
-                    </button>
-                    <hr className="border-t border-accent" />
-                    <button
-                      onClick={() => setLogoutConfirm(true)}
-                      className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
-                    >
-                      <LogOut className="w-6 h-6" />
-                      Logout
-                    </button>
-                  </div>
+                  {/* Admin Menu Dropdown */}
+                  {isAdminMenuOpen && (
+                    <div className="absolute right-0 w-48 px-5 py-5 mt-6 space-y-4 rounded-xl bg-dark">
+                      <button
+                        onClick={() => {
+                          navigate('/admin/profile');
+                          setIsAdminMenuOpen(false); // Close menu after navigation
+                        }}
+                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
+                      >
+                        <Settings className="w-6 h-6" />
+                        Settings
+                      </button>
+                      <hr className="border-t border-accent" />
+                      <button
+                        onClick={() => {
+                          setLogoutConfirm(true);
+                          setIsAdminMenuOpen(false); // Close menu after clicking logout
+                        }}
+                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
+                      >
+                        <LogOut className="w-6 h-6" />
+                        Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (

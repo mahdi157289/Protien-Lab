@@ -10,6 +10,10 @@ const ExerciseLandingPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchCategories = async () => {
       try {
         const { data } = await api.get('/users/exercises/categories');
@@ -48,7 +52,7 @@ const ExerciseLandingPage = () => {
 
       {/* Categories Grid */}
       <div className="px-4 py-16 mx-auto max-w-7xl">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((category) => (
             <CategoryCard
               key={category.name}
@@ -63,7 +67,7 @@ const ExerciseLandingPage = () => {
 };
 
 const CategoryCard = ({ category, onClick }) => (
-  <div className="overflow-hidden transition-transform bg-dark rounded-2xl hover:transform hover:scale-105">
+  <div className="overflow-hidden transition-transform bg-dark rounded-2xl">
     <div className="aspect-[4/3] relative">
       <img
         src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${category.image}`}

@@ -9,6 +9,10 @@ const ExerciseDetailPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchExercise = async () => {
       try {
         const { data } = await api.get(`/users/exercises/${id}`);
@@ -46,7 +50,7 @@ const ExerciseDetailPage = () => {
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <div className="p-6 bg-dark rounded-lg">
+            <div className="p-6 rounded-lg bg-dark">
               <div className="relative overflow-hidden bg-black rounded-lg aspect-video">
                 {isPlaying ? (
                   <iframe
@@ -86,7 +90,7 @@ const ExerciseDetailPage = () => {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="p-6 bg-dark rounded-lg">
+            <div className="p-6 rounded-lg bg-dark">
               <h3 className="mb-4 text-2xl font-bold">Exercise Details</h3>
               <p className="mb-4 text-gray-300">{exercise.description}</p>
               <div className="mt-4">

@@ -10,6 +10,10 @@ const CategoryExercisesPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchExercises = async () => {
       try {
         const { data } = await api.get(`/users/exercises/category/${category}`);
@@ -31,7 +35,7 @@ const CategoryExercisesPage = () => {
     <div className="min-h-screen ">
       <div className="px-4 py-12 mx-auto max-w-7xl">
         <h1 className="mb-8 text-4xl font-bold text-center text-red-500">{category}</h1>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {exercises.map((exercise) => (
             <ExerciseCard
               key={exercise._id}
@@ -46,7 +50,7 @@ const CategoryExercisesPage = () => {
 };
 
 const ExerciseCard = ({ exercise, onClick }) => (
-  <div className="flex flex-col overflow-hidden bg-dark rounded-lg">
+  <div className="flex flex-col overflow-hidden rounded-lg bg-dark">
     <img
       src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${exercise.image}`}
       alt={exercise.name}

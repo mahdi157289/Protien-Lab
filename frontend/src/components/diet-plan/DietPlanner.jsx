@@ -153,16 +153,16 @@ const DietPlanner = () => {
                 <p className="mb-6 ">
                 Are you sure you want to delete this diet plan? This action cannot be undone.
                 </p>
-                <div className="flex justify-center gap-4">
+                <div className="flex justify-center gap-10">
                 <button
                     onClick={() => setShowDeleteModal(false)}
-                    className="px-4 py-2 rounded-lg bg-secondary hover:bg-opacity-90"
+                    className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
                 >
                     Cancel
                 </button>
                 <button
                     onClick={handleDeletePlan}
-                    className="px-4 py-2 rounded-lg bg-primary hover:bg-opacity-90"
+                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
                 >
                     Delete
                 </button>
@@ -319,7 +319,7 @@ const DietPlanner = () => {
                     </button>
                     <button
                       onClick={() => openDeleteModal(plan._id)}
-                      className="px-4 py-2 ml-2 text-sm text-white rounded bg-gray-700 hover:bg-red-600"
+                      className="px-4 py-2 ml-2 text-sm text-white bg-gray-700 rounded hover:bg-red-600"
                     >
                       Delete
                     </button>

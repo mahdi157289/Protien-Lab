@@ -224,7 +224,7 @@ const AdminExercises = () => {
         message="Delete this exercise?"
       />
 
-      <div className="container max-w-6xl mx-auto">
+      <div className="container mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-4xl font-bold text-accent">Exercise Management</h1>
          
@@ -294,7 +294,7 @@ const AdminExercises = () => {
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="w-full py-2 transition rounded-lg bg-dark text-accent/70 hover:opacity-90"
+                    className="w-full py-2 transition rounded-lg bg-secondary text-accent/70 hover:opacity-90"
                   >
                     Cancel
                   </button>

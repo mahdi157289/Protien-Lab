@@ -21,10 +21,6 @@ const ExerciseDetailModal = ({ exercise, onClose }) => {
             <p className="text-gray-300">Category: {exercise.category}</p>
           </div>
           <div className="flex items-center gap-3">
-            <Info className="text-red-500" size={20} />
-            <p className="text-gray-300">Muscle Group: {exercise.muscleGroup || 'Not specified'}</p>
-          </div>
-          <div className="flex items-center gap-3">
             <Play className="text-red-500" size={20} />
             <p className="text-gray-300">Recommended: 3 Sets, 10-12 Reps</p>
           </div>
@@ -409,20 +405,20 @@ const WorkoutPlanner = () => {
       {showDeleteModal && (
         <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
           <div className="w-full max-w-md p-6 rounded-lg bg-dark">
-            <h3 className="mb-4 text-xl font-semibold text-gray-200">Delete Workout Plan</h3>
-            <p className="mb-6 text-gray-400">
+            <h3 className="mb-4 text-xl font-semibold text-center text-accent">Delete Workout Plan</h3>
+            <p className="mb-6 text-center text-accent/80">
               Are you sure you want to delete this workout plan? This action cannot be undone.
             </p>
-            <div className="flex justify-end gap-4">
+            <div className="flex justify-center gap-10">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 text-sm text-gray-200 bg-gray-700 rounded hover:bg-gray-800"
+                className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDeletePlan}
-                className="px-4 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
               >
                 Delete
               </button>

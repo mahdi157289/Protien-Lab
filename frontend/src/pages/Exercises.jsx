@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
-import ExerciseLandingPage from "/src/components/Exercise/ExerciseLandingPage.jsx"; // Import Page 1
-import CategoryExercises from "/src/components/Exercise/CategoryExercisesPage.jsx"; // Import Page 2
-import ExerciseDetailPage from "/src/components/Exercise/ExerciseDetails.jsx"; // Import Page 3
+import ExerciseLandingPage from "/src/components/Exercise/ExerciseLandingPage.jsx";
+import CategoryExercises from "/src/components/Exercise/CategoryExercisesPage.jsx";
+import ExerciseDetailPage from "/src/components/Exercise/ExerciseDetails.jsx";
 
 const Exercises = () => {
   return (

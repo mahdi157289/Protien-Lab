@@ -629,11 +629,13 @@ const VictoryWall = () => {
               </div>
             </div>
             {post.image && (
+              <div className="mx-5">
               <img
                 src={`${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
                 alt="Post"
-                className="object-cover w-full transition-opacity duration-200 max-h-96 hover:opacity-90"
+                className="object-cover w-full transition-opacity duration-200 rounded-sm hover:opacity-90"
               />
+              </div>
             )}
             <div className="p-4">
               <button 
