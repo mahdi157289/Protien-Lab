@@ -15,6 +15,22 @@ const AdminUserManagement = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  // Apply filters to users
+  const applyFilters = (userList) => {
+    const lowerQuery = searchQuery.toLowerCase();
+    return userList.filter((user) => {
+      const matchesSearch =
+        user.email.toLowerCase().includes(lowerQuery) ||
+        `${user.firstName} ${user.lastName}`.toLowerCase().includes(lowerQuery);
+      const matchesGender =
+        genderFilter === "all" || user.gender === genderFilter;
+      const matchesDateRange =
+        (!startDate || new Date(user.createdAt) >= new Date(startDate)) &&
+        (!endDate || new Date(user.createdAt) <= new Date(endDate));
+      return matchesSearch && matchesGender && matchesDateRange;
+    });
+  };
+
   // Fetch all users
   useEffect(() => {
     const fetchUsers = async () => {
@@ -28,29 +44,22 @@ const AdminUserManagement = () => {
           }
         );
         setUsers(response.data);
-        setFilteredUsers(response.data); // Initialize filtered users with all users
+        setFilteredUsers(applyFilters(response.data));
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
     fetchUsers();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Update filtered users when filters change
+  useEffect(() => {
+    setFilteredUsers(applyFilters(users));
+  }, [searchQuery, genderFilter, startDate, endDate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Handle search button click
   const handleSearch = () => {
-    const lowerQuery = searchQuery.toLowerCase();
-    const filtered = users.filter((user) => {
-      const matchesSearch =
-        user.email.toLowerCase().includes(lowerQuery) ||
-        `${user.firstName} ${user.lastName}`.toLowerCase().includes(lowerQuery);
-      const matchesGender =
-        genderFilter === "all" || user.gender === genderFilter;
-      const matchesDateRange =
-        (!startDate || new Date(user.createdAt) >= new Date(startDate)) &&
-        (!endDate || new Date(user.createdAt) <= new Date(endDate));
-      return matchesSearch && matchesGender && matchesDateRange;
-    });
-    setFilteredUsers(filtered);
+    setFilteredUsers(applyFilters(users));
   };
 
   // Delete user
@@ -61,7 +70,9 @@ const AdminUserManagement = () => {
           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
         },
       });
-      setUsers((prev) => prev.filter((user) => user._id !== userId));
+      const updatedUsers = users.filter((user) => user._id !== userId);
+      setUsers(updatedUsers);
+      setFilteredUsers(applyFilters(updatedUsers));
       setIsDeleteModalOpen(false);
     } catch (error) {
       console.error("Error deleting user:", error);
@@ -71,11 +82,11 @@ const AdminUserManagement = () => {
   // View Modal
   const ViewModal = () => (
     <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
-      <div className="relative w-full max-w-3xl overflow-hidden shadow-2xl rounded-xl bg-dark ">
+      <div className="relative w-full max-w-3xl overflow-hidden shadow-2xl rounded-xl bg-dark">
         <div className="p-6 border-b bg-dark backdrop-blur-sm border-accent/10">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center text-2xl font-bold text-accent">
-              <Eye className="mr-3 " size={28} /> User Profile
+              <Eye className="mr-3" size={28} /> User Profile
             </h2>
             <button
               onClick={() => setIsViewModalOpen(false)}
@@ -173,11 +184,11 @@ const AdminUserManagement = () => {
             },
           }
         );
-        setUsers((prev) =>
-          prev.map((user) =>
-            user._id === selectedUser._id ? { ...user, ...formData } : user
-          )
+        const updatedUsers = users.map((user) =>
+          user._id === selectedUser._id ? { ...user, ...formData } : user
         );
+        setUsers(updatedUsers);
+        setFilteredUsers(applyFilters(updatedUsers));
         setIsEditModalOpen(false);
       } catch (error) {
         console.error("Error updating user:", error);
@@ -188,11 +199,11 @@ const AdminUserManagement = () => {
       <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
         <div className="w-full max-w-2xl rounded-lg bg-dark">
           <div className="p-6">
-            <h2 className="mb-6 text-2xl font-bold ">Edit User</h2>
+            <h2 className="mb-6 text-2xl font-bold">Edit User</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block ">First Name</label>
+                  <label className="block">First Name</label>
                   <input
                     type="text"
                     value={formData.firstName}
@@ -203,7 +214,7 @@ const AdminUserManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block ">Last Name</label>
+                  <label className="block">Last Name</label>
                   <input
                     type="text"
                     value={formData.lastName}
@@ -307,7 +318,7 @@ const AdminUserManagement = () => {
     <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
       <div className="w-full max-w-md rounded-lg bg-dark">
         <div className="p-6">
-          <h2 className="mb-4 text-2xl font-bold text-center ">
+          <h2 className="mb-4 text-2xl font-bold text-center">
             Confirm Delete
           </h2>
           <p className="mb-6 text-center text-accent">
@@ -358,6 +369,7 @@ const AdminUserManagement = () => {
             />
           </div>
 
+          {/* Date Range Picker */}
           {/* Date Range Picker */}
           <div className="flex gap-4 lg:col-span-4">
             <input
