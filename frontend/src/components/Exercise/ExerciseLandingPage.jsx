@@ -24,11 +24,11 @@ const ExerciseLandingPage = () => {
   }, []);
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen bg-gray-900">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen ">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen ">
       {/* Hero Section */}
       <div className="relative h-[500px]">
         <div className="absolute inset-0">
@@ -63,7 +63,7 @@ const ExerciseLandingPage = () => {
 };
 
 const CategoryCard = ({ category, onClick }) => (
-  <div className="overflow-hidden transition-transform bg-gray-800 rounded-2xl hover:transform hover:scale-105">
+  <div className="overflow-hidden transition-transform bg-dark rounded-2xl hover:transform hover:scale-105">
     <div className="aspect-[4/3] relative">
       <img
         src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${category.image}`}

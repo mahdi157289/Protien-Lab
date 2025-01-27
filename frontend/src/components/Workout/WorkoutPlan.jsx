@@ -300,10 +300,10 @@ const WorkoutPlanner = () => {
               <p className="text-gray-400">You currently don't have workout plans</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-1">
               {workoutPlans.map((plan, index) => (
                 <div key={plan._id} className="flex items-center justify-between p-4 rounded-lg bg-secondary">
-                  <span className="text-gray-200">Workout Plan {index + 1}</span>
+                  <span className="text-200">Workout Plan {index + 1}</span>
                   <div className="flex gap-2">
                     <button 
                       onClick={() => {

@@ -28,7 +28,7 @@ const CategoryExercisesPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div className="min-h-screen ">
       <div className="px-4 py-12 mx-auto max-w-7xl">
         <h1 className="mb-8 text-4xl font-bold text-center text-red-500">{category}</h1>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -46,7 +46,7 @@ const CategoryExercisesPage = () => {
 };
 
 const ExerciseCard = ({ exercise, onClick }) => (
-  <div className="flex flex-col overflow-hidden bg-gray-800 rounded-lg">
+  <div className="flex flex-col overflow-hidden bg-dark rounded-lg">
     <img
       src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${exercise.image}`}
       alt={exercise.name}

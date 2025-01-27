@@ -23,11 +23,11 @@ const ExerciseDetailPage = () => {
   }, [id]);
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen bg-gray-900">Loading...</div>;
+    return <div className="flex items-center justify-center min-h-screen bg-dark">Loading...</div>;
   }
 
   if (!exercise) {
-    return <div className="flex items-center justify-center min-h-screen bg-gray-900">Exercise not found</div>;
+    return <div className="flex items-center justify-center min-h-screen bg-dark">Exercise not found</div>;
   }
 
   const getYouTubeEmbedId = (url) => {
@@ -39,14 +39,14 @@ const ExerciseDetailPage = () => {
   const videoId = getYouTubeEmbedId(exercise.youtubeLink);
 
   return (
-    <div className="min-h-screen text-white bg-gray-900">
+    <div className="min-h-screen text-white ">
       <div className="px-4 py-8 mx-auto max-w-7xl">
         <h1 className="mb-4 text-4xl font-bold text-center">{exercise.category}</h1>
         <h2 className="mb-8 text-3xl font-bold text-center text-red-500">{exercise.name}</h2>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <div className="p-6 bg-gray-800 rounded-lg">
+            <div className="p-6 bg-dark rounded-lg">
               <div className="relative overflow-hidden bg-black rounded-lg aspect-video">
                 {isPlaying ? (
                   <iframe
@@ -86,7 +86,7 @@ const ExerciseDetailPage = () => {
           </div>
 
           <div className="lg:col-span-1">
-            <div className="p-6 bg-gray-800 rounded-lg">
+            <div className="p-6 bg-dark rounded-lg">
               <h3 className="mb-4 text-2xl font-bold">Exercise Details</h3>
               <p className="mb-4 text-gray-300">{exercise.description}</p>
               <div className="mt-4">

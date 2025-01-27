@@ -5,7 +5,7 @@ import ExerciseDetailPage from "/src/components/Exercise/ExerciseDetails.jsx"; /
 
 const Exercises = () => {
   return (
-      <div className="min-h-screen text-white bg-gray-900">
+      <div className="min-h-screen text-white">
         <Routes>
           {/* Define routes for each page */}
           <Route path="" element={<ExerciseLandingPage />} />

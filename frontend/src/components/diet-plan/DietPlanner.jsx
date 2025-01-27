@@ -319,7 +319,7 @@ const DietPlanner = () => {
                     </button>
                     <button
                       onClick={() => openDeleteModal(plan._id)}
-                      className="px-4 py-2 ml-2 text-sm text-white rounded bg-primary hover:bg-red-600"
+                      className="px-4 py-2 ml-2 text-sm text-white rounded bg-gray-700 hover:bg-red-600"
                     >
                       Delete
                     </button>
