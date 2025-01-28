@@ -15,10 +15,26 @@ const ImageUploader = ({
   label, 
   onChange, 
   required = false,
-  existingImage = null 
+  existingImage = null,
+  resetTrigger = false 
 }) => {
   const [preview, setPreview] = useState(existingImage);
   const fileInputRef = useRef(null);
+
+  // Reset preview when resetTrigger changes
+  useEffect(() => {
+    if (resetTrigger) {
+      setPreview(null);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  }, [resetTrigger]);
+
+  // Update preview when existingImage changes
+  useEffect(() => {
+    setPreview(existingImage);
+  }, [existingImage]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -124,6 +140,7 @@ const AdminExercises = () => {
   });
   const [editingExercise, setEditingExercise] = useState(null);
   const [confirmDelete, setConfirmDelete] = useState(null);
+  const [resetImages, setResetImages] = useState(false);
 
   useEffect(() => {
     fetchExercises();
@@ -175,6 +192,7 @@ const AdminExercises = () => {
         });
       }
       fetchExercises();
+      setResetImages(prev => !prev); // Toggle reset trigger
       resetForm();
     } catch (error) {
       console.error('Error saving exercise:', error);
@@ -227,7 +245,6 @@ const AdminExercises = () => {
       <div className="container mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-4xl font-bold text-accent">Exercise Management</h1>
-         
         </div>
         
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -274,6 +291,7 @@ const AdminExercises = () => {
                   onChange={handleInputChange}
                   required={!editingExercise}
                   existingImage={editingExercise?.image}
+                  resetTrigger={resetImages}
                 />
                 <ImageUploader
                   name="categoryImage"
@@ -281,6 +299,7 @@ const AdminExercises = () => {
                   onChange={handleInputChange}
                   required={!editingExercise}
                   existingImage={editingExercise?.categoryImage}
+                  resetTrigger={resetImages}
                 />
               </div>
               <div className="grid grid-cols-2 gap-4 pt-4">
@@ -331,7 +350,6 @@ const AdminExercises = () => {
                       src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${exercise.image}`}
                       alt={exercise.name} 
                       className="object-cover w-16 h-16 rounded-lg"
-                      
                     />
                     <div>
                       <h3 className="text-lg font-semibold text-accent">{exercise.name}</h3>
