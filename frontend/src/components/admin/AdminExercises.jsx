@@ -4,24 +4,17 @@ import axios from 'axios';
 import { Trash2, Edit2, Filter, Upload } from 'lucide-react';
 
 const CATEGORIES = [
-  'Abs Exercises', 'Chest Exercises', 'Biceps Exercises', 
-  'Forearm Exercises', 'Triceps Exercises', 'Calf Exercises', 
-  'Glute Exercises', 'Hamstring Exercises', 'Quad Exercises', 
+  'Abs Exercises', 'Chest Exercises', 'Biceps Exercises',
+  'Forearm Exercises', 'Triceps Exercises', 'Calf Exercises',
+  'Glute Exercises', 'Hamstring Exercises', 'Quad Exercises',
   'Lats Exercises', 'Lower Back Exercises', 'Upper Back Exercises'
 ];
 
-const ImageUploader = ({ 
-  name, 
-  label, 
-  onChange, 
-  required = false,
-  existingImage = null,
-  resetTrigger = false 
+const ImageUploader = ({ name, label, onChange, required = false,existingImage = null,resetTrigger = false 
 }) => {
   const [preview, setPreview] = useState(existingImage);
   const fileInputRef = useRef(null);
 
-  // Reset preview when resetTrigger changes
   useEffect(() => {
     if (resetTrigger) {
       setPreview(null);
@@ -31,7 +24,6 @@ const ImageUploader = ({
     }
   }, [resetTrigger]);
 
-  // Update preview when existingImage changes
   useEffect(() => {
     setPreview(existingImage);
   }, [existingImage]);
@@ -53,19 +45,19 @@ const ImageUploader = ({
       <label className="block text-sm font-medium text-accent/80">
         {label}
       </label>
-      <div 
+      <div
         className={`relative w-full h-32 border-2 border-dashed rounded-lg flex items-center justify-center 
-        ${preview 
-          ? 'border-primary bg-secondary' 
+        ${preview
+          ? 'border-primary bg-secondary'
           : 'border-accent/30 bg-secondary hover:border-primary'}`}
       >
         {preview ? (
-          <img 
-            src={preview.startsWith('data:') 
-              ? preview 
+          <img
+            src={preview.startsWith('data:')
+              ? preview
               : `${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${preview}`
-            } 
-            alt="Preview" 
+            }
+            alt="Preview"
             className="object-cover w-full h-full rounded-lg"
           />
         ) : (
