@@ -92,3 +92,6 @@ Follow these steps to set up and run the **BodySync** project on your local mach
   <img src="./frontend/src/assets/screenshots/Supplements.png" alt="User Supplements" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
   <img src="./frontend/src/assets/screenshots/Victory-Wall.png" alt="User Victory Wall" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
 </div>
+
+## 🔗 Project Link  
+[Visit BodySync](https://github.com/geethaka11/BodySync)
