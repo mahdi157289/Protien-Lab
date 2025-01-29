@@ -1,8 +1,7 @@
 # BodySync - Personalized Fitness & Nutrition Planning System
-A web-based fitness and nutrition planning system that provides users with personalized workout and diet plans, a virtual supplement store, and a Victory Wall to share success stories.
-<br>
-![Project Screenshot](./frontend/src/assets/screenshots/Homepage.png)
+A web-based fitness and nutrition planning system that provides users with personalized workout and diet plans, a virtual supplement store, and a Victory Wall to share success stories.<be><br>
 
+![Project Screenshot](./frontend/src/assets/screenshots/BodySync.png)
 
 ---
 
@@ -67,3 +66,29 @@ Follow these steps to set up and run the **BodySync** project on your local mach
 ---
 
 ## Screenshots
+
+### Admin Dashboard
+
+<div>
+  <img src="./frontend/src/assets/screenshots/Admin-Dashboard.png" alt="Admin Dashboard" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+  <img src="./frontend/src/assets/screenshots/Admin-Exercises.png" alt="Admin Exercises" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+</div>
+<div>
+  <img src="./frontend/src/assets/screenshots/Admin-Diet-Plan.png" alt="Admin Diet Plan" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+  <img src="./frontend/src/assets/screenshots/Admin-Store.png" alt="Admin Store" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+</div>
+<div>
+  <img src="./frontend/src/assets/screenshots/Admin-Victory-Wall.png" alt="Admin Victory Wall" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+  <img src="./frontend/src/assets/screenshots/Admin-Users.png" alt="Admin Users" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+</div>
+
+### User Dashboard
+
+<div>
+  <img src="./frontend/src/assets/screenshots/Diet-Plan.png" alt="User Diet Plan" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+  <img src="./frontend/src/assets/screenshots/Workout-Details.png" alt="User Workout Details" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+</div>
+<div>
+  <img src="./frontend/src/assets/screenshots/Supplements.png" alt="User Supplements" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+  <img src="./frontend/src/assets/screenshots/Victory-Wall.png" alt="User Victory Wall" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
+</div>
