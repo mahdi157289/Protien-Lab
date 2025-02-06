@@ -11,7 +11,11 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://your-frontend-domain.com'],
+    origin: [
+        'http://localhost:5172',
+        'https://bodysync.vercel.app',
+        'https://bodysync-kalharageethaka12-gmailcoms-projects.vercel.app'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
