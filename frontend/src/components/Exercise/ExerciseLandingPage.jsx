@@ -42,7 +42,7 @@ const ExerciseLandingPage = () => {
       <div className="relative h-[500px]">
         <div className="absolute inset-0">
           <img
-            src="/src/assets/images/Exercises/karsten-winegeart-0Wra5YYVQJE-unsplash.jpg"
+            src="/src/assets/images/Exercises/exercise_landing.jpg"
             alt="Hero background"
             className="object-cover w-full h-full"
           />
