@@ -1,4 +1,4 @@
-const DietPlan = require('../models/dietPlan');
+const DietPlan = require('../models/DietPlan');
 const UserDietPlan = require('../models/userDietPlan');
 
 /**
