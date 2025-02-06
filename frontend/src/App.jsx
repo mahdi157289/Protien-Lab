@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { AdminAuthProvider } from './contexts/AdminAuthContext';
 import AdminRoutes from './routes/AdminRoutes';
 import UserRoutes from './routes/UserRoutes';
+import { Analytics } from "@vercel/analytics/react"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
               </Routes>
             </main>
           </div>
+          <Analytics />
         </AdminAuthProvider>
       </AuthProvider>
     </Router>
