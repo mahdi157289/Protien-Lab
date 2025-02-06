@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../config/api';
+import { Loader } from 'lucide-react';
 
 const ExerciseDetailPage = () => {
   const { id } = useParams();
@@ -27,7 +28,11 @@ const ExerciseDetailPage = () => {
   }, [id]);
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen bg-dark">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
+      </div>
+    );
   }
 
   if (!exercise) {

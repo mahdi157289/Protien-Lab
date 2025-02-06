@@ -1,13 +1,22 @@
-import { Plus, List } from 'lucide-react';
+import { Plus, List, Loader } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import dashboardWorkoutImage from '../../assets/images/dashobard/ud-workout.jpg';
 import dashboardDietImage from '../../assets/images/dashobard/ud-diet.jpg';
 import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 
 const Dashboard = () => {
-
+  const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleNavigateToWorkout = () => {
     navigate('/workouts');
@@ -16,6 +25,14 @@ const Dashboard = () => {
   const handleNavigateToDiet = () => {
     navigate('/diet-plan');
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-[calc(100vh-4rem)]">

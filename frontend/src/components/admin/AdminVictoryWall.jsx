@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
-import { Search, Trash2, RefreshCcw, UserCircle } from 'lucide-react';
+import { Search, Trash2, UserCircle, Loader } from 'lucide-react';
 import PropTypes from 'prop-types';
 
 const DeleteModal = ({ isOpen, onClose, onConfirm }) => {
@@ -128,8 +128,8 @@ const VictoryWallAdmin = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <RefreshCcw className="w-8 h-8 animate-spin text-primary" />
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
       </div>
     );
   }

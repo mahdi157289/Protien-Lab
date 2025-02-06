@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../config/api';
 import PropTypes from "prop-types";
+import { Loader } from 'lucide-react';
 
 const ExerciseLandingPage = () => {
   const navigate = useNavigate();
@@ -28,7 +29,11 @@ const ExerciseLandingPage = () => {
   }, []);
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen ">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
+      </div>
+    );
   }
 
   return (

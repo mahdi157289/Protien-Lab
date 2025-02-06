@@ -4,6 +4,7 @@ import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import {BarChart,Bar,LineChart,Line,XAxis,YAxis,CartesianGrid,Tooltip,Legend,ResponsiveContainer} from 'recharts';
 import {Users,ShoppingCart,Box,FileText,Dumbbell,Utensils,Activity,ClipboardList,Package} from 'lucide-react';
 import PropTypes from 'prop-types';
+import { Loader } from 'lucide-react';
 
 const AdminDashboard = () => {
   const { token } = useAdminAuth();
@@ -136,8 +137,8 @@ const AdminDashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-secondary">
-        <div className="text-xl text-accent">Loading...</div>
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
       </div>
     );
   }

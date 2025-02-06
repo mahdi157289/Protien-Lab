@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Pencil, Trash2, X, ArrowRight, Search } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, ArrowRight, Search, Loader } from 'lucide-react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -39,6 +39,7 @@ const Modal = ({ isOpen, onClose, title, children, onConfirm }) => {
     </div>
   );
 };
+
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
@@ -50,6 +51,7 @@ Modal.propTypes = {
 const AdminProductManagement = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -81,9 +83,11 @@ const AdminProductManagement = () => {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProducts(response.data.products);
-        setFilteredProducts(response.data.products); // Initialize filteredProducts with all products
+        setFilteredProducts(response.data.products);
       } catch (error) {
         console.error('Failed to fetch products', error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchProducts();
@@ -91,6 +95,7 @@ const AdminProductManagement = () => {
 
   const handleAddProduct = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     Object.keys(newProduct).forEach(key => {
       formData.append(key, newProduct[key]);
@@ -108,7 +113,7 @@ const AdminProductManagement = () => {
         }
       );
       setProducts([...products, response.data]);
-      setFilteredProducts([...filteredProducts, response.data]); // Update filteredProducts
+      setFilteredProducts([...filteredProducts, response.data]);
       setIsAddModalOpen(false);
       setNewProduct({
         name: '',
@@ -120,11 +125,14 @@ const AdminProductManagement = () => {
       });
     } catch (error) {
       console.error('Failed to add product', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleEditProduct = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData();
     Object.keys(currentProduct).forEach(key => {
       if (currentProduct[key] !== null && currentProduct[key] !== undefined) {
@@ -145,14 +153,17 @@ const AdminProductManagement = () => {
       );
       const updatedProducts = products.map(p => p._id === response.data._id ? response.data : p);
       setProducts(updatedProducts);
-      setFilteredProducts(updatedProducts); // Update filteredProducts
+      setFilteredProducts(updatedProducts);
       setIsEditModalOpen(false);
     } catch (error) {
       console.error('Failed to edit product', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDeleteProduct = async () => {
+    setIsLoading(true);
     try {
       await axios.delete(
         `${import.meta.env.VITE_API_URL}/admin/products/${productToDelete._id}`, 
@@ -162,10 +173,12 @@ const AdminProductManagement = () => {
       );
       const updatedProducts = products.filter(p => p._id !== productToDelete._id);
       setProducts(updatedProducts);
-      setFilteredProducts(updatedProducts); // Update filteredProducts
+      setFilteredProducts(updatedProducts);
       setIsDeleteModalOpen(false);
     } catch (error) {
       console.error('Failed to delete product', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -177,14 +190,12 @@ const AdminProductManagement = () => {
   const applyFilters = () => {
     let filtered = products;
 
-    // Search by product name
     if (filters.search) {
       filtered = filtered.filter(product =>
         product.name.toLowerCase().includes(filters.search.toLowerCase())
       );
     }
 
-    // Filter by price range
     if (filters.minPrice) {
       filtered = filtered.filter(product => product.price >= parseFloat(filters.minPrice));
     }
@@ -193,7 +204,6 @@ const AdminProductManagement = () => {
       filtered = filtered.filter(product => product.price <= parseFloat(filters.maxPrice));
     }
 
-    // Sort products
     if (filters.sort === 'name') {
       filtered.sort((a, b) => a.name.localeCompare(b.name));
     } else if (filters.sort === 'price') {
@@ -202,6 +212,14 @@ const AdminProductManagement = () => {
 
     setFilteredProducts(filtered);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 bg-secondary text-accent">
@@ -227,7 +245,6 @@ const AdminProductManagement = () => {
         {/* Filters */}
         <div className="p-4 mb-6 rounded-lg shadow-lg bg-dark">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {/* Search Input */}
             <div className="relative">
               <input
                 type="text"
@@ -240,7 +257,6 @@ const AdminProductManagement = () => {
               <Search className="absolute right-3 top-3 text-accent/80 size-5" />
             </div>
 
-            {/* Sort Dropdown */}
             <select
               name="sort"
               value={filters.sort}
@@ -251,7 +267,6 @@ const AdminProductManagement = () => {
               <option value="price">Sort by Price</option>
             </select>
 
-            {/* Min Price Input */}
             <input
               type="number"
               name="minPrice"
@@ -261,7 +276,6 @@ const AdminProductManagement = () => {
               className="w-full px-4 py-2 border rounded-lg placeholder-accent/80 bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
             />
 
-            {/* Max Price Input */}
             <input
               type="number"
               name="maxPrice"
@@ -271,12 +285,11 @@ const AdminProductManagement = () => {
               className="w-full px-4 py-2 border rounded-lg placeholder-accent/80 bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
             />
 
-            {/* Search Button */}
             <button
               onClick={applyFilters}
               className="flex items-center justify-center w-full px-2 py-2 transition-all rounded-md bg-primary text-accent hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary"
             >
-            Search
+              Search
             </button>
           </div>
         </div>
@@ -335,9 +348,8 @@ const AdminProductManagement = () => {
           title="Add New Product"
         >
           <form onSubmit={handleAddProduct} className="grid grid-cols-2 gap-4">
-            {/* Product Name and Image Upload on the same line */}
             <div>
-              <label className="block text-sm font-medium ">Product Name</label>
+              <label className="block text-sm font-medium">Product Name</label>
               <input 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                 placeholder="Enter product name" 
@@ -348,7 +360,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium ">Product Image</label>
+              <label className="block text-sm font-medium">Product Image</label>
               <input 
                 type="file" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent file:hidden"
@@ -358,7 +370,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div className="col-span-2">
-              <label className="block text-sm font-medium ">Short Description</label>
+              <label className="block text-sm font-medium">Short Description</label>
               <input 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                 placeholder="Brief product description" 
@@ -369,7 +381,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div className="col-span-2">
-              <label className="block text-sm font-medium ">Full Description</label>
+              <label className="block text-sm font-medium">Full Description</label>
               <textarea 
                 className="w-full h-24 p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                 placeholder="Detailed product description"
@@ -380,9 +392,8 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium ">Price</label>
-              <input 
-                type="number" 
+              <label className="block text-sm font-medium">Price</label>
+              <input type="number" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                 placeholder="Product price" 
                 value={newProduct.price}
@@ -392,7 +403,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium ">Stock</label>
+              <label className="block text-sm font-medium">Stock</label>
               <input 
                 type="number" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
@@ -421,9 +432,8 @@ const AdminProductManagement = () => {
           title="Edit Product"
         >
           <form onSubmit={handleEditProduct} className="grid grid-cols-2 gap-4">
-            {/* Product Name and Image Upload on the same line */}
             <div>
-              <label className="block text-sm font-medium ">Product Name</label>
+              <label className="block text-sm font-medium">Product Name</label>
               <input 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                 placeholder="Enter product name" 
@@ -434,7 +444,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium ">Product Image</label>
+              <label className="block text-sm font-medium">Product Image</label>
               <input 
                 type="file" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent file:hidden"
@@ -443,7 +453,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div className="col-span-2">
-              <label className="block text-sm font-medium ">Short Description</label>
+              <label className="block text-sm font-medium">Short Description</label>
               <input 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                 placeholder="Brief product description" 
@@ -454,7 +464,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div className="col-span-2">
-              <label className="block text-sm font-medium ">Full Description</label>
+              <label className="block text-sm font-medium">Full Description</label>
               <textarea 
                 className="w-full h-24 p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                 placeholder="Detailed product description" 
@@ -465,7 +475,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium ">Price</label>
+              <label className="block text-sm font-medium">Price</label>
               <input 
                 type="number" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
@@ -477,7 +487,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium ">Stock</label>
+              <label className="block text-sm font-medium">Stock</label>
               <input 
                 type="number" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
@@ -500,34 +510,16 @@ const AdminProductManagement = () => {
         </Modal>
 
         {/* Delete Confirmation Modal */}
-        <div 
-          className={`fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80 ${isDeleteModalOpen ? 'block' : 'hidden'}`}
+        <Modal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          title="Confirm Delete"
+          onConfirm={handleDeleteProduct}
         >
-          <div className="w-full max-w-md rounded-lg shadow-2xl bg-dark">
-            <div className="p-6 text-center">
-              <h2 className="mb-4 text-2xl font-bold">
-                Confirm Delete
-              </h2>
-              <p className="mb-6 ">
-                Are you sure you want to delete this product?
-              </p>
-              <div className="flex justify-center gap-10">
-                <button
-                  onClick={() => setIsDeleteModalOpen(false)}
-                  className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleDeleteProduct}
-                  className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          <p className="text-center">
+            Are you sure you want to delete this product?
+          </p>
+        </Modal>
       </div>
     </div>
   );

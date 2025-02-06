@@ -112,7 +112,7 @@ const AdminOrderManagement = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <Loader className="animate-spin" size={40} />
+        <Loader className="animate-spin text-primary" size={40} />
       </div>
     );
   }

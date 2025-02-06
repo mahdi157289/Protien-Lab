@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { User } from 'lucide-react';
 import api from '../../config/api';
 import PropTypes from 'prop-types';
+import {Loader} from 'lucide-react';
 
 const InputField = memo(({ label, name, value, onChange, isEditing, type = "text" }) => (
   <div className="mb-6">
@@ -103,7 +104,11 @@ const Profile = () => {
   };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
+      </div>
+    );
   }
 
   const shouldShowImage = (imagePreview || formData.profileImage) && !imageError;

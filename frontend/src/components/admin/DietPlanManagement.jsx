@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { Plus, X, Edit, Trash2 } from 'lucide-react';
+import { Loader } from 'lucide-react';
 
 const DietPlanManagement = () => {
   const { token } = useAdminAuth();
@@ -168,7 +169,11 @@ const DietPlanManagement = () => {
   };
 
   if (isLoading) {
-    return <div className="flex items-center justify-center h-screen ">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
+      </div>
+    );
   }
 
   return (

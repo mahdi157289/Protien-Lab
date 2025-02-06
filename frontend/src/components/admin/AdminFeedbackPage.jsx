@@ -1,7 +1,7 @@
 import{ useState, useEffect } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import axios from 'axios';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Loader } from 'lucide-react';
 
 const AdminFeedbackPage = () => {
   const { token } = useAdminAuth();
@@ -43,7 +43,9 @@ const AdminFeedbackPage = () => {
         </div>
 
         {loading ? (
-          <div className="text-center text-accent">Loading...</div>
+            <div className="flex items-center justify-center h-screen">
+              <Loader className="animate-spin text-primary" size={40} />
+            </div>
         ) : error ? (
           <div className="text-primary">{error}</div>
         ) : (

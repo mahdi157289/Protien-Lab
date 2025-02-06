@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../config/api';
 import { Image, Heart, Users, PlusSquare, X, MoreVertical, Trash2, Edit2 } from 'lucide-react';
+import {Loader} from 'lucide-react';
 
 // Confirmation Dialog Component
 const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
@@ -507,8 +508,8 @@ const VictoryWall = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen p-4 bg-secondary">
-        <div className="text-white">Loading posts...</div>
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="animate-spin text-primary" size={40} />
       </div>
     );
   }
