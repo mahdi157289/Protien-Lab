@@ -3,7 +3,7 @@ import WelcomeScreen from '../components/user/WelcomeScreen';
 import StatsBanner from '../components/user/StatsBanner';
 import AboutUs from '../components/user/AboutUs';
 import OurServices from '../components/user/OurServices'
-import Faq from '../components/user/FAQ';
+import Faq from '../components/user/Faq';
 import Feedback from '../components/user/Feedback';
 
 const Home = ({ onAuthClick }) => {
