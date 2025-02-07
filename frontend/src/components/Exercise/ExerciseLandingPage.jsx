@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../config/api';
 import PropTypes from "prop-types";
 import { Loader } from 'lucide-react';
+import exerciseLandingImg from '../../assets/images/exercises/exercise_landing.jpg';
 
 const ExerciseLandingPage = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const ExerciseLandingPage = () => {
       <div className="relative h-[500px]">
         <div className="absolute inset-0">
           <img
-            src="/src/assets/images/Exercises/exercise_landing.jpg"
+            src={exerciseLandingImg}
             alt="Hero background"
             className="object-cover w-full h-full"
           />

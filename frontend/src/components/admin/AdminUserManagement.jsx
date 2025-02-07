@@ -36,7 +36,7 @@ const AdminUserManagement = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/api/admin/users",
+          `${import.meta.env.VITE_API_URL}/admin/users`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -65,7 +65,7 @@ const AdminUserManagement = () => {
   // Delete user
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/admin/users/${userId}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/admin/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
         },
@@ -176,7 +176,7 @@ const AdminUserManagement = () => {
       e.preventDefault();
       try {
         await axios.put(
-          `http://localhost:5000/api/admin/users/${selectedUser._id}`,
+          `${import.meta.env.VITE_API_URL}/admin/users/${selectedUser._id}`,
           formData,
           {
             headers: {

@@ -55,7 +55,7 @@ const VictoryWallAdmin = () => {
   const fetchPosts = useCallback(async (params) => {
     try {
       const response = await fetch(
-        `/api/admin/posts?search=${params.search}&startDate=${params.startDate}&endDate=${params.endDate}&sortBy=${params.sort}`,
+        `${import.meta.env.VITE_API_URL}/admin/posts?search=${params.search}&startDate=${params.startDate}&endDate=${params.endDate}&sortBy=${params.sort}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -88,7 +88,7 @@ const VictoryWallAdmin = () => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`/api/admin/posts/${selectedPostId}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/admin/posts/${selectedPostId}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,

@@ -35,7 +35,7 @@ const DietPlanManagement = () => {
 
   const fetchDietPlans = async () => {
     try {
-      const response = await fetch('/api/admin/diet-plans', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/diet-plans`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -55,8 +55,8 @@ const DietPlanManagement = () => {
     e.preventDefault();
     try {
       const url = currentPlan
-        ? `/api/admin/diet-plans/${currentPlan._id}`
-        : '/api/admin/diet-plans';
+        ? `${import.meta.env.VITE_API_URL}/api/admin/diet-plans/${currentPlan._id}`
+        : `${import.meta.env.VITE_API_URL}/admin/diet-plans`;
       const method = currentPlan ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -81,7 +81,7 @@ const DietPlanManagement = () => {
   const handleDelete = async () => {
     if (!deleteConfirmation.planId) return;
     try {
-      const response = await fetch(`/api/admin/diet-plans/${deleteConfirmation.planId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/diet-plans/${deleteConfirmation.planId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

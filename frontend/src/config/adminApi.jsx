@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api/admin';
+const API_BASE_URL = import.meta.env.VITE_API_URL + "/admin";
 
 export const registerAdmin = async (data) => {
   const response = await axios.post(`${API_BASE_URL}/register`, data);

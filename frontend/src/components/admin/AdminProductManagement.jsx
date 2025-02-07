@@ -234,7 +234,7 @@ const AdminProductManagement = () => {
               <Plus className="mr-2 size-5" /> Add Product
             </button>
             <button 
-              onClick={() => navigate('/admin/store/orders')} 
+              onClick={() => navigate(`/admin/store/orders`)} 
               className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-red-600"
             >
               <ArrowRight className="mr-2 size-5" /> Go to Orders

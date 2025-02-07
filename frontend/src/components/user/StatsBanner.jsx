@@ -4,10 +4,10 @@ import { Loader } from "lucide-react";
 
 const StatsBanner = () => {
   const [stats, setStats] = useState({
-    activeMembers: 0,
-    exercises: 0,
-    successStories: 0,
-    products: 0
+    activeMembers: 1000,
+    exercises: 30,
+    successStories: 100,
+    products: 20
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -12,7 +12,7 @@ const AdminFeedbackPage = () => {
   const fetchFeedbacks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('http://localhost:5000/api/admin/feedback', {
+      const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/feedback`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFeedbacks(response.data);

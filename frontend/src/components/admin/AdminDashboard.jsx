@@ -44,13 +44,13 @@ const AdminDashboard = () => {
           dietPlans,
           postAnalyticsRes
         ] = await Promise.all([
-          axios.get('http://localhost:5000/api/admin/users', { headers }),
-          axios.get('http://localhost:5000/api/admin/orders', { headers }),
-          axios.get('http://localhost:5000/api/admin/posts', { headers }),
-          axios.get('http://localhost:5000/api/admin/products', { headers }),
-          axios.get('http://localhost:5000/api/admin/exercises', { headers }),
-          axios.get('http://localhost:5000/api/admin/diet-plans', { headers }),
-          axios.get('http://localhost:5000/api/admin/posts/analytics', { headers })
+          axios.get(`${import.meta.env.VITE_API_URL}/admin/users`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_URL}/admin/orders`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_URL}/admin/posts`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_URL}/admin/products`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_URL}/admin/exercises`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_URL}/admin/diet-plans`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_URL}/admin/posts/analytics`, { headers })
         ]);
 
         setCounts({

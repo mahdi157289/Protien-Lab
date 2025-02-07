@@ -141,8 +141,8 @@ const AdminExercises = () => {
   const fetchExercises = async () => {
     try {
       const url = selectedCategory 
-        ? `/api/admin/exercises/category/${selectedCategory}` 
-        : '/api/admin/exercises';
+        ? `${import.meta.env.VITE_API_URL}/admin/exercises/category/${selectedCategory}` 
+        : `${import.meta.env.VITE_API_URL}/admin/exercises`;
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -226,7 +226,7 @@ const AdminExercises = () => {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-secondary text-accent">
+    <div className="min-h-[calc(100vh-4rem)] p-8 bg-secondary text-accent">
       <ConfirmModal
         isOpen={!!confirmDelete}
         onClose={() => setConfirmDelete(null)}

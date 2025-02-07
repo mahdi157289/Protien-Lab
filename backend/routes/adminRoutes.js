@@ -12,6 +12,7 @@ const { getAllFeedbacks } = require('../controllers/adminFeedbackController');
 const exerciseController = require('../controllers/adminExerciseController');
 
 // Admin Authentication Routes
+router.post('/register', registerAdmin);
 router.post('/login', loginAdmin);
 router.get('/profile', adminAuth, getAdminProfile);
 router.put('/profile', adminAuth, updateAdminProfile);
