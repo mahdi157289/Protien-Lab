@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import api from '../../config/api';
 import PropTypes from "prop-types";
 import { Loader } from 'lucide-react';
-import exerciseLandingImg from '../../assets/images/exercises/exercise_landing.jpg';
+import exerciseLandingImg from '../../assets/images/exercise/exercise_landing.jpg';
 
 const ExerciseLandingPage = () => {
   const navigate = useNavigate();
