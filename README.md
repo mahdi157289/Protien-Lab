@@ -1,6 +1,36 @@
 # BodySync - Personalized Fitness & Nutrition Planning System
 A web-based fitness and nutrition planning system that provides users with personalized workout and diet plans, a virtual supplement store, and a Victory Wall to share success stories.<be><br>
 
+## 🌐 Live Preview  
+<div align="center">
+<a href="https://bodysync.vercel.app/" target="_blank">Visit BodySync</a>
+</div>
+<br>
+<div align="center">
+<table>
+  <thead>
+    <tr>
+      <th align="center">User Account</th>
+      <th align="center">Admin Account</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Email: <code>user@bodysync.com</code></td>
+      <td>Email: <code>admin@bodysync.com</code></td>
+    </tr>
+    <tr>
+      <td>Password: <code>user123</code></td>
+      <td>Password: <code>admin123</code></td>
+    </tr>
+    <tr>
+      <td>User URL: <a href="https://bodysync.vercel.app/">User homepage</a></td>
+      <td>Admin URL: <a href="https://bodysync.vercel.app/admin/login/">Admin login</a></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 ![Project Screenshot](./frontend/src/assets/screenshots/BodySync.png)
 
 ---
@@ -94,4 +124,4 @@ Follow these steps to set up and run the **BodySync** project on your local mach
 </div>
 
 ## 🔗 Project Link  
-[Visit BodySync](https://github.com/geethaka11/BodySync)
+[Visit BodySync](https://bodysync.vercel.app/)
