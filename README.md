@@ -58,7 +58,7 @@ A web-based fitness and nutrition planning system that provides users with perso
 ## Tech Stack
 - Frontend: React (Vite), Tailwind CSS
 - Backend: Node.js, Express.js
-- Database: MongoDB (Local)
+- Database: MongoDB
 - Tools: Postman (API testing), GitHub (Version control)
 
 ---
@@ -97,7 +97,7 @@ Follow these steps to set up and run the **BodySync** project on your local mach
 
 ## Screenshots
 
-### Admin Dashboard
+### Admin
 
 <div>
   <img src="./frontend/src/assets/screenshots/Admin-Dashboard.png" alt="Admin Dashboard" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
@@ -112,7 +112,7 @@ Follow these steps to set up and run the **BodySync** project on your local mach
   <img src="./frontend/src/assets/screenshots/Admin-Users.png" alt="Admin Users" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
 </div>
 
-### User Dashboard
+### User
 
 <div>
   <img src="./frontend/src/assets/screenshots/Diet-Plan.png" alt="User Diet Plan" style="display: inline-block; width: 48%; margin-right: 4%; margin-bottom: 20px;">
