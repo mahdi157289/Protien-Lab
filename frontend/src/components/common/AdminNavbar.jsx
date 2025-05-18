@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserCircle, LogOut, Settings } from 'lucide-react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
-import logo from '../../assets/images/common/bodysync.svg';
+import logo from '../../assets/images/common/Protein-Lab.png';
 
 const AdminNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,13 +59,13 @@ const AdminNavbar = ({ onAuthClick }) => {
   ];
 
   return (
-    <nav className="fixed top-0 z-40 w-full px-6 py-4 bg-dark bg-opacity-95">
+    <nav style={{ background: "linear-gradient(60deg, rgba(88, 88, 88, 1) 80%, rgba(255, 250, 252, 1) 100%)" }} className="fixed top-0 z-40 w-full px-6 py-4 bg-dark bg-opacity-95">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
             <NavLink to="/admin/dashboard" className="h-8">
-              <img src={logo} alt="BodySync Admin" className="h-full" />
+              <img src={logo} alt="Protein Lab Admin" className=" max-h-[100px]" />
             </NavLink>
           </div>
 
@@ -74,12 +74,13 @@ const AdminNavbar = ({ onAuthClick }) => {
             {navItems.map((item) => (
               <NavLink
                 key={item.label}
+                style={{ fontFamily: "'Orbitron', sans-serif" }} 
                 to={item.path}
                 className={({ isActive }) =>
                   `text-accent transition-all duration-500 relative text-base md:text-lg ${
                     isActive
-                      ? 'text-primary after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300'
-                      : 'text-accent after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:text-primary'
+                      ? ' text-accent after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300'
+                      : 'text-primary after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 '
                   }`
                 }
               >
@@ -95,7 +96,7 @@ const AdminNavbar = ({ onAuthClick }) => {
                 <div className="relative" ref={adminMenuRef}>
                   <button
                     onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)} // Toggle admin menu on click
-                    className="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-secondary text-accent hover:text-primary"
+                    className="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-secondary text-accent "
                   >
                     <UserCircle className="w-10 h-10" />
                   </button>
@@ -107,7 +108,7 @@ const AdminNavbar = ({ onAuthClick }) => {
                           navigate('/admin/profile');
                           setIsAdminMenuOpen(false); // Close menu after navigation
                         }}
-                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
+                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent "
                       >
                         <Settings className="w-6 h-6" />
                         Settings
@@ -118,7 +119,7 @@ const AdminNavbar = ({ onAuthClick }) => {
                           setLogoutConfirm(true);
                           setIsAdminMenuOpen(false); // Close menu after clicking logout
                         }}
-                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
+                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent "
                       >
                         <LogOut className="w-6 h-6" />
                         Logout
@@ -139,7 +140,7 @@ const AdminNavbar = ({ onAuthClick }) => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button onClick={toggleMenu} className="transition-colors text-accent hover:text-primary">
+            <button onClick={toggleMenu} className="transition-colors text-accent ">
               {isOpen ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -178,7 +179,7 @@ const AdminNavbar = ({ onAuthClick }) => {
                 to={item.path}
                 onClick={closeMenu}
                 className={({ isActive }) =>
-                  `text-accent hover:text-primary transition-all duration-500 relative ${
+                  `text-accent hover:bg-green-600 transition-all duration-500 relative ${
                     isActive
                       ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300'
                       : 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100'
@@ -192,13 +193,13 @@ const AdminNavbar = ({ onAuthClick }) => {
               <>
                 <button
                   onClick={() => navigate('/admin/profile')}
-                  className="text-left transition-all duration-500 text-accent hover:text-primary"
+                  className="text-left transition-all duration-500 text-accent hover:bg-green-600"
                 >
                   Settings
                 </button>
                 <button
                   onClick={() => setLogoutConfirm(true)}
-                  className="text-left transition-all duration-500 text-accent hover:text-primary"
+                  className="text-left transition-all duration-500 text-accent hover:bg-green-600"
                 >
                   Logout
                 </button>
@@ -230,7 +231,7 @@ const AdminNavbar = ({ onAuthClick }) => {
               </button>
               <button
                 onClick={handleLogout}
-                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-700"
+                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-700"
               >
                 Log Out
               </button>

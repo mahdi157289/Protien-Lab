@@ -6,8 +6,8 @@ const Faq = () => {
 
   const faqData = [
     {
-      question: "What is BodySync?",
-      answer: "BodySync is a platform dedicated to helping you achieve your fitness and nutrition goals through tailored workout plans, diet suggestions, and a supplement store."
+      question: "What is Protein Lab?",
+      answer: "Protein Lab is a platform dedicated to helping you achieve your fitness and nutrition goals through tailored workout plans, diet suggestions, and a supplement store."
     },
     {
       question: "How do I get started?",

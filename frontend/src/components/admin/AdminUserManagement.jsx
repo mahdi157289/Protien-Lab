@@ -90,7 +90,7 @@ const AdminUserManagement = () => {
             </h2>
             <button
               onClick={() => setIsViewModalOpen(false)}
-              className="transition-colors duration-300 text-accent hover:text-primary"
+              className="transition-colors duration-300 text-accent hover:bg-green-600"
             >
               <X size={24} />
             </button>
@@ -301,7 +301,7 @@ const AdminUserManagement = () => {
                 </button>
                 <button
                   type="submit"
-                  className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+                  className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
                 >
                   Save
                 </button>
@@ -333,7 +333,7 @@ const AdminUserManagement = () => {
             </button>
             <button
               onClick={() => handleDelete(selectedUser._id)}
-              className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+              className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
             >
               Confirm
             </button>

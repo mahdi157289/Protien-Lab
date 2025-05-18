@@ -13,7 +13,7 @@ const Modal = ({ isOpen, onClose, title, children, onConfirm }) => {
       <div className="relative w-full max-w-md p-6 rounded-lg bg-dark text-accent">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-accent hover:text-primary"
+          className="absolute top-4 right-4 text-accent hover:bg-green-600"
         >
           <X />
         </button>
@@ -29,7 +29,7 @@ const Modal = ({ isOpen, onClose, title, children, onConfirm }) => {
             </button>
             <button 
               onClick={onConfirm}
-              className="px-4 py-2 rounded bg-primary text-accent hover:bg-red-600"
+              className="px-4 py-2 rounded bg-primary text-accent hover:bg-green-600"
             >
               Confirm
             </button>
@@ -229,13 +229,13 @@ const AdminProductManagement = () => {
           <div className="flex space-x-4">
             <button 
               onClick={() => setIsAddModalOpen(true)}
-              className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-red-600"
+              className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-green-600"
             >
               <Plus className="mr-2 size-5" /> Add Product
             </button>
             <button 
               onClick={() => navigate(`/admin/store/orders`)} 
-              className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-red-600"
+              className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-green-600"
             >
               <ArrowRight className="mr-2 size-5" /> Go to Orders
             </button>

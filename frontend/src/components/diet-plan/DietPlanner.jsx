@@ -59,7 +59,7 @@ const DietPlanner = () => {
 
   const fetchUserDietPlans = async () => {
     try {
-      const response = await api.get('/diet-plans/all');
+      const response = await api.get('/api/diet-plans/all');
       setDietPlans(response.data.data.plans);
     } catch (error) {
       console.error('Error fetching diet plans:', error);
@@ -87,7 +87,7 @@ const DietPlanner = () => {
 
     setIsSubmitting(true);
     try {
-      const response = await api.post('/diet-plans/generate', formData);
+      const response = await api.post('/api/diet-plans/generate', formData);
       setDietPlans([...dietPlans, response.data.data]);
       setFormData({
         age: '',
@@ -107,7 +107,7 @@ const DietPlanner = () => {
 
   const handleViewPlan = async (planId) => {
     try {
-      const response = await api.get(`/diet-plans/${planId}`);
+      const response = await api.get(`/api/diet-plans/${planId}`);
       setSelectedPlan(response.data.data);
       // Smooth scroll to meal plan details after a short delay
       setTimeout(() => {
@@ -121,7 +121,7 @@ const DietPlanner = () => {
   const handleDeletePlan = async () => {
     if (planToDelete) {
       try {
-        await api.delete(`/diet-plans/${planToDelete}`);
+        await api.delete(`/api/diet-plans/${planToDelete}`);
         setDietPlans(dietPlans.filter(plan => plan._id !== planToDelete));
         if (selectedPlan && selectedPlan._id === planToDelete) {
           setSelectedPlan(null);
@@ -162,7 +162,7 @@ const DietPlanner = () => {
                 </button>
                 <button
                     onClick={handleDeletePlan}
-                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
                 >
                     Delete
                 </button>
@@ -177,10 +177,10 @@ const DietPlanner = () => {
         {/* Left Panel - Create Plan Form */}
         <div className="p-6 rounded-lg bg-dark">
           {/* Form content remains exactly the same */}
-          <h2 className="mb-6 text-lg text-red-500">Create Your Diet Plan</h2>
+          <h2 className="mb-6 text-lg #40ee45">Create Your Diet Plan</h2>
 
           <div className="mb-6">
-            <h3 className="mb-4 text-sm text-red-500">Personal Profile</h3>
+            <h3 className="mb-4 text-sm #40ee45">Personal Profile</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block mb-2 text-sm text">Age</label>
@@ -190,11 +190,11 @@ const DietPlanner = () => {
                   value={formData.age}
                   onChange={handleInputChange}
                   className={`w-full p-2 text-gray-200 border rounded bg-secondary ${
-                    errors.age ? 'border-red-500' : 'border-gray-700'
+                    errors.age ? 'border-green-500' : 'border-gray-700'
                   }`}
                 />
                 {errors.age && (
-                  <p className="mt-1 text-xs text-red-500">{errors.age}</p>
+                  <p className="mt-1 text-xs #40ee45">{errors.age}</p>
                 )}
               </div>
               <div>
@@ -204,7 +204,7 @@ const DietPlanner = () => {
                   value={formData.gender}
                   onChange={handleInputChange}
                   className={`w-full p-2 border rounded appearance-none bg-secondary text-200 ${
-                    errors.gender ? 'border-red-500' : 'border-gray-700'
+                    errors.gender ? 'border-green-500' : 'border-gray-700'
                   }`}
                 >
                   <option>Select Gender</option>
@@ -212,7 +212,7 @@ const DietPlanner = () => {
                   <option>Female</option>
                 </select>
                 {errors.gender && (
-                  <p className="mt-1 text-xs text-red-500">{errors.gender}</p>
+                  <p className="mt-1 text-xs #40ee45">{errors.gender}</p>
                 )}
               </div>
               <div>
@@ -223,11 +223,11 @@ const DietPlanner = () => {
                   value={formData.height}
                   onChange={handleInputChange}
                   className={`w-full p-2 border rounded bg-secondary text-200 ${
-                    errors.height ? 'border-red-500' : 'border-gray-700'
+                    errors.height ? 'border-green-500' : 'border-gray-700'
                   }`}
                 />
                 {errors.height && (
-                  <p className="mt-1 text-xs text-red-500">{errors.height}</p>
+                  <p className="mt-1 text-xs #40ee45">{errors.height}</p>
                 )}
               </div>
               <div>
@@ -238,18 +238,18 @@ const DietPlanner = () => {
                   value={formData.weight}
                   onChange={handleInputChange}
                   className={`w-full p-2 border rounded bg-secondary text-200 ${
-                    errors.weight ? 'border-red-500' : 'border-gray-700'
+                    errors.weight ? 'border-green-500' : 'border-gray-700'
                   }`}
                 />
                 {errors.weight && (
-                  <p className="mt-1 text-xs text-red-500">{errors.weight}</p>
+                  <p className="mt-1 text-xs #40ee45">{errors.weight}</p>
                 )}
               </div>
             </div>
           </div>
 
           <div className="mb-6">
-            <h3 className="mb-4 text-sm text-red-500">Lifestyle and Fitness Goals</h3>
+            <h3 className="mb-4 text-sm #40ee45">Lifestyle and Fitness Goals</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block mb-2 text-sm text-200">Activity Level</label>
@@ -285,15 +285,15 @@ const DietPlanner = () => {
             disabled={isSubmitting}
             className={`w-full py-2 text-white transition-colors rounded ${
               isSubmitting 
-                ? 'bg-red-400 cursor-not-allowed' 
-                : 'bg-red-500 hover:bg-red-600'
+                ? 'bg-green-400 cursor-not-allowed' 
+                : 'bg-green-500 hover:bg-green-600'
             }`}
           >
             {isSubmitting ? 'Creating Plan...' : 'Create Plan'}
           </button>
 
           {Object.keys(errors).length > 0 && (
-            <div className="p-3 mt-4 text-sm text-red-500 border border-red-500 rounded">
+            <div className="p-3 mt-4 text-sm #40ee45 border border-green-500 rounded">
               Please fix the errors above before submitting.
             </div>
           )}
@@ -313,13 +313,13 @@ const DietPlanner = () => {
                   <div>
                     <button
                       onClick={() => handleViewPlan(plan._id)}
-                      className="px-4 py-2 text-sm text-white rounded bg-primary hover:bg-red-600"
+                      className="px-4 py-2 text-sm text-white rounded bg-primary "
                     >
                       View
                     </button>
                     <button
                       onClick={() => openDeleteModal(plan._id)}
-                      className="px-4 py-2 ml-2 text-sm text-white bg-gray-700 rounded hover:bg-red-600"
+                      className="px-4 py-2 ml-2 text-sm text-white bg-gray-700 rounded "
                     >
                       Delete
                     </button>

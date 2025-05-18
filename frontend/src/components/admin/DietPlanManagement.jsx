@@ -183,7 +183,7 @@ const DietPlanManagement = () => {
           <h1 className="text-3xl font-bold ">Diet Plans Management</h1>
           <button
             onClick={() => {resetForm();setShowModal(true);}}
-            className="flex items-center px-4 py-3 rounded-lg bg-primary hover:bg-red-600"
+            className="flex items-center px-4 py-3 rounded-lg bg-primary hover:bg-green-600"
           >
             <span className="mr-2"><Plus className="w-5 h-5" /></span>
             Add New Diet Plan
@@ -228,7 +228,7 @@ const DietPlanManagement = () => {
                 </h2>
                 <button
                   onClick={() => setShowModal(false)}
-                  className=" hover:text-primary"
+                  className=" hover:bg-green-600"
                 >
                   <X className="w-7 h-7" />
                 </button>
@@ -371,7 +371,7 @@ const DietPlanManagement = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
                   >
                     {currentPlan ? 'Update' : 'Create'} Diet Plan
                   </button>
@@ -400,7 +400,7 @@ const DietPlanManagement = () => {
                 </button>
                 <button
                     onClick={handleDelete}
-                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+                    className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
                 >
                     Delete
                 </button>

@@ -190,9 +190,9 @@ const AdminDashboard = () => {
                 <Line 
                   type="monotone" 
                   dataKey="users" 
-                  stroke="#EE4540" 
+                  stroke="#40ee45" 
                   strokeWidth={2}
-                  dot={{ fill: '#EE4540', strokeWidth: 2 }}
+                  dot={{ fill: '#40ee45', strokeWidth: 2 }}
                 />
               </LineChart>
             </ResponsiveContainer>
@@ -219,7 +219,7 @@ const AdminDashboard = () => {
                 <Legend />
                 <Bar 
                   dataKey="orders" 
-                  fill="#EE4540" 
+                  fill="#40ee45" 
                   radius={[4, 4, 0, 0]}
                 />
               </BarChart>
@@ -249,9 +249,9 @@ const AdminDashboard = () => {
                   <Line 
                     type="monotone" 
                     dataKey="count" 
-                    stroke="#EE4540" 
+                    stroke="#40ee45" 
                     strokeWidth={2}
-                    dot={{ fill: '#EE4540', strokeWidth: 2 }}
+                    dot={{ fill: '#40ee45', strokeWidth: 2 }}
                   />
                 </LineChart>
               </ResponsiveContainer>

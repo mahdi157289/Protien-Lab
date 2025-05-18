@@ -25,11 +25,11 @@ function ProductCard({ product }) {
       {/* Product Info */}
       <div className="p-4 bg-[#1C1C1C]">
         <h2 className="mb-2 text-lg font-bold text-white">{product.name}</h2>
-        <p className="mb-2 text-xl font-semibold text-red-500">Rs. {product.price}</p>
+        <p className="mb-2 text-xl font-semibold #40ee45">Rs. {product.price}</p>
         <p className="mb-4 text-sm text-gray-400">{product.descriptionShort}</p>
         {/* Order Button */}
         <button
-          className="w-full py-2 font-bold text-white bg-red-500 rounded-md hover:bg-red-600"
+          className="w-full py-2 font-bold text-white bg-green-500 rounded-md hover:bg-green-600"
           onClick={handleProductClick}
         >
           Order Now

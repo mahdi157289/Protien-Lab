@@ -49,7 +49,7 @@ const AdminRegister = () => {
       <div className="w-full max-w-md p-6 space-y-4 rounded-lg shadow-md bg-[#1C1C1C]">
         {/* Custom Error Alert */}
         {error && (
-          <div className="p-3 mb-4 text-sm text-red-500 border border-red-500 rounded-lg bg-red-500/10" role="alert">
+          <div className="p-3 mb-4 text-sm #40ee45 border border-green-500 rounded-lg bg-green-500/10" role="alert">
             <div className="flex items-center gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -89,7 +89,7 @@ const AdminRegister = () => {
               placeholder="Enter your name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#EE4540] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
+              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
               disabled={isSubmitting}
             />
           </div>
@@ -104,7 +104,7 @@ const AdminRegister = () => {
               placeholder="Enter your email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#EE4540] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
+              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
               disabled={isSubmitting}
             />
           </div>
@@ -119,14 +119,14 @@ const AdminRegister = () => {
               placeholder="Enter your password"
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#EE4540] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
+              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
               disabled={isSubmitting}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full px-4 py-2 font-medium text-[#FFFCF9] rounded-lg bg-[#EE4540] hover:bg-[#EE4540]/90 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none transition-colors"
+            className="w-full px-4 py-2 font-medium text-[#FFFCF9] rounded-lg bg-[#40ee45] hover:bg-[#40ee45]/90 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none transition-colors"
             disabled={isSubmitting}
           >
             {isSubmitting ? 'Registering...' : 'Register'}
@@ -137,7 +137,7 @@ const AdminRegister = () => {
           Already have an account?{' '}
           <button
             onClick={() => navigate('/admin/login')}
-            className="text-[#EE4540] hover:underline disabled:opacity-50 transition-colors"
+            className="text-[#40ee45] hover:underline disabled:opacity-50 transition-colors"
             disabled={isSubmitting}
           >
             Login here

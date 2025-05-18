@@ -59,7 +59,7 @@ const AdminProfile = () => {
             <div className="flex justify-end">
               <button
                 type="submit"
-                className="px-4 py-2 text-white transition-colors rounded-lg bg-primary hover:bg-red-600"
+                className="px-4 py-2 text-white transition-colors rounded-lg bg-primary hover:bg-green-600"
               >
                 Save Changes
               </button>

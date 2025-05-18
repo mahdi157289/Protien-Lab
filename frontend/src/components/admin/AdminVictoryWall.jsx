@@ -20,7 +20,7 @@ const DeleteModal = ({ isOpen, onClose, onConfirm }) => {
           </button>
           <button
             onClick={onConfirm}
-            className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+            className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
           >
             Delete
           </button>

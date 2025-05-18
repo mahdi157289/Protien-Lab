@@ -7,7 +7,7 @@ const ExerciseDetailModal = ({ exercise, onClose }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-60">
       <div className="w-full max-w-md p-6 rounded-lg shadow-2xl bg-dark">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-red-500">{exercise.name}</h3>
+          <h3 className="text-xl font-bold #40ee45">{exercise.name}</h3>
           <button 
             onClick={onClose} 
             className="text-gray-400 transition-colors hover:text-white"
@@ -17,18 +17,18 @@ const ExerciseDetailModal = ({ exercise, onClose }) => {
         </div>
         <div className="space-y-4">
           <div className="flex items-center gap-3">
-            <BookOpen className="text-red-500" size={20} />
+            <BookOpen className="#40ee45" size={20} />
             <p className="text-gray-300">Category: {exercise.category}</p>
           </div>
           <div className="flex items-center gap-3">
-            <Play className="text-red-500" size={20} />
+            <Play className="#40ee45" size={20} />
             <p className="text-gray-300">Recommended: 3 Sets, 10-12 Reps</p>
           </div>
           <a 
             href={`/exercises/${exercise._id}`}
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-full py-2 text-white transition-colors bg-red-500 rounded hover:bg-red-600"
+            className="flex items-center justify-center w-full py-2 text-white transition-colors bg-green-500 rounded hover:bg-green-600"
           >
             <CheckCircle className="mr-2" size={20} />
             View Exercise Details
@@ -174,10 +174,10 @@ const WorkoutPlanner = () => {
       {/* Left Panel - Create Plan Form */}
       <div className="grid w-full grid-cols-1 gap-6 max-w-7xl md:grid-cols-2">
         <div className="p-6 rounded-lg bg-dark">
-          <h2 className="mb-6 text-lg text-red-500">Create Your Workout Plan</h2>
+          <h2 className="mb-6 text-lg #40ee45">Create Your Workout Plan</h2>
           
           <div className="mb-6">
-            <h3 className="mb-4 text-sm text-red-500">Personal Information</h3>
+            <h3 className="mb-4 text-sm #40ee45">Personal Information</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block mb-2 text-sm text-200">Age</label>
@@ -187,11 +187,11 @@ const WorkoutPlanner = () => {
                   value={formData.age}
                   onChange={handleInputChange}
                   className={`w-full p-2 text-gray-200 border rounded bg-secondary ${
-                    formErrors.age ? 'border-red-500' : 'border-gray-700'
+                    formErrors.age ? 'border-green-500' : 'border-gray-700'
                   }`}
                 />
                 {formErrors.age && (
-                  <p className="mt-1 text-sm text-red-500">{formErrors.age}</p>
+                  <p className="mt-1 text-sm #40ee45">{formErrors.age}</p>
                 )}
               </div>
               <div>
@@ -210,14 +210,14 @@ const WorkoutPlanner = () => {
                   <option>Other</option>
                 </select>
                 {formErrors.gender && (
-                  <p className="mt-1 text-sm text-red-500">{formErrors.gender}</p>
+                  <p className="mt-1 text-sm #40ee45">{formErrors.gender}</p>
                 )}
               </div>
             </div>
           </div>
 
           <div className="mb-6">
-            <h3 className="mb-4 text-sm text-red-500">Health Information</h3>
+            <h3 className="mb-4 text-sm #40ee45">Health Information</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block mb-2 text-sm text-200">Height (cm)</label>
@@ -231,7 +231,7 @@ const WorkoutPlanner = () => {
                   }`}
                 />
                 {formErrors.height && (
-                  <p className="mt-1 text-sm text-red-500">{formErrors.height}</p>
+                  <p className="mt-1 text-sm #40ee45">{formErrors.height}</p>
                 )}
               </div>
               <div>
@@ -246,7 +246,7 @@ const WorkoutPlanner = () => {
                   }`}
                 />
                 {formErrors.weight && (
-                  <p className="mt-1 text-sm text-red-500">{formErrors.weight}</p>
+                  <p className="mt-1 text-sm #40ee45">{formErrors.weight}</p>
                 )}
               </div>
             </div>
@@ -283,7 +283,7 @@ const WorkoutPlanner = () => {
 
           <button 
             onClick={handleCreatePlan}
-            className="w-full py-2 text-white transition-colors bg-red-500 rounded hover:bg-red-600"
+            className="w-full py-2 text-white transition-colors bg-green-500 rounded hover:bg-green-600"
           >
             Create Plan
           </button>
@@ -306,7 +306,7 @@ const WorkoutPlanner = () => {
                         setSelectedPlan(plan._id);
                         setSelectedDay(plan.days?.[0] || null);
                       }}
-                      className="px-4 py-2 text-sm text-white bg-red-500 rounded hover:bg-red-600"
+                      className="px-4 py-2 text-sm text-white bg-green-500 rounded hover:bg-green-600"
                     >
                       View
                     </button>
@@ -348,7 +348,7 @@ const WorkoutPlanner = () => {
                 onClick={() => setSelectedDay(day)}
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   selectedDay === day 
-                    ? 'bg-red-500 text-white' 
+                    ? 'bg-green-500 text-white' 
                     : 'bg-secondary  hover:bg-secondary/60'
                 }`}
               >
@@ -360,8 +360,8 @@ const WorkoutPlanner = () => {
           {/* Exercises Display */}
           {selectedDay && (
             <div className="p-6 border border-gray-700 rounded-lg shadow-md bg-secondary">
-              <h4 className="flex items-center mb-4 text-lg font-semibold text-red-500">
-                <span className="flex items-center justify-center w-8 h-8 mr-3 text-white bg-red-500 rounded-full">
+              <h4 className="flex items-center mb-4 text-lg font-semibold #40ee45">
+                <span className="flex items-center justify-center w-8 h-8 mr-3 text-white bg-green-500 rounded-full">
                   {selectedDay.day}
                 </span>
                 Workout Details
@@ -373,7 +373,7 @@ const WorkoutPlanner = () => {
                     className="flex items-center justify-between p-4 transition-colors rounded-lg bg-dark hover:bg-dark/60"
                   >
                     <div className="flex items-center space-x-4">
-                    <div className="flex items-center justify-center w-10 h-10 text-white bg-red-500 rounded-full">
+                    <div className="flex items-center justify-center w-10 h-10 text-white bg-green-500 rounded-full">
                         {exerciseIndex + 1}
                       </div>
                       <div>
@@ -388,7 +388,7 @@ const WorkoutPlanner = () => {
                       </div>
                       <button 
                         onClick={() => setSelectedExercise(exercise)}
-                        className="px-4 py-2 text-sm text-white transition-colors bg-red-500 rounded hover:bg-red-600"
+                        className="px-4 py-2 text-sm text-white transition-colors bg-green-500 rounded hover:bg-green-600"
                       >
                         View Exercise
                       </button>
@@ -418,7 +418,7 @@ const WorkoutPlanner = () => {
               </button>
               <button
                 onClick={handleDeletePlan}
-                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
               >
                 Delete
               </button>

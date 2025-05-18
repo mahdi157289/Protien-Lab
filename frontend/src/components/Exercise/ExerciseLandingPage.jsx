@@ -1,4 +1,4 @@
-// src/pages/ExercisesLanding.jsx
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../config/api';
@@ -38,26 +38,25 @@ const ExerciseLandingPage = () => {
   }
 
   return (
-    <div className="min-h-screen ">
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }} className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative h-[500px]">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="relative h-[500px]">
         <div className="absolute inset-0">
-          <img
-            src={exerciseLandingImg}
-            alt="Hero background"
-            className="object-cover w-full h-full"
-          />
+          <img src={exerciseLandingImg} alt="Hero background" className="object-cover w-full h-full" />
           <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         </div>
-        <div className="container relative flex items-center h-full px-4 mx-auto">
-          <h1 className="mx-auto text-4xl font-bold text-red-500 md:text-6xl max-w-7xl">
+        <motion.div  initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+        className="container relative flex items-center h-full px-4 mx-auto">
+          <h1 className="text-primary mx-auto text-4xl font-bold md:text-6xl max-w-7xl">
             Ready To Make a Change ?
           </h1>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Categories Grid */}
-      <div className="px-4 py-16 mx-auto max-w-7xl">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.5 }} className="px-4 py-16 mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((category) => (
             <CategoryCard
@@ -67,30 +66,33 @@ const ExerciseLandingPage = () => {
             />
           ))}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
 const CategoryCard = ({ category, onClick }) => (
-  <div className="overflow-hidden transition-transform bg-dark rounded-2xl">
+  <motion.div 
+    initial={{ opacity: 0, scale: 0.9 }} 
+    animate={{ opacity: 1, scale: 1 }} 
+    transition={{ duration: 0.8 }} 
+    whileHover={{ scale: 1.05 }} 
+    className="overflow-hidden transition-transform bg-dark rounded-2xl"
+  >
     <div className="aspect-[4/3] relative">
-      <img
-        src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${category.image}`}
-        alt={category.name}
-        className="object-cover w-full h-full"
-      />
+      <img src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${category.image}`} alt={category.name} className="object-cover w-full h-full" />
     </div>
     <div className="p-6 text-center">
       <h3 className="mb-3 text-xl font-semibold text-white">{category.name}</h3>
-      <button 
-        onClick={onClick}
-        className="w-full py-2 text-white transition-colors bg-red-500 rounded-lg hover:bg-red-600"
+      <motion.button 
+        onClick={onClick} 
+        whileHover={{ scale: 1.05 }} 
+        className="w-full py-2 text-white transition-colors bg-green-500 rounded-lg hover:bg-green-600"
       >
         View Exercises
-      </button>
+      </motion.button>
     </div>
-  </div>
+  </motion.div>
 );
 
 CategoryCard.propTypes = {

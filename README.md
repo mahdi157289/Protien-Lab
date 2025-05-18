@@ -1,9 +1,9 @@
-# BodySync - Personalized Fitness & Nutrition Planning System
+# Protein Lab - Personalized Fitness & Nutrition Planning System
 A web-based fitness and nutrition planning system that provides users with personalized workout and diet plans, a virtual supplement store, and a Victory Wall to share success stories.<be><br>
 
 ## 🌐 Live Preview  
 <div align="center">
-<a href="https://bodysync.vercel.app/" target="_blank">Visit BodySync</a>
+<a href="https://Protein Lab.vercel.app/" target="_blank">Visit Protein Lab</a>
 </div>
 <br>
 <div align="center">
@@ -16,22 +16,22 @@ A web-based fitness and nutrition planning system that provides users with perso
   </thead>
   <tbody>
     <tr>
-      <td>Email: <code>user@bodysync.com</code></td>
-      <td>Email: <code>admin@bodysync.com</code></td>
+      <td>Email: <code>user@Protein Lab.com</code></td>
+      <td>Email: <code>admin@Protein Lab.com</code></td>
     </tr>
     <tr>
       <td>Password: <code>user123</code></td>
       <td>Password: <code>admin123</code></td>
     </tr>
     <tr>
-      <td>User URL: <a href="https://bodysync.vercel.app/">User homepage</a></td>
-      <td>Admin URL: <a href="https://bodysync.vercel.app/admin/login/">Admin login</a></td>
+      <td>User URL: <a href="https://Protein Lab.vercel.app/">User homepage</a></td>
+      <td>Admin URL: <a href="https://Protein Lab.vercel.app/admin/login/">Admin login</a></td>
     </tr>
   </tbody>
 </table>
 </div>
 
-![Project Screenshot](./frontend/src/assets/screenshots/BodySync.png)
+![Project Screenshot](./frontend/src/assets/screenshots/Protein Lab.png)
 
 ---
 
@@ -65,13 +65,13 @@ A web-based fitness and nutrition planning system that provides users with perso
 
 ## Installation Guide  
 
-Follow these steps to set up and run the **BodySync** project on your local machine.  
+Follow these steps to set up and run the **Protein Lab** project on your local machine.  
 
   1. Clone the Repository 
   Download the project from GitHub:
   ```sh  
-  git clone https://github.com/geethaka11/BodySync.git
-  cd BodySync
+  git clone https://github.com/geethaka11/Protein Lab.git
+  cd Protein Lab
   ```
   2. Install backend dependencies
   ```sh  
@@ -124,4 +124,4 @@ Follow these steps to set up and run the **BodySync** project on your local mach
 </div>
 
 ## 🔗 Project Link  
-[Visit BodySync](https://bodysync.vercel.app/)
+[Visit Protein Lab](https://Protein Lab.vercel.app/)

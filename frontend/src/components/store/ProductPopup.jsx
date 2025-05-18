@@ -146,7 +146,7 @@ function ProductPopup({ product, onClose }) {
 
               {/* Total Price */}
               <div className="p-4 bg-[#29292A] rounded-lg">
-                <p className="text-xl font-bold text-red-500">
+                <p className="text-xl font-bold #40ee45">
                   Total: Rs. {(product.price * quantity).toLocaleString()}
                 </p>
               </div>
@@ -223,7 +223,7 @@ function ProductPopup({ product, onClose }) {
 
           {/* Error Message */}
           {error && (
-            <div className="p-3 mt-4 text-red-500 rounded-lg bg-red-500/20">
+            <div className="p-3 mt-4 #40ee45 rounded-lg bg-red-500/20">
               {error}
             </div>
           )}
@@ -231,7 +231,7 @@ function ProductPopup({ product, onClose }) {
           {/* Order Button */}
           <div className="flex justify-end mt-6">
             <button
-              className="px-8 py-2 font-bold transition bg-red-500 rounded hover:bg-red-600"
+              className="px-8 py-2 font-bold transition bg-green-500 rounded hover:bg-green-600"
               onClick={handleOrderNow}
               disabled={loading}
             >

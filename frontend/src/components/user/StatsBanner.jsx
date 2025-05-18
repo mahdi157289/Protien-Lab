@@ -53,7 +53,7 @@ const StatsBanner = () => {
   if (error) {
     return (
       <div className="w-full pt-8 md:pt-16">
-        <div className="px-2 py-2 mx-auto text-center text-red-500 rounded-lg">
+        <div className="px-2 py-2 mx-auto text-center #40ee45 rounded-lg">
           {error}
         </div>
       </div>

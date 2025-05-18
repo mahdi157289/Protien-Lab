@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply bg-[#29292A] text-[#FFFCF9];
+  @apply bg-[#585858] text-[#29292A];
   scroll-behavior: smooth;
 }
 

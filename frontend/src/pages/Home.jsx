@@ -5,7 +5,7 @@ import AboutUs from '../components/user/AboutUs';
 import OurServices from '../components/user/OurServices'
 import Faq from '../components/user/Faq';
 import Feedback from '../components/user/Feedback';
-
+import Products from '../components/user/Products';
 const Home = ({ onAuthClick }) => {
   return (
     <>
@@ -13,6 +13,7 @@ const Home = ({ onAuthClick }) => {
       <StatsBanner/>
       <AboutUs/>
       <OurServices />
+      <Products />
       <Faq />
       <Feedback />
     </>

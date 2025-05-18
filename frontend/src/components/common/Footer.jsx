@@ -1,5 +1,5 @@
 import ve from '../../assets/images/common/h1_hero.png'
-import logo from '../../assets/images/common/bodysync.svg';
+import logo from '../../assets/images/common/Protein-Lab.png'
 
 
 const Footer = () => {
@@ -15,7 +15,7 @@ const Footer = () => {
           {/* Logo and tagline */}
           <div className="space-y-2">
             <div className="flex items-center">
-            <img src={logo} alt="BodySync Logo" className="h-12 w-30" />
+            <img src={logo} alt="Protein Lab Logo" className=" w-30 max-h-[100px]" />
             </div>
             <p className="text-sm text-gray-400 ml-7"> Build Your Body<br />  &ensp; As You Want.</p>
           </div>
@@ -66,7 +66,7 @@ const Footer = () => {
         {/* Bottom section with copyright and social icons */}
         <div className="flex flex-col items-center justify-between pt-8 mt-8 border-t-2 border-gray-800 md:flex-row">
           <div className="text-sm text-gray-400">
-            Copywrite © 2025 BodySync. All rights reserved.
+            Copywrite © 2025 Protein Lab. All rights reserved.
             <a href="#" className="ml-4 hover:text-white"><u>Terms of Use</u></a>
             <a href="#" className="ml-4 hover:text-white"><u>Privacy Policy</u></a>
           </div>

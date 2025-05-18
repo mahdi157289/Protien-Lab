@@ -11,7 +11,7 @@ function App() {
       <AuthProvider>
         <AdminAuthProvider>
           <div>
-            <main className="pt-[73px]">
+            <main className="pt-[73px]" style={{ fontFamily: "'Orbitron', sans-serif" , color: 'white' }} >
               <Routes>
                 <Route path="/*" element={<UserRoutes />} />
                 <Route path="/admin/*" element={<AdminRoutes />} />

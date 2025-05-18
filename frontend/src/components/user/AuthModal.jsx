@@ -136,7 +136,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
         className={`p-2 mb-4 text-sm text-center rounded ${
           error.includes('Successfully registered') 
             ? 'text-green-500 bg-green-100'
-            : 'text-red-500 bg-red-100'
+            : '#40ee45 bg-red-100'
         }`}
       >
         {error}
@@ -255,7 +255,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                       </div>
                       <motion.button
                         type="submit"
-                        className="block px-8 py-3 mx-auto text-base transition duration-500 text-accent rounded-xl bg-primary hover:bg-red-600 md:text-lg"
+                        className="block px-8 py-3 mx-auto text-base transition duration-500 text-accent rounded-xl bg-primary hover:bg-green-600 md:text-lg"
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -303,7 +303,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                       <motion.button
                         type="submit"
                         disabled={loading}
-                        className={`block px-8 py-3 mx-auto text-base transition duration-500 text-accent rounded-xl bg-primary ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-red-600'} md:text-lg`}
+                        className={`block px-8 py-3 mx-auto text-base transition duration-500 text-accent rounded-xl bg-primary ${loading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-green-600'} md:text-lg`}
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
                       >
@@ -333,7 +333,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                   >
                     {isSignUp ? (
                       <>
-                        <h3 className="text-2xl font-bold text-center sm:text-3xl md:text-3xl lg:text-4xl">Join to BodySync Today!</h3>
+                        <h3 className="text-2xl font-bold text-center sm:text-3xl md:text-3xl lg:text-4xl">Join to Protein Lab Today!</h3>
                         <p className="text-sm text-center sm:text-base md:text-lg lg:text-lg">Start your fitness journey here</p>
                         <div className="mt-6 text-center">
                           <motion.button

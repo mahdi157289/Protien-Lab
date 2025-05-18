@@ -51,7 +51,7 @@ const ExerciseDetailPage = () => {
     <div className="min-h-screen text-white ">
       <div className="px-4 py-8 mx-auto max-w-7xl">
         <h1 className="mb-4 text-4xl font-bold text-center">{exercise.category}</h1>
-        <h2 className="mb-8 text-3xl font-bold text-center text-red-500">{exercise.name}</h2>
+        <h2 className="mb-8 text-3xl font-bold text-center #40ee45">{exercise.name}</h2>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
@@ -77,7 +77,7 @@ const ExerciseDetailPage = () => {
                       onClick={() => setIsPlaying(true)}
                       className="absolute inset-0 flex items-center justify-center"
                     >
-                      <div className="flex items-center justify-center w-16 h-16 bg-red-500 rounded-full">
+                      <div className="flex items-center justify-center w-16 h-16 bg-green-500 rounded-full">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="w-8 h-8 text-white"

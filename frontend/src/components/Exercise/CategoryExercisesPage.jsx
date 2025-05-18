@@ -39,7 +39,7 @@ const CategoryExercisesPage = () => {
   return (
     <div className="min-h-screen ">
       <div className="px-4 py-12 mx-auto max-w-7xl">
-        <h1 className="mb-8 text-4xl font-bold text-center text-red-500">{category}</h1>
+        <h1 className="mb-8 text-4xl font-bold text-center #40ee45">{category}</h1>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {exercises.map((exercise) => (
             <ExerciseCard
@@ -65,7 +65,7 @@ const ExerciseCard = ({ exercise, onClick }) => (
       <h3 className="mb-2 text-lg font-semibold text-white">{exercise.name}</h3>
       <button
         onClick={onClick}
-        className="px-4 py-2 mt-auto text-white transition-colors bg-red-500 rounded-md hover:bg-red-600"
+        className="px-4 py-2 mt-auto text-white transition-colors bg-green-500 rounded-md hover:bg-green-600"
       >
         View Details
       </button>

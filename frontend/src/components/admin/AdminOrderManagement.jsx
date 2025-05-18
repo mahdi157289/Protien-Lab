@@ -123,7 +123,7 @@ const AdminOrderManagement = () => {
         <h1 className="text-3xl font-bold">Order Management</h1>
         <button
           onClick={() => navigate('/admin/store/products')}
-          className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-red-600"
+          className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-green-600"
         >
           <ArrowLeft className='mr-2 size-5' /> Go to Products
         </button>
@@ -241,7 +241,7 @@ const AdminOrderManagement = () => {
                   {order.status !== 'Cancelled' && order.status !== 'Delivered' && (
                     <button
                       onClick={() => openCancelModal(order)}
-                      className="flex items-center gap-1 px-3 py-1 transition bg-red-500 rounded-md text-accent hover:bg-red-600"
+                      className="flex items-center gap-1 px-3 py-1 transition bg-green-500 rounded-md text-accent hover:bg-green-600"
                     >
                       <X size={16} /> Cancel
                     </button>
@@ -258,7 +258,7 @@ const AdminOrderManagement = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
           <div className="w-full max-w-md p-6 rounded-lg shadow-lg bg-dark text-accent">
             <div className="flex justify-end">
-              <button onClick={() => setIsStatusModalOpen(false)} className="text-accent hover:text-primary">
+              <button onClick={() => setIsStatusModalOpen(false)} className="text-accent hover:bg-green-600">
                 <X size={24} />
               </button>
             </div>
@@ -275,7 +275,7 @@ const AdminOrderManagement = () => {
             </select>
             <button
               onClick={updateOrderStatus}
-              className="px-4 py-2 bg-red-500 rounded-md text-accent hover:bg-red-600"
+              className="px-4 py-2 bg-green-500 rounded-md text-accent hover:bg-green-600"
             >
               Update Status
             </button>
@@ -298,7 +298,7 @@ const AdminOrderManagement = () => {
               </button>
               <button
                 onClick={cancelOrder}
-                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
               >
                 Confirm
               </button>
@@ -316,7 +316,7 @@ const AdminOrderManagement = () => {
               <h2 className="text-3xl font-bold text-primary">Order #{selectedOrder._id?.slice(-6)}</h2>
               <button 
                 onClick={() => setIsViewModalOpen(false)} 
-                className="transition-colors duration-300 text-accent hover:text-primary"
+                className="transition-colors duration-300 text-accent hover:bg-green-600"
               >
                 <X size={28} strokeWidth={2} />
               </button>

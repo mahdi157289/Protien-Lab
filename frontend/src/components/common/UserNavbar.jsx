@@ -1,22 +1,20 @@
-import { useState, useRef, useEffect } from 'react'; // Add useRef and useEffect
+import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserCircle, LogOut, User } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
-import logo from '../../assets/images/common/bodysync.svg';
+import logo from '../../assets/images/common/Protein-Lab.png';
 
 const UserNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false); // State for user menu visibility
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
 
-  // Ref for the user menu dropdown
   const userMenuRef = useRef(null);
 
-  // Close user menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
@@ -75,13 +73,13 @@ const UserNavbar = ({ onAuthClick }) => {
   const shouldShowImage = user?.profileImage && !imageError;
 
   return (
-    <nav className="fixed top-0 z-40 w-full px-6 py-4 bg-dark bg-opacity-95">
+    <nav style={{ background: "linear-gradient(60deg, rgba(88, 88, 88, 1) 80%, rgba(255, 250, 252, 1) 100%)" }} className="fixed top-0 z-40 w-full px-6 py-1">{/* Reduced padding */}
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
-          {/* Logo */}
+          {/* Extra large logo */}
           <div className="flex items-center">
-            <NavLink to="/" className="h-8">
-              <img src={logo} alt="BodySync" className="h-full" />
+            <NavLink to="/" className="flex items-center h-20"> {/* Increased height */}
+              <img src={logo} alt="Protein Lab" className="h-full max-h-[100px]" /> {/* Max height increased */}
             </NavLink>
           </div>
 
@@ -90,12 +88,13 @@ const UserNavbar = ({ onAuthClick }) => {
             {navItems.map((item) => (
               <NavLink
                 key={item.label}
+                style={{ fontFamily: "'Orbitron', sans-serif" }} 
                 to={item.path}
                 className={({ isActive }) =>
                   `text-accent transition-all duration-500 relative text-base md:text-lg ${
                     isActive
-                      ? 'text-primary after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300'
-                      : 'text-accent after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:text-primary'
+                      ? ' text-accent after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300'
+                      : ' text-primary after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300'
                   }`
                 }
               >
@@ -110,8 +109,8 @@ const UserNavbar = ({ onAuthClick }) => {
               <div className="flex items-center gap-4">
                 <div className="relative" ref={userMenuRef}>
                   <button
-                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)} // Toggle user menu on click
-                    className="flex items-center justify-center w-10 h-10 overflow-hidden transition-colors border-2 rounded-full bg-secondary text-accent hover:text-primary border-secondary"
+                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                    className="flex items-center justify-center w-10 h-10 overflow-hidden transition-colors border-2 rounded-full bg-secondary text-primary border-secondary"
                   >
                     {shouldShowImage ? (
                       <img
@@ -124,15 +123,14 @@ const UserNavbar = ({ onAuthClick }) => {
                       <UserCircle className="w-10 h-10" />
                     )}
                   </button>
-                  {/* User Menu Dropdown */}
                   {isUserMenuOpen && (
                     <div className="absolute right-0 w-48 px-5 py-5 mt-6 space-y-4 rounded-xl bg-dark">
                       <button
                         onClick={() => {
                           navigate('/profile');
-                          setIsUserMenuOpen(false); // Close menu after navigation
+                          setIsUserMenuOpen(false);
                         }}
-                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
+                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent"
                       >
                         <User className="w-6 h-6" />
                         Profile
@@ -141,9 +139,9 @@ const UserNavbar = ({ onAuthClick }) => {
                       <button
                         onClick={() => {
                           setLogoutConfirm(true);
-                          setIsUserMenuOpen(false); // Close menu after clicking logout
+                          setIsUserMenuOpen(false);
                         }}
-                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent hover:text-primary"
+                        className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent "
                       >
                         <LogOut className="w-6 h-6" />
                         Logout
@@ -164,7 +162,7 @@ const UserNavbar = ({ onAuthClick }) => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button onClick={toggleMenu} className="transition-colors text-accent hover:text-primary">
+            <button onClick={toggleMenu} className="transition-colors text-accent ">
               {isOpen ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -203,7 +201,7 @@ const UserNavbar = ({ onAuthClick }) => {
                 to={item.path}
                 onClick={closeMenu}
                 className={({ isActive }) =>
-                  `text-accent hover:text-primary transition-all duration-500 relative ${
+                  `text-accent  transition-all duration-500 relative ${
                     isActive
                       ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300'
                       : 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100'
@@ -217,13 +215,13 @@ const UserNavbar = ({ onAuthClick }) => {
               <>
                 <button
                   onClick={() => navigate('/profile')}
-                  className="text-left transition-all duration-500 text-accent hover:text-primary"
+                  className="text-left transition-all duration-500 text-accent "
                 >
                   Profile
                 </button>
                 <button
                   onClick={() => setLogoutConfirm(true)}
-                  className="text-left transition-all duration-500 text-accent hover:text-primary"
+                  className="text-left transition-all duration-500 text-accent "
                 >
                   Logout
                 </button>
@@ -255,7 +253,7 @@ const UserNavbar = ({ onAuthClick }) => {
               </button>
               <button
                 onClick={handleLogout}
-                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-700"
+                className="px-8 py-2 transition border rounded-lg border-primary bg-primary "
               >
                 Log Out
               </button>

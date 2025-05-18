@@ -73,7 +73,7 @@ function OrderPage() {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center h-screen text-red-500">
+      <div className="flex items-center justify-center h-screen #40ee45">
         {error}
       </div>
     );
@@ -90,13 +90,13 @@ function OrderPage() {
       {/* Navigation Buttons */}
       <div className="flex flex-col justify-center gap-8 mb-8 sm:flex-row sm:gap-16">
         <button
-          className="w-full sm:w-[288px] h-[60px] border-2 border-red-500 text-red-500 hover:bg-red-500 hover:text-white font-bold rounded-[50px] transition duration-200"
+          className="w-full sm:w-[288px] h-[60px] border-2 border-green-500 #40ee45 hover:bg-green-500 hover:text-white font-bold rounded-[50px] transition duration-200"
           onClick={() => navigate("/store/products")}
         >
           Products
         </button>
         <button 
-          className="w-full sm:w-[288px] h-[60px] bg-red-500 hover:bg-red-600 text-white font-bold border-2 border-white rounded-[50px] transition duration-200"
+          className="w-full sm:w-[288px] h-[60px] bg-green-500 hover:bg-green-600 text-white font-bold border-2 border-white rounded-[50px] transition duration-200"
           onClick={() => navigate("/store/orders")}
         >
           Orders
@@ -116,7 +116,7 @@ function OrderPage() {
             <div key={order._id} className="bg-[#1C1C1C] text-white rounded-lg p-6 shadow-lg mb-4">
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-600">
                 <div>
-                  <h2 className="font-bold text-red-500">Order #{order._id.slice(-5).toUpperCase()}</h2>
+                  <h2 className="font-bold #40ee45">Order #{order._id.slice(-5).toUpperCase()}</h2>
                   <p className="text-sm text-gray-400">Placed on: {formatDate(order.createdAt)}</p>
                 </div>
                 <span className={`px-2 py-1 rounded-lg text-sm ${
@@ -157,14 +157,14 @@ function OrderPage() {
                         {order.status === 'Pending' || order.status === 'Processing' ? (
                           <button
                             onClick={() => openConfirmationModal(order, 'cancel')}
-                            className="px-4 py-2 text-white transition bg-red-500 rounded-md hover:bg-red-600"
+                            className="px-4 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600"
                           >
                             Cancel Order
                           </button>
                         ) : order.status === 'Cancelled' && (
                           <button
                             onClick={() => openConfirmationModal(order, 'delete')}
-                            className="flex items-center gap-2 px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
+                            className="flex items-center gap-2 px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
                           >
                             <Trash size={16} /> Delete
                           </button>

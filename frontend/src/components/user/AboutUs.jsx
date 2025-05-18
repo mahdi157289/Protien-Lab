@@ -2,10 +2,10 @@ import aboutImage from "../../assets/images/home/about.jpg";
 
 const About = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" style={{ fontFamily: "'Orbitron', sans-serif" }} >
       <div className="px-4 py-8 mx-auto max-w-7xl md:py-16">
         <h1 className="mb-8 text-5xl font-bold text-center md:mb-16 md:text-6xl lg:text-7xl">
-          <span className="text-red-500">About</span>{' '}
+          <span className="text-primary">About</span>{' '}
           <span>Us</span>
         </h1>
 
@@ -19,10 +19,10 @@ const About = () => {
           </div>
 
           <div className="space-y-6 lg:pl-8">
-            <div>
+            <div >
               <h2 className="mb-2 text-2xl font-bold md:text-3xl">
                 Welcome to{' '}
-                <span className="text-primary">BodySync</span>
+                <span className="text-primary tracking-widest">Protein Lab</span>
               </h2>
               <p>
                 Your ultimate destination for fitness and nutrition harmony.
@@ -38,7 +38,7 @@ const About = () => {
                 individuals to achieve their health goals. We provide tailored workout
                 plans, balanced diet guidance, a supplement store, and a supportive
                 platform through our Victory Wall to celebrate progress and inspire growth.
-                BodySync is dedicated to fostering a healthier, more balanced lifestyle for
+                Protein Lab is dedicated to fostering a healthier, more balanced lifestyle for
                 every user.
               </p>
             </div>
