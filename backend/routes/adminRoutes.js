@@ -31,9 +31,9 @@ router.get('/posts/:id', adminAuth, getPostDetails);
 router.delete('/posts/:id', adminAuth, deletePost);
 
 // Product routes
-router.post('/products', adminAuth, upload.single('image'), productController.createProduct);
+router.post('/products', adminAuth, upload.array('images', 2), productController.createProduct);
 router.get('/products', adminAuth, productController.getAllProducts);
-router.put('/products/:id', adminAuth, upload.single('image'), productController.updateProduct);
+router.put('/products/:id', adminAuth, upload.array('images', 2), productController.updateProduct);
 router.delete('/products/:id', adminAuth, productController.deleteProduct);
 
 // Order routes

@@ -14,6 +14,7 @@ import ProtectedRoute from '../components/user/ProtectedRoute';
 import Footer from '../components/common/Footer';
 
 const UserRoutes = () => {
+  
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authType, setAuthType] = useState('login');
 

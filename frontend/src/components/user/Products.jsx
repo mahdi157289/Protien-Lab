@@ -1,69 +1,57 @@
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import workoutImage from "../../assets/images/home/workout.png";
-import dietImage from "../../assets/images/home/diet.png";
-import supplementImage from "../../assets/images/home/Supplement.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDumbbell, faUtensils, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 
-const services = [
-  {
-    title: "Workout Plans",
-    description: "Personalized routines to help you reach your fitness goals.",
-    buttonText: "Start Workout",
-    icon: <FontAwesomeIcon icon={faDumbbell} />,
-    image: workoutImage,
-    path: "/workouts",
-  },
-  {
-    title: "Diet Plans",
-    description: "Optimized nutrition strategies for better health.",
-    buttonText: "Get Diet Plan",
-    icon: <FontAwesomeIcon icon={faUtensils} />,
-    image: dietImage,
-    path: "/diet-plan",
-  },
-  {
-    title: "Supplement Store",
-    description: "High-quality supplements to complement your workouts.",
-    buttonText: "Shop Now",
-    icon: <FontAwesomeIcon icon={faShoppingCart} />,
-    image: supplementImage,
-    path: "/store",
-  },
+// Import your brand images here
+import brand1 from "../../assets/images/brands/brand1.png";
+import brand2 from "../../assets/images/brands/brand2.png";
+import brand3 from "../../assets/images/brands/brand3.png";
+import brand4 from "../../assets/images/brands/brand4.png";
+import brand5 from "../../assets/images/brands/brand5.png";
+// Add more as needed
+
+const brandImages = [
+  { src: brand1, alt: "Brand 1" },
+  { src: brand2, alt: "Brand 2" },
+  { src: brand3, alt: "Brand 3" },
+  { src: brand4, alt: "Brand 4" },
+  { src: brand5, alt: "Brand 5" },
+  // Add more as needed
 ];
 
-const OurServices = () => {
-  const navigate = useNavigate();
+const Products = () => {
+  const { t } = useTranslation();
+
+  // Duplicate the array for seamless infinite scroll
+  const images = [...brandImages, ...brandImages];
 
   return (
     <div className="w-full px-4 py-12 overflow-hidden relative">
       <h1 className="mb-12 text-4xl font-bold text-center md:text-5xl">
-        <span>Our </span>
-        <span className="text-primary">BRANDS</span>
+        <span>{t("our") + " "}</span>
+        <span className="text-primary">{t("brands")}</span>
       </h1>
 
-      {/* Smooth Horizontal Scroll */}
-      <div className="w-full overflow-hidden">
+      {/* Smooth Horizontal Brand Scroll */}
+      <div className="relative w-full overflow-hidden">
         <motion.div
-          className="flex gap-6"
-          initial={{ x: "100%" }}
-          animate={{ x: "-100%" }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+          className="flex gap-12"
+          style={{ width: `${images.length * 220}px` }}
+          initial={{ x: 0 }}
+          animate={{ x: `-${(brandImages.length) * 220}px` }}
+          transition={{
+            duration: 20,
+            repeat: Infinity,
+            ease: "linear",
+          }}
         >
-          {services.map((service, index) => (
-            <div key={index} className="flex flex-col items-center p-4 pb-6 text-center rounded-2xl bg-dark min-w-[300px]">
-              <div className="w-full mb-6 overflow-hidden rounded-lg aspect-video">
-                <img src={service.image} alt={service.title} className="object-cover w-full h-full bg-secondary" />
-              </div>
-              <h2 className="mb-4 text-2xl font-bold">{service.title}</h2>
-              <p className="flex-grow mb-6">{service.description}</p>
-              <button
-                className="flex items-center gap-2 px-6 py-2 transition-colors duration-300 border rounded-full border-accent bg-primary hover:border-primary"
-                onClick={() => navigate(service.path)}
-              >
-                {service.buttonText} <span>{service.icon}</span>
-              </button>
+          {images.map((brand, idx) => (
+            <div key={idx} className="flex items-center justify-center min-w-[200px] h-32 bg-dark rounded-xl shadow-lg">
+              <img
+                src={brand.src}
+                alt={brand.alt}
+                className="object-contain h-24 w-auto mx-auto"
+                draggable={false}
+              />
             </div>
           ))}
         </motion.div>
@@ -72,4 +60,4 @@ const OurServices = () => {
   );
 };
 
-export default OurServices;
+export default Products;

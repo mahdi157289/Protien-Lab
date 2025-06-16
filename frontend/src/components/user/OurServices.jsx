@@ -4,32 +4,33 @@ import supplementImage from "../../assets/images/home/Supplement.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDumbbell, faUtensils, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const OurServices = () => {
-
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const services = [
     {
-      title: "Workout Plans",
-      description: "Personalized routines to help you reach your fitness goals, whether it's strength, endurance, or weight loss",
-      buttonText: "Start Workout",
-      icon:  <FontAwesomeIcon icon={faDumbbell} />,
+      title: t("workout_plans_title"),
+      description: t("workout_plans_desc"),
+      buttonText: t("workout_plans_btn"),
+      icon: <FontAwesomeIcon icon={faDumbbell} />,
       image: workoutImage,
       path: "/workouts",
     },
     {
-      title: "Diet Plans",
-      description: "Personalized nutrition strategies designed to optimize your fitness progress and overall health",
-      buttonText: "Get Diet Plan",
-      icon:  <FontAwesomeIcon icon={faUtensils} />,
+      title: t("diet_plans_title"),
+      description: t("diet_plans_desc"),
+      buttonText: t("diet_plans_btn"),
+      icon: <FontAwesomeIcon icon={faUtensils} />,
       image: dietImage,
       path: "/diet-plan",
     },
     {
-      title: "Supplement Store",
-      description: "Quality supplements that complement your workouts and boost performance towards your goals",
-      buttonText: "Shop Now",
+      title: t("supplement_store_title"),
+      description: t("supplement_store_desc"),
+      buttonText: t("supplement_store_btn"),
       icon: <FontAwesomeIcon icon={faShoppingCart} />,
       image: supplementImage,
       path: "/store",
@@ -39,8 +40,8 @@ const OurServices = () => {
   return (
     <div className="w-full px-4 py-12">
       <h1 className="mb-12 text-4xl font-bold text-center md:text-5xl">
-        <span>Our </span>
-        <span className="text-primary">Services</span>
+        <span>{t("our") + " "}</span>
+        <span className="text-primary">{t("services")}</span>
       </h1>
 
       <div className="grid grid-cols-1 gap-6 mx-auto md:grid-cols-2 lg:grid-cols-3 max-w-7xl">

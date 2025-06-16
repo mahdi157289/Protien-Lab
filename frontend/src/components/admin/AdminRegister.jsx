@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { registerAdmin } from '../../config/adminApi';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const AdminRegister = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '' });
@@ -8,6 +9,7 @@ const AdminRegister = () => {
   const [success, setSuccess] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,15 +20,15 @@ const AdminRegister = () => {
     try {
       // Basic validation
       if (!form.name || !form.email || !form.password) {
-        throw new Error('All fields are required');
+        throw new Error(t('admin_register_error_required'));
       }
       
       if (form.password.length < 6) {
-        throw new Error('Password must be at least 6 characters long');
+        throw new Error(t('admin_register_error_password_length'));
       }
 
       if (!form.email.includes('@')) {
-        throw new Error('Please enter a valid email address');
+        throw new Error(t('admin_register_error_email'));
       }
 
       await registerAdmin(form);
@@ -38,7 +40,7 @@ const AdminRegister = () => {
         navigate('/admin/login');
       }, 2000);
     } catch (error) {
-      setError(error.response?.data?.message || error.message || 'Registration failed');
+      setError(error.response?.data?.message || error.message || t('admin_register_error_generic'));
     } finally {
       setIsSubmitting(false);
     }
@@ -69,24 +71,24 @@ const AdminRegister = () => {
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span>Registration successful! Redirecting to login...</span>
+              <span>{t('admin_register_success')}</span>
             </div>
           </div>
         )}
 
         <h2 className="text-2xl font-bold text-center text-[#FFFCF9]">
-          Register Admin
+          {t('admin_register_title')}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="name" className="block mb-1 text-sm font-medium text-[#FFFCF9]">
-              Name
+              {t('admin_register_name')}
             </label>
             <input
               type="text"
               id="name"
-              placeholder="Enter your name"
+              placeholder={t('admin_register_name_placeholder')}
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
@@ -96,12 +98,12 @@ const AdminRegister = () => {
 
           <div>
             <label htmlFor="email" className="block mb-1 text-sm font-medium text-[#FFFCF9]">
-              Email
+              {t('admin_register_email')}
             </label>
             <input
               type="email"
               id="email"
-              placeholder="Enter your email"
+              placeholder={t('admin_register_email_placeholder')}
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
@@ -111,12 +113,12 @@ const AdminRegister = () => {
 
           <div>
             <label htmlFor="password" className="block mb-1 text-sm font-medium text-[#FFFCF9]">
-              Password
+              {t('admin_register_password')}
             </label>
             <input
               type="password"
               id="password"
-              placeholder="Enter your password"
+              placeholder={t('admin_register_password_placeholder')}
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
@@ -129,18 +131,18 @@ const AdminRegister = () => {
             className="w-full px-4 py-2 font-medium text-[#FFFCF9] rounded-lg bg-[#40ee45] hover:bg-[#40ee45]/90 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none transition-colors"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Registering...' : 'Register'}
+            {isSubmitting ? t('admin_register_registering') : t('admin_register_register')}
           </button>
         </form>
 
         <p className="mt-4 text-sm text-center text-[#FFFCF9]">
-          Already have an account?{' '}
+          {t('admin_register_already_account')}{' '}
           <button
             onClick={() => navigate('/admin/login')}
             className="text-[#40ee45] hover:underline disabled:opacity-50 transition-colors"
             disabled={isSubmitting}
           >
-            Login here
+            {t('admin_register_login_here')}
           </button>
         </p>
       </div>

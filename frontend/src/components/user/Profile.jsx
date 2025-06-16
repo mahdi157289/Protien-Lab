@@ -5,6 +5,7 @@ import { User } from 'lucide-react';
 import api from '../../config/api';
 import PropTypes from 'prop-types';
 import { Loader } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const InputField = memo(({ label, name, value, onChange, isEditing, type = "text" }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
@@ -39,6 +40,7 @@ const Profile = () => {
   const [formData, setFormData] = useState({
     firstName: '', lastName: '', email: '', address: '', mobileNumber: '', gender: '', weight: '', height: '', profileImage: ''
   });
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -46,13 +48,14 @@ const Profile = () => {
         const response = await api.get('/profile');
         setFormData(response.data);
       } catch (err) {
-        setError('Error fetching profile');
+        setError(t('profile_fetch_error'));
         console.error('Error fetching profile:', err);
       } finally {
         setLoading(false);
       }
     };
     fetchProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (loading) {
@@ -70,13 +73,13 @@ const Profile = () => {
           {error && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="p-4 mb-4 rounded bg-primary">{error}</motion.div>}
           
           <motion.div className="flex items-center justify-between mb-8" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }}>
-            <h1 className="pl-8 text-3xl font-bold">My Profile</h1>
+            <h1 className="pl-8 text-3xl font-bold">{t('profile_title')}</h1>
             <motion.button
               onClick={() => setIsEditing(!isEditing)}
               whileHover={{ scale: 1.05 }}
               className="flex items-center gap-2 px-4 py-2 transition-colors rounded-lg bg-secondary hover:bg-secondary/50"
             >
-              {isEditing ? 'Cancel' : 'Edit'}
+              {isEditing ? t('profile_cancel') : t('profile_edit')}
             </motion.button>
           </motion.div>
 
@@ -88,11 +91,11 @@ const Profile = () => {
             </motion.div>
 
             <motion.div className="grid grid-cols-1 gap-6 md:col-span-2 md:grid-cols-2">
-              <InputField label="First Name" name="firstName" value={formData.firstName} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={isEditing} />
-              <InputField label="Email" name="email" value={formData.email} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={false} type="email" />
-              <InputField label="Address" name="address" value={formData.address} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={isEditing} />
-              <InputField label="Mobile Number" name="mobileNumber" value={formData.mobileNumber} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={isEditing} type="tel" />
-              <InputField label="Last Name" name="lastName" value={formData.lastName} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={isEditing} />
+              <InputField label={t('profile_first_name')} name="firstName" value={formData.firstName} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={isEditing} />
+              <InputField label={t('profile_email')} name="email" value={formData.email} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={false} type="email" />
+              <InputField label={t('profile_address')} name="address" value={formData.address} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={isEditing} />
+              <InputField label={t('profile_mobile_number')} name="mobileNumber" value={formData.mobileNumber} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={isEditing} type="tel" />
+              <InputField label={t('profile_last_name')} name="lastName" value={formData.lastName} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} isEditing={isEditing} />
             </motion.div>
           </div>
 
@@ -103,7 +106,7 @@ const Profile = () => {
                 whileHover={{ scale: 1.05 }}
                 className="px-4 py-2 transition-colors border rounded-lg bg-primary hover:bg-green-600 hover:border-primary"
               >
-                Save Changes
+                {t('profile_save_changes')}
               </motion.button>
             </motion.div>
           )}

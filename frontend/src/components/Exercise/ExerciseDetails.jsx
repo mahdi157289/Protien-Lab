@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../config/api';
 import { Loader } from 'lucide-react';
+import { useTranslation } from "react-i18next";
 
 const ExerciseDetailPage = () => {
   const { id } = useParams();
   const [exercise, setExercise] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,7 +38,7 @@ const ExerciseDetailPage = () => {
   }
 
   if (!exercise) {
-    return <div className="flex items-center justify-center min-h-screen bg-dark">Exercise not found</div>;
+    return <div className="flex items-center justify-center min-h-screen bg-dark">{t('exercise_not_found')}</div>;
   }
 
   const getYouTubeEmbedId = (url) => {
@@ -96,10 +98,10 @@ const ExerciseDetailPage = () => {
 
           <div className="lg:col-span-1">
             <div className="p-6 rounded-lg bg-dark">
-              <h3 className="mb-4 text-2xl font-bold">Exercise Details</h3>
+              <h3 className="mb-4 text-2xl font-bold">{t('exercise_details_title')}</h3>
               <p className="mb-4 text-gray-300">{exercise.description}</p>
               <div className="mt-4">
-                <h4 className="mb-2 text-lg font-semibold">Target Muscles</h4>
+                <h4 className="mb-2 text-lg font-semibold">{t('exercise_target_muscles')}</h4>
                 <p className="text-gray-400">{exercise.category}</p>
               </div>
             </div>

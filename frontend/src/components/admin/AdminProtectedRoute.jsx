@@ -1,10 +1,12 @@
 import PropTypes from 'prop-types';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const AdminProtectedRoute = ({ children }) => {
   const { admin, loading } = useAdminAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   if (loading) {
     return (
@@ -41,9 +43,9 @@ const AdminProtectedRoute = ({ children }) => {
             </div>
           </div>
 
-          <h2 className="mb-4 text-2xl font-bold text-accent">Admin Access Required</h2>
+          <h2 className="mb-4 text-2xl font-bold text-accent">{t('admin_protected_access_required')}</h2>
           <p className="mb-6 text-accent/80">
-            This page requires administrator privileges. Please sign in with an admin account to access this content.
+            {t('admin_protected_access_message')}
           </p>
 
           <div className="space-y-3">
@@ -51,13 +53,13 @@ const AdminProtectedRoute = ({ children }) => {
               className="w-full px-4 py-2 transition-colors duration-200 rounded-md bg-primary hover:bg-primary/70 text-accent"
               onClick={() => navigate('/admin/register')}
             >
-              Register as Admin
+              {t('admin_protected_register')}
             </button>
             <button
               className="w-full px-4 py-2 transition-colors duration-200 rounded-md bg-secondary hover:bg-secondary/60 text-accent"
               onClick={() => window.history.back()}
             >
-              Go Back
+              {t('admin_protected_go_back')}
             </button>
           </div>
         </div>

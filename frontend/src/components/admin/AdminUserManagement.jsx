@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Eye, X, User, UserCircle2, Calendar, Phone, MapPin, Ruler, Search, Trash2, Edit } from "lucide-react";
 import PropTypes from "prop-types";
+import { useTranslation } from "react-i18next"; // Add this import
 
 const AdminUserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -14,6 +15,7 @@ const AdminUserManagement = () => {
   const [genderFilter, setGenderFilter] = useState("all");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const { t } = useTranslation(); // Add this line
 
   // Apply filters to users
   const applyFilters = (userList) => {
@@ -86,7 +88,7 @@ const AdminUserManagement = () => {
         <div className="p-6 border-b bg-dark backdrop-blur-sm border-accent/10">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center text-2xl font-bold text-accent">
-              <Eye className="mr-3" size={28} /> User Profile
+              <Eye className="mr-3" size={28} /> {t('admin_users_view_profile')}
             </h2>
             <button
               onClick={() => setIsViewModalOpen(false)}
@@ -111,31 +113,31 @@ const AdminUserManagement = () => {
           <div className="space-y-4 md:col-span-2">
             <div className="grid grid-cols-2 gap-4">
               <DetailCard
-                label="Gender"
+                label={t('admin_users_gender')}
                 value={selectedUser.gender}
                 icon={<UserCircle2 className="text-accent" />}
               />
               <DetailCard
-                label="Registration Date"
+                label={t('admin_users_registration_date')}
                 value={new Date(selectedUser.createdAt).toLocaleDateString()}
                 icon={<Calendar className="text-accent" />}
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <DetailCard 
-                label="Phone" 
-                value={selectedUser.number || "N/A"} 
+                label={t('admin_users_phone')} 
+                value={selectedUser.number || t('admin_users_na')} 
                 icon={<Phone className="text-accent" />} 
               />
               <DetailCard 
-                label="Address" 
-                value={selectedUser.address || "N/A"} 
+                label={t('admin_users_address')} 
+                value={selectedUser.address || t('admin_users_na')} 
                 icon={<MapPin className="text-accent" />} 
               />
             </div>
             <DetailCard 
-              label="Physical Details" 
-              value={`${selectedUser.height || 'N/A'} cm, ${selectedUser.weight || 'N/A'} kg`} 
+              label={t('admin_users_physical_details')} 
+              value={`${selectedUser.height || t('admin_users_na')} cm, ${selectedUser.weight || t('admin_users_na')} kg`} 
               icon={<Ruler className="text-accent" />} 
               fullWidth 
             />
@@ -199,11 +201,11 @@ const AdminUserManagement = () => {
       <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
         <div className="w-full max-w-2xl rounded-lg bg-dark">
           <div className="p-6">
-            <h2 className="mb-6 text-2xl font-bold">Edit User</h2>
+            <h2 className="mb-6 text-2xl font-bold">{t('admin_users_edit_user')}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div>
-                  <label className="block">First Name</label>
+                  <label className="block">{t('admin_users_first_name')}</label>
                   <input
                     type="text"
                     value={formData.firstName}
@@ -214,7 +216,7 @@ const AdminUserManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block">Last Name</label>
+                  <label className="block">{t('admin_users_last_name')}</label>
                   <input
                     type="text"
                     value={formData.lastName}
@@ -225,7 +227,7 @@ const AdminUserManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-accent">Email</label>
+                  <label className="block text-accent">{t('admin_users_email')}</label>
                   <input
                     type="email"
                     value={formData.email}
@@ -234,7 +236,7 @@ const AdminUserManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-accent">Gender</label>
+                  <label className="block text-accent">{t('admin_users_gender')}</label>
                   <select
                     value={formData.gender}
                     onChange={(e) =>
@@ -242,12 +244,12 @@ const AdminUserManagement = () => {
                     }
                     className="w-full p-2 mt-2 border rounded bg-secondary border-accent/50 focus:outline-none focus:border-accent"
                   >
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
+                    <option value="male">{t('admin_users_male')}</option>
+                    <option value="female">{t('admin_users_female')}</option>
                   </select>
                 </div>
                 <div>
-                  <label className="block text-accent">Address</label>
+                  <label className="block text-accent">{t('admin_users_address')}</label>
                   <input
                     type="text"
                     value={formData.address}
@@ -258,7 +260,7 @@ const AdminUserManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-accent">Phone</label>
+                  <label className="block text-accent">{t('admin_users_phone')}</label>
                   <input
                     type="text"
                     value={formData.number}
@@ -269,7 +271,7 @@ const AdminUserManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-accent">Height (cm)</label>
+                  <label className="block text-accent">{t('admin_users_height_cm')}</label>
                   <input
                     type="number"
                     value={formData.height}
@@ -280,7 +282,7 @@ const AdminUserManagement = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-accent">Weight (kg)</label>
+                  <label className="block text-accent">{t('admin_users_weight_kg')}</label>
                   <input
                     type="number"
                     value={formData.weight}
@@ -297,13 +299,13 @@ const AdminUserManagement = () => {
                   onClick={() => setIsEditModalOpen(false)}
                   className="px-6 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
                 >
-                  Cancel
+                  {t('admin_users_cancel')}
                 </button>
                 <button
                   type="submit"
                   className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
                 >
-                  Save
+                  {t('admin_users_save')}
                 </button>
               </div>
             </form>
@@ -319,23 +321,23 @@ const AdminUserManagement = () => {
       <div className="w-full max-w-md rounded-lg bg-dark">
         <div className="p-6">
           <h2 className="mb-4 text-2xl font-bold text-center">
-            Confirm Delete
+            {t('admin_users_confirm_delete')}
           </h2>
           <p className="mb-6 text-center text-accent">
-            Are you sure you want to delete this user?
+            {t('admin_users_confirm_delete_message')}
           </p>
           <div className="flex justify-center gap-10">
             <button
               onClick={() => setIsDeleteModalOpen(false)}
               className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
             >
-              Cancel
+              {t('admin_users_cancel')}
             </button>
             <button
               onClick={() => handleDelete(selectedUser._id)}
               className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
             >
-              Confirm
+              {t('admin_users_confirm')}
             </button>
           </div>
         </div>
@@ -346,7 +348,7 @@ const AdminUserManagement = () => {
   return (
     <div className="mx-auto min-h-[calc(100vh-5rem)] py-6 max-w-7xl sm:px-6 lg:px-0">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">User Management</h1>
+        <h1 className="text-3xl font-bold">{t('admin_users_management_title')}</h1>
       </div>
       {/* Search and Filters */}
       <div className="p-4 mb-6 bg-dark rounded-xl">
@@ -362,14 +364,13 @@ const AdminUserManagement = () => {
             />
             <input
               type="text"
-              placeholder="Search by name or email..."
+              placeholder={t('admin_users_search_placeholder')}
               className="w-full py-2 pl-10 pr-4 border rounded-lg bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          {/* Date Range Picker */}
           {/* Date Range Picker */}
           <div className="flex gap-4 lg:col-span-4">
             <input
@@ -399,9 +400,9 @@ const AdminUserManagement = () => {
               onChange={(e) => setGenderFilter(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
             >
-              <option value="all">All Genders</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option value="all">{t('admin_users_all_genders')}</option>
+              <option value="male">{t('admin_users_male')}</option>
+              <option value="female">{t('admin_users_female')}</option>
             </select>
           </div>
 
@@ -412,7 +413,7 @@ const AdminUserManagement = () => {
               onClick={handleSearch}
               className="w-full px-4 py-2 transition-opacity rounded-lg bg-primary text-accent hover:opacity-90"
             >
-              Search
+              {t('admin_users_search')}
             </button>
           </div>
         </form>
@@ -423,11 +424,11 @@ const AdminUserManagement = () => {
         <table className="w-full">
           <thead className="bg-dark">
             <tr>
-              <th className="p-3 text-left text-accent">Name</th>
-              <th className="p-3 text-left text-accent">Email</th>
-              <th className="p-3 text-left text-accent">Gender</th>
-              <th className="p-3 text-left text-accent">Registered</th>
-              <th className="p-3 text-left text-accent">Actions</th>
+              <th className="p-3 text-left text-accent">{t('admin_users_name')}</th>
+              <th className="p-3 text-left text-accent">{t('admin_users_email')}</th>
+              <th className="p-3 text-left text-accent">{t('admin_users_gender')}</th>
+              <th className="p-3 text-left text-accent">{t('admin_users_registered')}</th>
+              <th className="p-3 text-left text-accent">{t('admin_users_actions')}</th>
             </tr>
           </thead>
           <tbody>

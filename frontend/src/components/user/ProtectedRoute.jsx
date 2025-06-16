@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 import { useAuth } from '../../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 const ProtectedRoute = ({ children, onAuthClick }) => {
   const { user, loading } = useAuth();
+  const { t } = useTranslation();
 
   if (loading) {
     return (
@@ -39,9 +41,9 @@ const ProtectedRoute = ({ children, onAuthClick }) => {
             </div>
           </div>
 
-          <h2 className="mb-4 text-2xl font-bold text-accent">Authentication Required</h2>
+          <h2 className="mb-4 text-2xl font-bold text-accent">{t('auth_required_title')}</h2>
           <p className="mb-6 text-accent/80">
-            This page requires you to be logged in. Please sign in or create an account to access this content.
+            {t('auth_required_desc')}
           </p>
 
           <div className="space-y-3">
@@ -49,13 +51,13 @@ const ProtectedRoute = ({ children, onAuthClick }) => {
               className="w-full px-4 py-2 transition-colors duration-200 rounded-md bg-primary hover:bg-primary/70 text-accent"
               onClick={() => onAuthClick(true, 'login')}
             >
-              Sign In
+              {t('sign_in')}
             </button>
             <button
               className="w-full px-4 py-2 transition-colors duration-200 rounded-md bg-secondary hover:bg-secondary/60 text-accent"
               onClick={() => window.history.back()}
             >
-              Go Back
+              {t('go_back')}
             </button>
           </div>
         </div>

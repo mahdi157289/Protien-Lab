@@ -6,6 +6,7 @@ import signUpImage from '../../assets/images/common/signup.jpg'
 import signInImage from '../../assets/images/common/signin.jpg'
 import  {useAuth} from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const formVariants = {
   initial: { x: -20, opacity: 0 },
@@ -25,6 +26,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login, signup } = useAuth();
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsSignUp(authType === 'signup');
@@ -58,20 +60,20 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
   const validateForm = () => {
     if (isSignUp) {
       if (!formData.firstName || !formData.lastName) {
-        setError('Please enter both first and last name');
+        setError(t('auth_error_name_required'));
         return false;
       }
       if (formData.password !== formData.confirmPassword) {
-        setError('Passwords do not match');
+        setError(t('auth_error_password_match'));
         return false;
       }
     }
     if (!formData.email) {
-      setError('Please enter your email');
+      setError(t('auth_error_email_required'));
       return false;
     }
     if (!formData.password) {
-      setError('Please enter your password');
+      setError(t('auth_error_password_required'));
       return false;
     }
     return true;
@@ -97,7 +99,6 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
         });
 
         if (response.success) {
-          // After successful signup, switch to login form
           setIsSignUp(false);
           setFormData({
             firstName: '',
@@ -106,8 +107,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
             password: '',
             confirmPassword: '',
           });
-          // Optional: Show success message
-          setError('Successfully registered! Please login to continue.');
+          setError(t('auth_success_signup'));
         } else {
           setError(response.error);
         }
@@ -122,7 +122,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
         }
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'An error occurred. Please try again.');
+      setError(err.response?.data?.message || t('auth_error_generic'));
     } finally {
       setLoading(false);
     }
@@ -134,7 +134,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         className={`p-2 mb-4 text-sm text-center rounded ${
-          error.includes('Successfully registered') 
+          error.includes(t('auth_success_signup')) 
             ? 'text-green-500 bg-green-100'
             : '#40ee45 bg-red-100'
         }`}
@@ -188,7 +188,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                     exit="exit"
                     transition={{ duration: 0.5 }}
                   >
-                    <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">Sign Up</h2>
+                    <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">{t('auth_signup_title')}</h2>
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
                     <StatusMessage />
                       <div className="grid grid-cols-1 gap-2 sm:gap-4 sm:grid-cols-2">
@@ -198,7 +198,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                             type="text"
                             id="firstName"
                             name="firstName"
-                            placeholder="First Name"
+                            placeholder={t('auth_first_name')}
                             value={formData.firstName}
                             onChange={handleInputChange}
                             className="w-full p-2 pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent sm:pl-[calc(2rem+8px)]"
@@ -210,7 +210,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                             type="text"
                             id="lastName"
                             name="lastName"
-                            placeholder="Last Name"
+                            placeholder={t('auth_last_name')}
                             value={formData.lastName}
                             onChange={handleInputChange}
                             className="w-full p-2 pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent sm:pl-[calc(2rem+8px)]"
@@ -223,7 +223,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           type="email"
                           id="email"
                           name="email"
-                          placeholder="Email"
+                          placeholder={t('auth_email')}
                           value={formData.email}
                           onChange={handleInputChange}
                           className="w-full p-2 pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent sm:pl-[calc(2rem+8px)]"
@@ -235,7 +235,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           type="password"
                           id="password"
                           name="password"
-                          placeholder="Password"
+                          placeholder={t('auth_password')}
                           value={formData.password}
                           onChange={handleInputChange}
                           className="w-full p-2 pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent sm:pl-[calc(2rem+8px)]"
@@ -247,7 +247,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           type="password"
                           id="confirm-password"
                           name="confirmPassword"
-                          placeholder="Confirm Password"
+                          placeholder={t('auth_confirm_password')}
                           value={formData.confirmPassword}
                           onChange={handleInputChange}
                           className="w-full p-2 pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent sm:pl-[calc(2rem+8px)]"
@@ -259,7 +259,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        Sign Up
+                        {t('auth_signup_btn')}
                       </motion.button>
                     </form>
                   </motion.div>
@@ -273,7 +273,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                     exit="exit"
                     transition={{ duration: 0.5 }}
                   >
-                    <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">Sign In</h2>
+                    <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">{t('auth_signin_title')}</h2>
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
                     <StatusMessage />
                       <div className="relative">
@@ -282,7 +282,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           type="email"
                           id="email"
                           name="email"
-                          placeholder="Email"
+                          placeholder={t('auth_email')}
                           value={formData.email}
                           onChange={handleInputChange}
                           className="w-full p-2 sm:pl-[calc(2rem+8px)] pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent"
@@ -294,7 +294,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           type="password"
                           id="password"
                           name="password"
-                          placeholder="Password"
+                          placeholder={t('auth_password')}
                           value={formData.password}
                           onChange={handleInputChange}
                           className="w-full p-2 pl-10 border rounded outline-none sm:p-3 text-accent bg-secondary border-accent/50 focus:border-accent sm:pl-[calc(2rem+8px)]"
@@ -307,7 +307,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         whileHover={{ scale: 1.03 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        {loading ? 'Signing in...' : 'Sign In'}
+                        {loading ? t('auth_signing_in') : t('auth_signin_btn')}
                       </motion.button>
                     </form>
                   </motion.div>
@@ -333,8 +333,8 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                   >
                     {isSignUp ? (
                       <>
-                        <h3 className="text-2xl font-bold text-center sm:text-3xl md:text-3xl lg:text-4xl">Join to Protein Lab Today!</h3>
-                        <p className="text-sm text-center sm:text-base md:text-lg lg:text-lg">Start your fitness journey here</p>
+                        <h3 className="text-2xl font-bold text-center sm:text-3xl md:text-3xl lg:text-4xl">{t('auth_join_title')}</h3>
+                        <p className="text-sm text-center sm:text-base md:text-lg lg:text-lg">{t('auth_join_subtitle')}</p>
                         <div className="mt-6 text-center">
                           <motion.button
                             onClick={() => setIsSignUp(!isSignUp)}
@@ -342,14 +342,14 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            Sign In
+                            {t('auth_signin_btn')}
                           </motion.button>
                         </div>
                       </>
                     ) : (
                       <>
-                        <h3 className="text-2xl font-bold text-center sm:text-3xl md:text-3xl lg:text-4xl">Welcome Back!</h3>
-                        <p className="text-sm text-center sm:text-base md:text-lg lg:text-lg">Please login to continue your fitness journey</p>
+                        <h3 className="text-2xl font-bold text-center sm:text-3xl md:text-3xl lg:text-4xl">{t('auth_welcome_back')}</h3>
+                        <p className="text-sm text-center sm:text-base md:text-lg lg:text-lg">{t('auth_welcome_subtitle')}</p>
                         <div className="mt-6 text-center">
                           <motion.button
                             onClick={() => setIsSignUp(!isSignUp)}
@@ -357,7 +357,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.98 }}
                           >
-                            Sign Up
+                            {t('auth_signup_btn')}
                           </motion.button>
                         </div>
                       </>

@@ -1,8 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Info, Play, BookOpen, CheckCircle } from 'lucide-react';
 import api from '../../config/api';
+import { useTranslation } from 'react-i18next';
 
 const ExerciseDetailModal = ({ exercise, onClose }) => {
+  const { t } = useTranslation();
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-60">
       <div className="w-full max-w-md p-6 rounded-lg shadow-2xl bg-dark">
@@ -18,11 +20,11 @@ const ExerciseDetailModal = ({ exercise, onClose }) => {
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <BookOpen className="#40ee45" size={20} />
-            <p className="text-gray-300">Category: {exercise.category}</p>
+            <p className="text-gray-300">{t('workout_category')}: {exercise.category}</p>
           </div>
           <div className="flex items-center gap-3">
             <Play className="#40ee45" size={20} />
-            <p className="text-gray-300">Recommended: 3 Sets, 10-12 Reps</p>
+            <p className="text-gray-300">{t('workout_recommended')}</p>
           </div>
           <a 
             href={`/exercises/${exercise._id}`}
@@ -31,7 +33,7 @@ const ExerciseDetailModal = ({ exercise, onClose }) => {
             className="flex items-center justify-center w-full py-2 text-white transition-colors bg-green-500 rounded hover:bg-green-600"
           >
             <CheckCircle className="mr-2" size={20} />
-            View Exercise Details
+            {t('workout_view_exercise_details')}
           </a>
         </div>
       </div>
@@ -56,6 +58,7 @@ const WorkoutPlanner = () => {
   const [planToDelete, setPlanToDelete] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const detailsRef = useRef(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchWorkoutPlans = async () => {
@@ -78,30 +81,26 @@ const WorkoutPlanner = () => {
   const validateForm = () => {
     const errors = {};
 
-    // Validate Age
     if (!formData.age.trim()) {
-      errors.age = 'Age is required';
+      errors.age = t('workout_error_age_required');
     } else if (isNaN(formData.age) || parseInt(formData.age) <= 0) {
-      errors.age = 'Please enter a valid age';
+      errors.age = t('workout_error_age_valid');
     }
 
-    // Validate Gender
     if (formData.gender === 'Select Gender') {
-      errors.gender = 'Gender is required';
+      errors.gender = t('workout_error_gender_required');
     }
 
-    // Validate Height
     if (!formData.height.trim()) {
-      errors.height = 'Height is required';
+      errors.height = t('workout_error_height_required');
     } else if (isNaN(formData.height) || parseInt(formData.height) <= 0) {
-      errors.height = 'Please enter a valid height';
+      errors.height = t('workout_error_height_valid');
     }
 
-    // Validate Weight
     if (!formData.weight.trim()) {
-      errors.weight = 'Weight is required';
+      errors.weight = t('workout_error_weight_required');
     } else if (isNaN(formData.weight) || parseInt(formData.weight) <= 0) {
-      errors.weight = 'Please enter a valid weight';
+      errors.weight = t('workout_error_weight_valid');
     }
 
     setFormErrors(errors);
@@ -114,8 +113,6 @@ const WorkoutPlanner = () => {
       ...prev,
       [name]: value
     }));
-    
-    // Clear specific error when user starts typing
     if (formErrors[name]) {
       setFormErrors(prev => {
         const newErrors = {...prev};
@@ -130,10 +127,7 @@ const WorkoutPlanner = () => {
       try {
         const creationResponse = await api.post('/users/workouts/generate', formData);
         const { data: fullPlan } = await api.get(`/users/workouts/${creationResponse.data._id}`);
-        
         setWorkoutPlans(prev => [...prev, fullPlan]);
-        
-        // Reset form
         setFormData({
           age: '',
           gender: 'Select Gender',
@@ -174,13 +168,13 @@ const WorkoutPlanner = () => {
       {/* Left Panel - Create Plan Form */}
       <div className="grid w-full grid-cols-1 gap-6 max-w-7xl md:grid-cols-2">
         <div className="p-6 rounded-lg bg-dark">
-          <h2 className="mb-6 text-lg #40ee45">Create Your Workout Plan</h2>
+          <h2 className="mb-6 text-lg #40ee45">{t('workout_create_title')}</h2>
           
           <div className="mb-6">
-            <h3 className="mb-4 text-sm #40ee45">Personal Information</h3>
+            <h3 className="mb-4 text-sm #40ee45">{t('workout_personal_info')}</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block mb-2 text-sm text-200">Age</label>
+                <label className="block mb-2 text-sm text-200">{t('workout_age')}</label>
                 <input 
                   type="text"
                   name="age"
@@ -195,7 +189,7 @@ const WorkoutPlanner = () => {
                 )}
               </div>
               <div>
-                <label className="block mb-2 text-sm text-200">Gender</label>
+                <label className="block mb-2 text-sm text-200">{t('workout_gender')}</label>
                 <select 
                   name="gender"
                   value={formData.gender}
@@ -204,10 +198,10 @@ const WorkoutPlanner = () => {
                     formErrors.gender ? 'border-red-500' : 'border-gray-700'
                   }`}
                 >
-                  <option>Select Gender</option>
-                  <option>Male</option>
-                  <option>Female</option>
-                  <option>Other</option>
+                  <option>{t('workout_select_gender')}</option>
+                  <option>{t('workout_gender_male')}</option>
+                  <option>{t('workout_gender_female')}</option>
+                  <option>{t('workout_gender_other')}</option>
                 </select>
                 {formErrors.gender && (
                   <p className="mt-1 text-sm #40ee45">{formErrors.gender}</p>
@@ -217,10 +211,10 @@ const WorkoutPlanner = () => {
           </div>
 
           <div className="mb-6">
-            <h3 className="mb-4 text-sm #40ee45">Health Information</h3>
+            <h3 className="mb-4 text-sm #40ee45">{t('workout_health_info')}</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block mb-2 text-sm text-200">Height (cm)</label>
+                <label className="block mb-2 text-sm text-200">{t('workout_height')}</label>
                 <input 
                   type="text"
                   name="height"
@@ -235,7 +229,7 @@ const WorkoutPlanner = () => {
                 )}
               </div>
               <div>
-                <label className="block mb-2 text-sm text-200">Weight (kg)</label>
+                <label className="block mb-2 text-sm text-200">{t('workout_weight')}</label>
                 <input 
                   type="text"
                   name="weight"
@@ -254,29 +248,29 @@ const WorkoutPlanner = () => {
 
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div>
-              <label className="block mb-2 text-sm text-200">Goal</label>
+              <label className="block mb-2 text-sm text-200">{t('workout_goal')}</label>
               <select 
                 name="goal"
                 value={formData.goal}
                 onChange={handleInputChange}
                 className="w-full p-2 text-gray-200 border border-gray-700 rounded appearance-none bg-secondary"
               >
-                <option>Lose Weight</option>
-                <option>Build Muscle</option>
-                <option>Improve Fitness</option>
+                <option>{t('workout_goal_lose_weight')}</option>
+                <option>{t('workout_goal_build_muscle')}</option>
+                <option>{t('workout_goal_improve_fitness')}</option>
               </select>
             </div>
             <div>
-              <label className="block mb-2 text-sm text-200">Medical Conditions</label>
+              <label className="block mb-2 text-sm text-200">{t('workout_medical_conditions')}</label>
               <select 
                 name="medicalConditions"
                 value={formData.medicalConditions}
                 onChange={handleInputChange}
                 className="w-full p-2 text-gray-200 border border-gray-700 rounded appearance-none bg-secondary"
               >
-                <option>Injury/Recovery</option>
-                <option>None</option>
-                <option>Other</option>
+                <option>{t('workout_medical_injury')}</option>
+                <option>{t('workout_medical_none')}</option>
+                <option>{t('workout_medical_other')}</option>
               </select>
             </div>
           </div>
@@ -285,7 +279,7 @@ const WorkoutPlanner = () => {
             onClick={handleCreatePlan}
             className="w-full py-2 text-white transition-colors bg-green-500 rounded hover:bg-green-600"
           >
-            Create Plan
+            {t('workout_create_btn')}
           </button>
         </div>
 
@@ -293,13 +287,13 @@ const WorkoutPlanner = () => {
         <div className="p-6 rounded-lg bg-dark">
           {workoutPlans.length === 0 ? (
             <div className="flex items-center justify-center h-full">
-              <p className="text-gray-400">You currently don't have workout plans</p>
+              <p className="text-gray-400">{t('workout_no_plans')}</p>
             </div>
           ) : (
             <div className="space-y-1">
               {workoutPlans.map((plan, index) => (
                 <div key={plan._id} className="flex items-center justify-between p-4 rounded-lg bg-secondary">
-                  <span className="text-200">Workout Plan {index + 1}</span>
+                  <span className="text-200">{t('workout_plan')} {index + 1}</span>
                   <div className="flex gap-2">
                     <button 
                       onClick={() => {
@@ -308,7 +302,7 @@ const WorkoutPlanner = () => {
                       }}
                       className="px-4 py-2 text-sm text-white bg-green-500 rounded hover:bg-green-600"
                     >
-                      View
+                      {t('workout_view')}
                     </button>
                     <button 
                       onClick={() => {
@@ -317,7 +311,7 @@ const WorkoutPlanner = () => {
                       }}
                       className="px-4 py-1 text-sm text-white bg-gray-700 rounded hover:bg-gray-800"
                     >
-                      Delete
+                      {t('workout_delete')}
                     </button>
                   </div>
                 </div>
@@ -336,7 +330,7 @@ const WorkoutPlanner = () => {
             </h3>
             <div className="flex items-center gap-2 text-sm text-gray-400">
               <Info size={16} />
-              <span>Personalized Workout Plan</span>
+              <span>{t('workout_personalized')}</span>
             </div>
           </div>
           
@@ -352,7 +346,7 @@ const WorkoutPlanner = () => {
                     : 'bg-secondary  hover:bg-secondary/60'
                 }`}
               >
-                Day {day.day}
+                {t('workout_day')} {day.day}
               </button>
             ))}
           </div>
@@ -364,7 +358,7 @@ const WorkoutPlanner = () => {
                 <span className="flex items-center justify-center w-8 h-8 mr-3 text-white bg-green-500 rounded-full">
                   {selectedDay.day}
                 </span>
-                Workout Details
+                {t('workout_details')}
               </h4>
               <div className="space-y-4">
                 {selectedDay.exercises?.map((exercise, exerciseIndex) => (
@@ -383,14 +377,14 @@ const WorkoutPlanner = () => {
                     </div>
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
-                        <p className="font-bold text-gray-200">3 Sets</p>
-                        <p className="text-sm text-gray-400">10-12 Reps</p>
+                        <p className="font-bold text-gray-200">{t('workout_sets')}</p>
+                        <p className="text-sm text-gray-400">{t('workout_reps')}</p>
                       </div>
                       <button 
                         onClick={() => setSelectedExercise(exercise)}
                         className="px-4 py-2 text-sm text-white transition-colors bg-green-500 rounded hover:bg-green-600"
                       >
-                        View Exercise
+                        {t('workout_view_exercise')}
                       </button>
                     </div>
                   </div>
@@ -405,22 +399,22 @@ const WorkoutPlanner = () => {
       {showDeleteModal && (
         <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50">
           <div className="w-full max-w-md p-6 rounded-lg bg-dark">
-            <h3 className="mb-4 text-xl font-semibold text-center text-accent">Delete Workout Plan</h3>
+            <h3 className="mb-4 text-xl font-semibold text-center text-accent">{t('workout_delete_title')}</h3>
             <p className="mb-6 text-center text-accent/80">
-              Are you sure you want to delete this workout plan? This action cannot be undone.
+              {t('workout_delete_confirm')}
             </p>
             <div className="flex justify-center gap-10">
               <button
                 onClick={() => setShowDeleteModal(false)}
                 className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
               >
-                Cancel
+                {t('workout_cancel')}
               </button>
               <button
                 onClick={handleDeletePlan}
                 className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
               >
-                Delete
+                {t('workout_delete')}
               </button>
             </div>
           </div>

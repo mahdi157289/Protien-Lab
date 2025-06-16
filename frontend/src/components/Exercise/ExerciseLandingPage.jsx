@@ -5,11 +5,13 @@ import api from '../../config/api';
 import PropTypes from "prop-types";
 import { Loader } from 'lucide-react';
 import exerciseLandingImg from '../../assets/images/exercise/exercise_landing.jpg';
+import { useTranslation } from "react-i18next";
 
 const ExerciseLandingPage = () => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -50,7 +52,7 @@ const ExerciseLandingPage = () => {
         transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
         className="container relative flex items-center h-full px-4 mx-auto">
           <h1 className="text-primary mx-auto text-4xl font-bold md:text-6xl max-w-7xl">
-            Ready To Make a Change ?
+            {t('exercise_landing_title')}
           </h1>
         </motion.div>
       </motion.div>
@@ -63,6 +65,7 @@ const ExerciseLandingPage = () => {
               key={category.name}
               category={category}
               onClick={() => navigate(`/exercises/category/${encodeURIComponent(category.name)}`)}
+              t={t}
             />
           ))}
         </div>
@@ -71,7 +74,7 @@ const ExerciseLandingPage = () => {
   );
 };
 
-const CategoryCard = ({ category, onClick }) => (
+const CategoryCard = ({ category, onClick, t }) => (
   <motion.div 
     initial={{ opacity: 0, scale: 0.9 }} 
     animate={{ opacity: 1, scale: 1 }} 
@@ -89,7 +92,7 @@ const CategoryCard = ({ category, onClick }) => (
         whileHover={{ scale: 1.05 }} 
         className="w-full py-2 text-white transition-colors bg-green-500 rounded-lg hover:bg-green-600"
       >
-        View Exercises
+        {t('exercise_view_exercises')}
       </motion.button>
     </div>
   </motion.div>
@@ -101,6 +104,7 @@ CategoryCard.propTypes = {
     image: PropTypes.string,
   }).isRequired,
   onClick: PropTypes.func,
+  t: PropTypes.func,
 };
 
 export default ExerciseLandingPage;

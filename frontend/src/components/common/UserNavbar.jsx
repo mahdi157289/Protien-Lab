@@ -4,6 +4,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { UserCircle, LogOut, User } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import logo from '../../assets/images/common/Protein-Lab.png';
+import { useTranslation } from 'react-i18next';
+import { LiaLanguageSolid } from "react-icons/lia"; // Add this import
 
 const UserNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +14,7 @@ const UserNavbar = ({ onAuthClick }) => {
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation(); // Add i18n here
 
   const userMenuRef = useRef(null);
 
@@ -52,34 +55,38 @@ const UserNavbar = ({ onAuthClick }) => {
     }
   };
 
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "en" ? "fr" : "en");
+  };
+
   const navItems = user
     ? [
-        { label: 'Dashboard', path: '/dashboard' },
-        { label: 'Exercises', path: '/exercises' },
-        { label: 'Workouts', path: '/workouts' },
-        { label: 'Diet Plan', path: '/diet-plan' },
-        { label: 'Store', path: '/store' },
-        { label: 'Victory Wall', path: '/victory-wall' },
+        { label: t('user_dashboard'), path: '/dashboard' },
+        { label: t('user_exercises'), path: '/exercises' },
+        { label: t('user_workouts'), path: '/workouts' },
+        { label: t('user_diet_plan'), path: '/diet-plan' },
+        { label: t('user_store'), path: '/store' },
+        { label: t('user_victory_wall'), path: '/victory-wall' },
       ]
     : [
-        { label: 'Home', path: '/' },
-        { label: 'Exercises', path: '/exercises' },
-        { label: 'Workouts', path: '/workouts' },
-        { label: 'Diet Plan', path: '/diet-plan' },
-        { label: 'Store', path: '/store' },
-        { label: 'Victory Wall', path: '/victory-wall' },
+        { label: t('user_home'), path: '/' },
+        { label: t('user_exercises'), path: '/exercises' },
+        { label: t('user_workouts'), path: '/workouts' },
+        { label: t('user_diet_plan'), path: '/diet-plan' },
+        { label: t('user_store'), path: '/store' },
+        { label: t('user_victory_wall'), path: '/victory-wall' },
       ];
 
   const shouldShowImage = user?.profileImage && !imageError;
 
   return (
-    <nav style={{ background: "linear-gradient(60deg, rgba(88, 88, 88, 1) 80%, rgba(255, 250, 252, 1) 100%)" }} className="fixed top-0 z-40 w-full px-6 py-1">{/* Reduced padding */}
+    <nav style={{ background: "linear-gradient(60deg, rgba(88, 88, 88, 1) 80%, rgba(255, 250, 252, 1) 100%)" }} className="fixed top-0 z-40 w-full px-6 py-1">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
           {/* Extra large logo */}
           <div className="flex items-center">
-            <NavLink to="/" className="flex items-center h-20"> {/* Increased height */}
-              <img src={logo} alt="Protein Lab" className="h-full max-h-[100px]" /> {/* Max height increased */}
+            <NavLink to="/" className="flex items-center h-20">
+              <img src={logo} alt="Protein Lab" className="h-full max-h-[100px]" />
             </NavLink>
           </div>
 
@@ -101,6 +108,16 @@ const UserNavbar = ({ onAuthClick }) => {
                 {item.label}
               </NavLink>
             ))}
+            {/* Language Toggle Desktop */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-center p-2 ml-2 text-xl rounded-full hover:bg-secondary transition"
+              title={i18n.language === "en" ? "Français" : "English"}
+              aria-label="Toggle language"
+            >
+              <LiaLanguageSolid />
+              <span className="ml-1 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
+            </button>
           </div>
 
           {/* User Menu */}
@@ -133,7 +150,7 @@ const UserNavbar = ({ onAuthClick }) => {
                         className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent"
                       >
                         <User className="w-6 h-6" />
-                        Profile
+                        {t('user_profile')}
                       </button>
                       <hr className="border-t border-accent" />
                       <button
@@ -144,7 +161,7 @@ const UserNavbar = ({ onAuthClick }) => {
                         className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent "
                       >
                         <LogOut className="w-6 h-6" />
-                        Logout
+                        {t('user_logout')}
                       </button>
                     </div>
                   )}
@@ -155,13 +172,23 @@ const UserNavbar = ({ onAuthClick }) => {
                 onClick={handleAuthClick}
                 className="bg-secondary text-primary border border-primary px-6 py-1.5 rounded-lg hover:bg-primary hover:text-accent transition-all text-base md:text-lg"
               >
-                Login
+                {t('user_login')}
               </button>
             )}
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            {/* Language Toggle Mobile */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-center p-2 text-xl rounded-full hover:bg-secondary transition"
+              title={i18n.language === "en" ? "Français" : "English"}
+              aria-label="Toggle language"
+            >
+              <LiaLanguageSolid />
+              <span className="ml-1 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
+            </button>
             <button onClick={toggleMenu} className="transition-colors text-accent ">
               {isOpen ? (
                 <svg
@@ -211,19 +238,29 @@ const UserNavbar = ({ onAuthClick }) => {
                 {item.label}
               </NavLink>
             ))}
+            {/* Language Toggle in Mobile Menu */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-start p-2 text-xl rounded-full hover:bg-secondary transition"
+              title={i18n.language === "en" ? "Français" : "English"}
+              aria-label="Toggle language"
+            >
+              <LiaLanguageSolid />
+              <span className="ml-2 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
+            </button>
             {user ? (
               <>
                 <button
                   onClick={() => navigate('/profile')}
                   className="text-left transition-all duration-500 text-accent "
                 >
-                  Profile
+                  {t('user_profile')}
                 </button>
                 <button
                   onClick={() => setLogoutConfirm(true)}
                   className="text-left transition-all duration-500 text-accent "
                 >
-                  Logout
+                  {t('user_logout')}
                 </button>
               </>
             ) : (
@@ -231,7 +268,7 @@ const UserNavbar = ({ onAuthClick }) => {
                 onClick={handleAuthClick}
                 className="bg-secondary text-primary border border-primary px-6 py-1.5 rounded hover:bg-primary hover:text-accent transition-all"
               >
-                Login
+                {t('user_login')}
               </button>
             )}
           </div>
@@ -242,20 +279,20 @@ const UserNavbar = ({ onAuthClick }) => {
       {logoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
           <div className="p-6 text-center text-white shadow-lg rounded-2xl bg-dark">
-            <h2 className="mb-3 text-2xl font-bold">Log Out</h2>
-            <p className="mb-4">Are you sure you want to log out of your account?</p>
+            <h2 className="mb-3 text-2xl font-bold">{t('user_logout_title')}</h2>
+            <p className="mb-4">{t('user_logout_confirm')}</p>
             <div className="flex justify-center gap-10">
               <button
                 onClick={() => setLogoutConfirm(false)}
                 className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
               >
-                Cancel
+                {t('user_cancel')}
               </button>
               <button
                 onClick={handleLogout}
                 className="px-8 py-2 transition border rounded-lg border-primary bg-primary "
               >
-                Log Out
+                {t('user_logout')}
               </button>
             </div>
           </div>

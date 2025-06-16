@@ -1,21 +1,22 @@
-import { useState, useRef, useEffect } from 'react'; // Add useRef and useEffect
+import { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { UserCircle, LogOut, Settings } from 'lucide-react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import logo from '../../assets/images/common/Protein-Lab.png';
+import { useTranslation } from 'react-i18next';
+import { LiaLanguageSolid } from "react-icons/lia"; // Add this import
 
 const AdminNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false); // State for admin menu visibility
+  const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
   const { admin, logout } = useAdminAuth();
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation(); // Add this to get i18n instance
 
-  // Ref for the admin menu dropdown
   const adminMenuRef = useRef(null);
 
-  // Close admin menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (adminMenuRef.current && !adminMenuRef.current.contains(event.target)) {
@@ -41,21 +42,25 @@ const AdminNavbar = ({ onAuthClick }) => {
     setLogoutConfirm(false);
     try {
       logout();
-      navigate('/admin/login'); // Redirect to admin login page
+      navigate('/admin/login');
       closeMenu();
     } catch (error) {
       console.error('Logout failed:', error);
     }
   };
 
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "en" ? "fr" : "en");
+  };
+
   const navItems = [
-    { label: 'Dashboard', path: '/admin/dashboard' },
-    { label: 'Exercises', path: '/admin/exercises' },
-    { label: 'Diet Plan', path: '/admin/diet-plan' },
-    { label: 'Victory Wall', path: '/admin/victory-wall' },
-    { label: 'Store', path: '/admin/store' },
-    { label: 'Users', path: '/admin/users' },
-    { label: 'Feedback', path: '/admin/feedback' },
+    { label: t('admin_dashboard'), path: '/admin/dashboard' },
+    { label: t('admin_exercises'), path: '/admin/exercises' },
+    { label: t('admin_diet_plan'), path: '/admin/diet-plan' },
+    { label: t('admin_victory_wall'), path: '/admin/victory-wall' },
+    { label: t('admin_store'), path: '/admin/store' },
+    { label: t('admin_users'), path: '/admin/users' },
+    { label: t('admin_feedback'), path: '/admin/feedback' },
   ];
 
   return (
@@ -63,9 +68,14 @@ const AdminNavbar = ({ onAuthClick }) => {
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center">
-            <NavLink to="/admin/dashboard" className="h-8">
-              <img src={logo} alt="Protein Lab Admin" className=" max-h-[100px]" />
+          <div className="flex items-center h-16">
+            <NavLink to="/admin/dashboard" className="h-full">
+              <img 
+                src={logo} 
+                alt="Protein Lab Admin" 
+                className="h-full object-contain" 
+                style={{ maxWidth: '200px' }}
+              />
             </NavLink>
           </div>
 
@@ -87,6 +97,16 @@ const AdminNavbar = ({ onAuthClick }) => {
                 {item.label}
               </NavLink>
             ))}
+            {/* Language Toggle Desktop */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-center p-2 ml-2 text-xl rounded-full hover:bg-secondary transition"
+              title={i18n.language === "en" ? "Français" : "English"}
+              aria-label="Toggle language"
+            >
+              <LiaLanguageSolid />
+              <span className="ml-1 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
+            </button>
           </div>
 
           {/* Admin Menu */}
@@ -95,34 +115,33 @@ const AdminNavbar = ({ onAuthClick }) => {
               <div className="flex items-center gap-4">
                 <div className="relative" ref={adminMenuRef}>
                   <button
-                    onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)} // Toggle admin menu on click
+                    onClick={() => setIsAdminMenuOpen(!isAdminMenuOpen)}
                     className="flex items-center justify-center w-10 h-10 transition-colors rounded-full bg-secondary text-accent "
                   >
                     <UserCircle className="w-10 h-10" />
                   </button>
-                  {/* Admin Menu Dropdown */}
                   {isAdminMenuOpen && (
                     <div className="absolute right-0 w-48 px-5 py-5 mt-6 space-y-4 rounded-xl bg-dark">
                       <button
                         onClick={() => {
                           navigate('/admin/profile');
-                          setIsAdminMenuOpen(false); // Close menu after navigation
+                          setIsAdminMenuOpen(false);
                         }}
                         className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent "
                       >
                         <Settings className="w-6 h-6" />
-                        Settings
+                        {t('admin_settings')}
                       </button>
                       <hr className="border-t border-accent" />
                       <button
                         onClick={() => {
                           setLogoutConfirm(true);
-                          setIsAdminMenuOpen(false); // Close menu after clicking logout
+                          setIsAdminMenuOpen(false);
                         }}
                         className="flex items-center w-full gap-4 text-lg text-left transition-colors text-accent "
                       >
                         <LogOut className="w-6 h-6" />
-                        Logout
+                        {t('admin_logout')}
                       </button>
                     </div>
                   )}
@@ -133,13 +152,23 @@ const AdminNavbar = ({ onAuthClick }) => {
                 onClick={onAuthClick}
                 className="bg-secondary text-primary border border-primary px-6 py-1.5 rounded-lg hover:bg-primary hover:text-accent transition-all text-base md:text-lg"
               >
-                Login
+                {t('admin_login')}
               </button>
             )}
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center gap-2">
+            {/* Language Toggle Mobile */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-center p-2 text-xl rounded-full hover:bg-secondary transition"
+              title={i18n.language === "en" ? "Français" : "English"}
+              aria-label="Toggle language"
+            >
+              <LiaLanguageSolid />
+              <span className="ml-1 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
+            </button>
             <button onClick={toggleMenu} className="transition-colors text-accent ">
               {isOpen ? (
                 <svg
@@ -189,19 +218,29 @@ const AdminNavbar = ({ onAuthClick }) => {
                 {item.label}
               </NavLink>
             ))}
+            {/* Language Toggle in Mobile Menu */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-start p-2 text-xl rounded-full hover:bg-secondary transition"
+              title={i18n.language === "en" ? "Français" : "English"}
+              aria-label="Toggle language"
+            >
+              <LiaLanguageSolid />
+              <span className="ml-2 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
+            </button>
             {admin ? (
               <>
                 <button
                   onClick={() => navigate('/admin/profile')}
                   className="text-left transition-all duration-500 text-accent hover:bg-green-600"
                 >
-                  Settings
+                  {t('admin_settings')}
                 </button>
                 <button
                   onClick={() => setLogoutConfirm(true)}
                   className="text-left transition-all duration-500 text-accent hover:bg-green-600"
                 >
-                  Logout
+                  {t('admin_logout')}
                 </button>
               </>
             ) : (
@@ -209,7 +248,7 @@ const AdminNavbar = ({ onAuthClick }) => {
                 onClick={onAuthClick}
                 className="bg-secondary text-primary border border-primary px-6 py-1.5 rounded hover:bg-primary hover:text-accent transition-all"
               >
-                Login
+                {t('admin_login')}
               </button>
             )}
           </div>
@@ -220,20 +259,20 @@ const AdminNavbar = ({ onAuthClick }) => {
       {logoutConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
           <div className="p-6 text-center text-white shadow-lg rounded-2xl bg-dark">
-            <h2 className="mb-3 text-2xl font-bold">Log Out</h2>
-            <p className="mb-4">Are you sure you want to log out of your account?</p>
+            <h2 className="mb-3 text-2xl font-bold">{t('admin_logout_title')}</h2>
+            <p className="mb-4">{t('admin_logout_confirm')}</p>
             <div className="flex justify-center gap-10">
               <button
                 onClick={() => setLogoutConfirm(false)}
                 className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
               >
-                Cancel
+                {t('admin_cancel')}
               </button>
               <button
                 onClick={handleLogout}
                 className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-700"
               >
-                Log Out
+                {t('admin_logout')}
               </button>
             </div>
           </div>

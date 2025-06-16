@@ -5,7 +5,9 @@ import AdminRoutes from './routes/AdminRoutes';
 import UserRoutes from './routes/UserRoutes';
 import { Analytics } from "@vercel/analytics/react"
 
+
 function App() {
+  
   return (
     <Router>
       <AuthProvider>

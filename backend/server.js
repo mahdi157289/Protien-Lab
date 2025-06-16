@@ -13,8 +13,7 @@ const app = express();
 app.use(cors({
     origin: [
         'http://localhost:5173',
-        'https://Protein Lab.vercel.app',
-        'https://Protein Lab-kalharageethaka12-gmailcoms-projects.vercel.app'
+       
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']

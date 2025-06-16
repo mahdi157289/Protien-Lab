@@ -19,9 +19,10 @@ const productSchema = new mongoose.Schema({
         required: true,
         min: 0
     },
-    image: {
-        type: String,
-        required: true
+    images: { // Changed from "image" to "images"
+        type: [String], // Array of image paths
+        required: true,
+        validate: [arr => arr.length === 2, 'Exactly two images are required']
     },
     stock: {
         type: Number,

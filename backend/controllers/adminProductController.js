@@ -5,14 +5,14 @@ const path = require('path');
 const adminProductController = {
     createProduct: async (req, res) => {
         try {
-            if (!req.file) {
-                return res.status(400).json({ message: 'Product image is required' });
+            if (!req.files || req.files.length < 2) {
+                return res.status(400).json({ message: 'Two product images are required' });
             }
 
-            const imagePath = req.file.path.replace(/\\/g, '/');
+            const imagePaths = req.files.map(file => file.path.replace(/\\/g, '/'));
             const product = new Product({
                 ...req.body,
-                image: imagePath,
+                images: imagePaths,
                 price: Number(req.body.price),
                 stock: Number(req.body.stock)
             });
@@ -20,9 +20,11 @@ const adminProductController = {
             await product.save();
             res.status(201).json(product);
         } catch (error) {
-            if (req.file) {
-                fs.unlink(req.file.path, (err) => {
-                    if (err) console.error('Error deleting file:', err);
+            if (req.files) {
+                req.files.forEach(file => {
+                    fs.unlink(file.path, (err) => {
+                        if (err) console.error('Error deleting file:', err);
+                    });
                 });
             }
             res.status(400).json({ message: error.message });
@@ -56,15 +58,17 @@ const adminProductController = {
     updateProduct: async (req, res) => {
         try {
             const updateData = { ...req.body };
-            if (req.file) {
-                updateData.image = req.file.path.replace(/\\/g, '/');
-                
+            if (req.files && req.files.length > 0) {
+                // Delete old images
                 const oldProduct = await Product.findById(req.params.id);
-                if (oldProduct?.image) {
-                    fs.unlink(oldProduct.image, (err) => {
-                        if (err) console.error('Error deleting old image:', err);
+                if (oldProduct?.images && Array.isArray(oldProduct.images)) {
+                    oldProduct.images.forEach(imgPath => {
+                        fs.unlink(imgPath, (err) => {
+                            if (err) console.error('Error deleting old image:', err);
+                        });
                     });
                 }
+                updateData.images = req.files.map(file => file.path.replace(/\\/g, '/'));
             }
 
             if (updateData.price) updateData.price = Number(updateData.price);
@@ -81,9 +85,11 @@ const adminProductController = {
             }
             res.json(product);
         } catch (error) {
-            if (req.file) {
-                fs.unlink(req.file.path, (err) => {
-                    if (err) console.error('Error deleting file:', err);
+            if (req.files) {
+                req.files.forEach(file => {
+                    fs.unlink(file.path, (err) => {
+                        if (err) console.error('Error deleting file:', err);
+                    });
                 });
             }
             res.status(400).json({ message: error.message });
@@ -97,9 +103,11 @@ const adminProductController = {
                 return res.status(404).json({ message: 'Product not found' });
             }
 
-            if (product.image) {
-                fs.unlink(product.image, (err) => {
-                    if (err) console.error('Error deleting image:', err);
+            if (product.images && Array.isArray(product.images)) {
+                product.images.forEach(imgPath => {
+                    fs.unlink(imgPath, (err) => {
+                        if (err) console.error('Error deleting image:', err);
+                    });
                 });
             }
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../config/api";
 import { X, Loader, Trash } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 function OrderPage() {
   const [orders, setOrders] = useState([]);
@@ -12,6 +13,7 @@ function OrderPage() {
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
   const [actionType, setActionType] = useState(null); // 'cancel' or 'delete'
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   // Fetch user orders from backend
   useEffect(() => {
@@ -21,13 +23,13 @@ function OrderPage() {
         setOrders(response.data);
         setLoading(false);
       } catch (error) {
-        setError(error.response?.data?.message || 'Failed to fetch orders');
+        setError(error.response?.data?.message || t('orders_fetch_error'));
         setLoading(false);
       }
     };
 
     fetchOrders();
-  }, []);
+  }, [t]);
 
   // Format date
   const formatDate = (dateString) => {
@@ -53,7 +55,7 @@ function OrderPage() {
       setOrders(orders.filter(order => order._id !== selectedOrder._id));
       setIsConfirmationModalOpen(false);
     } catch (error) {
-      setError(error.response?.data?.message || `Failed to ${actionType} order`);
+      setError(error.response?.data?.message || t('orders_action_error', { action: actionType }));
     }
   };
 
@@ -82,9 +84,9 @@ function OrderPage() {
   return (
     <div className="min-h-screen px-8 py-10 bg-secondary">
       {/* Page Heading */}
-      <h1 className="mb-8 text-4xl font-bold text-center text-white">Your Orders</h1>
+      <h1 className="mb-8 text-4xl font-bold text-center text-white">{t('orders_title')}</h1>
       <p className="px-4 mb-8 text-center text-accent/80">
-        Track and manage your recent orders with ease. View detailed information about each purchase, including product details, order status, and delivery updates. <br/>Thank you for choosing us!
+        {t('orders_subtitle')}
       </p>
 
       {/* Navigation Buttons */}
@@ -93,13 +95,13 @@ function OrderPage() {
           className="w-full sm:w-[288px] h-[60px] border-2 border-green-500 #40ee45 hover:bg-green-500 hover:text-white font-bold rounded-[50px] transition duration-200"
           onClick={() => navigate("/store/products")}
         >
-          Products
+          {t('orders_products_btn')}
         </button>
         <button 
           className="w-full sm:w-[288px] h-[60px] bg-green-500 hover:bg-green-600 text-white font-bold border-2 border-white rounded-[50px] transition duration-200"
           onClick={() => navigate("/store/orders")}
         >
-          Orders
+          {t('orders_orders_btn')}
         </button>
       </div>
 
@@ -108,7 +110,7 @@ function OrderPage() {
         {orders.length === 0 ? (
           <div className="bg-[#1C1C1C] text-white rounded-lg p-6 shadow-lg text-center">
             <p className="text-xl font-semibold text-gray-400">
-              No orders found
+              {t('orders_no_orders')}
             </p>
           </div>
         ) : (
@@ -116,8 +118,8 @@ function OrderPage() {
             <div key={order._id} className="bg-[#1C1C1C] text-white rounded-lg p-6 shadow-lg mb-4">
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-600">
                 <div>
-                  <h2 className="font-bold #40ee45">Order #{order._id.slice(-5).toUpperCase()}</h2>
-                  <p className="text-sm text-gray-400">Placed on: {formatDate(order.createdAt)}</p>
+                  <h2 className="font-bold #40ee45">{t('orders_order_number', { number: order._id.slice(-5).toUpperCase() })}</h2>
+                  <p className="text-sm text-gray-400">{t('orders_placed_on', { date: formatDate(order.createdAt) })}</p>
                 </div>
                 <span className={`px-2 py-1 rounded-lg text-sm ${
                   order.status === 'Pending' ? 'bg-yellow-500' :
@@ -125,7 +127,7 @@ function OrderPage() {
                   order.status === 'Shipped' ? 'bg-green-500' :
                   order.status === 'Delivered' ? 'bg-purple-500' : 'bg-red-500'
                 }`}>
-                  {order.status}
+                  {t(`orders_status_${order.status.toLowerCase()}`, { defaultValue: order.status })}
                 </span>
               </div>
 
@@ -140,18 +142,18 @@ function OrderPage() {
                   </div>
                   <div className="flex-1">
                     <h3 className="mb-2 text-lg font-bold">{item.product.name}</h3>
-                    <p className="mb-1 text-sm">Quantity: {item.quantity}</p>
+                    <p className="mb-1 text-sm">{t('orders_quantity', { quantity: item.quantity })}</p>
                     <p className="mb-1 font-medium text-md">
-                      Rs. {item.price} x {item.quantity}
+                      {t('orders_price_x_quantity', { price: item.price, quantity: item.quantity })}
                     </p>
                     <div className="flex items-center justify-between mt-4">
-                    <p className="text-xl font-bold text-primary">Total: Rs. {order.totalAmount}</p>
+                      <p className="text-xl font-bold text-primary">{t('orders_total', { total: order.totalAmount })}</p>
                       <div className="flex gap-2">
                         <button
                           onClick={() => openOrderDetails(order)}
                           className="px-4 py-2 text-white transition bg-blue-500 rounded-md hover:bg-blue-600"
                         >
-                          View Details
+                          {t('orders_view_details')}
                         </button>
                         {/* Show Cancel or Delete button based on order status */}
                         {order.status === 'Pending' || order.status === 'Processing' ? (
@@ -159,18 +161,18 @@ function OrderPage() {
                             onClick={() => openConfirmationModal(order, 'cancel')}
                             className="px-4 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600"
                           >
-                            Cancel Order
+                            {t('orders_cancel_order')}
                           </button>
                         ) : order.status === 'Cancelled' && (
                           <button
                             onClick={() => openConfirmationModal(order, 'delete')}
                             className="flex items-center gap-2 px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
                           >
-                            <Trash size={16} /> Delete
+                            <Trash size={16} /> {t('orders_delete')}
                           </button>
                         )}
+                      </div>
                     </div>
-                  </div>
                   </div>
                 </div>
               ))}
@@ -190,20 +192,20 @@ function OrderPage() {
               <X size={24} />
             </button>
 
-            <h2 className="mb-4 text-2xl font-bold">Order Details</h2>
+            <h2 className="mb-4 text-2xl font-bold">{t('orders_details_title')}</h2>
             
             {/* Shipping Information */}
             <div className="bg-[#29292A] p-4 rounded-lg mb-6">
-              <h3 className="mb-2 text-lg font-bold">Shipping Details</h3>
-              <p>Name: {selectedOrder.shippingAddress.fullName}</p>
-              <p>Email: {selectedOrder.shippingAddress.email}</p>
-              <p>Address: {selectedOrder.shippingAddress.address}</p>
-              <p>Phone: {selectedOrder.shippingAddress.phoneNumber}</p>
+              <h3 className="mb-2 text-lg font-bold">{t('orders_shipping_details')}</h3>
+              <p>{t('orders_shipping_name', { name: selectedOrder.shippingAddress.fullName })}</p>
+              <p>{t('orders_shipping_email', { email: selectedOrder.shippingAddress.email })}</p>
+              <p>{t('orders_shipping_address', { address: selectedOrder.shippingAddress.address })}</p>
+              <p>{t('orders_shipping_phone', { phone: selectedOrder.shippingAddress.phoneNumber })}</p>
             </div>
 
             {/* Order Items */}
             <div className="bg-[#29292A] p-4 rounded-lg">
-              <h3 className="mb-2 text-lg font-bold">Products</h3>
+              <h3 className="mb-2 text-lg font-bold">{t('orders_products')}</h3>
               {selectedOrder.orderItems.map((item, index) => (
                 <div key={index} className="flex items-center gap-4 mb-4">
                   <img
@@ -213,14 +215,14 @@ function OrderPage() {
                   />
                   <div>
                     <h4 className="font-bold">{item.product.name}</h4>
-                    <p>Quantity: {item.quantity}</p>
-                    <p>Price: Rs. {item.price} each</p>
+                    <p>{t('orders_quantity', { quantity: item.quantity })}</p>
+                    <p>{t('orders_price_each', { price: item.price })}</p>
                   </div>
                 </div>
               ))}
               <div className="pt-4 border-t border-gray-600">
-                <p className="text-lg font-bold">Total: Rs. {selectedOrder.totalAmount}</p>
-                <p className="text-sm text-gray-400">Payment Method: {selectedOrder.paymentMethod}</p>
+                <p className="text-lg font-bold">{t('orders_total', { total: selectedOrder.totalAmount })}</p>
+                <p className="text-sm text-gray-400">{t('orders_payment_method', { method: selectedOrder.paymentMethod })}</p>
               </div>
             </div>
           </div>
@@ -239,10 +241,10 @@ function OrderPage() {
             </button>
 
             <h2 className="mb-4 text-2xl font-bold text-center">
-              {actionType === 'cancel' ? 'Cancel Order' : 'Delete Order'}
+              {actionType === 'cancel' ? t('orders_cancel_order') : t('orders_delete_order')}
             </h2>
             <p className="mb-6 text-center text-accent/80">
-              Are you sure you want to {actionType} this order?
+              {t('orders_confirm_action', { action: t(actionType === 'cancel' ? 'orders_cancel_order' : 'orders_delete_order') })}
             </p>
 
             <div className="flex justify-center gap-10">
@@ -250,13 +252,13 @@ function OrderPage() {
                 onClick={() => setIsConfirmationModalOpen(false)}
                 className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
               >
-                No, Go Back
+                {t('orders_no_go_back')}
               </button>
               <button
                 onClick={handleConfirmAction}
                 className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
               >
-                Yes, {actionType === 'cancel' ? 'Cancel' : 'Delete'}
+                {t('orders_yes_action', { action: t(actionType === 'cancel' ? 'orders_cancel' : 'orders_delete') })}
               </button>
             </div>
           </div>

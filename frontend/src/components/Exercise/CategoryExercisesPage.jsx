@@ -3,12 +3,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../config/api';
 import PropTypes from "prop-types";
 import { Loader } from 'lucide-react';
+import { useTranslation } from "react-i18next";
 
 const CategoryExercisesPage = () => {
   const { category } = useParams();
   const navigate = useNavigate();
   const [exercises, setExercises] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { t } = useTranslation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -46,6 +48,7 @@ const CategoryExercisesPage = () => {
               key={exercise._id}
               exercise={exercise}
               onClick={() => navigate(`/exercises/${exercise._id}`)}
+              t={t}
             />
           ))}
         </div>
@@ -54,7 +57,7 @@ const CategoryExercisesPage = () => {
   );
 };
 
-const ExerciseCard = ({ exercise, onClick }) => (
+const ExerciseCard = ({ exercise, onClick, t }) => (
   <div className="flex flex-col overflow-hidden rounded-lg bg-dark">
     <img
       src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${exercise.image}`}
@@ -67,7 +70,7 @@ const ExerciseCard = ({ exercise, onClick }) => (
         onClick={onClick}
         className="px-4 py-2 mt-auto text-white transition-colors bg-green-500 rounded-md hover:bg-green-600"
       >
-        View Details
+        {t('exercise_view_details')}
       </button>
     </div>
   </div>
@@ -79,6 +82,7 @@ ExerciseCard.propTypes = {
     image: PropTypes.string,
   }).isRequired,
   onClick: PropTypes.func,
+  t: PropTypes.func,
 };
 
 export default CategoryExercisesPage;

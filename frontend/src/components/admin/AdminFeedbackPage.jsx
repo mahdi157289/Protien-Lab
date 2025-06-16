@@ -1,13 +1,15 @@
-import{ useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import axios from 'axios';
 import { RefreshCw, Loader } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const AdminFeedbackPage = () => {
   const { token } = useAdminAuth();
   const [feedbacks, setFeedbacks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t } = useTranslation();
 
   const fetchFeedbacks = async () => {
     try {
@@ -18,7 +20,7 @@ const AdminFeedbackPage = () => {
       setFeedbacks(response.data);
       setError(null);
     } catch (err) {
-      setError('Failed to fetch feedbacks');
+      setError(t('admin_feedback_error'));
       console.error(err);
     } finally {
       setLoading(false);
@@ -33,7 +35,7 @@ const AdminFeedbackPage = () => {
     <div className="min-h-screen p-6 bg-secondary">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-accent">User Feedbacks</h1>
+          <h1 className="text-2xl font-bold text-accent">{t('admin_feedback_title')}</h1>
           <button 
             onClick={fetchFeedbacks}
             className="p-2 transition rounded bg-primary text-accent hover:bg-opacity-80"
@@ -51,7 +53,7 @@ const AdminFeedbackPage = () => {
         ) : (
           <div className="space-y-4">
             {feedbacks.length === 0 ? (
-              <div className="py-10 text-center text-accent">No feedbacks found</div>
+              <div className="py-10 text-center text-accent">{t('admin_feedback_none')}</div>
             ) : (
               feedbacks.map((feedback) => (
                 <div 

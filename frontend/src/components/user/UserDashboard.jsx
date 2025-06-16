@@ -5,11 +5,13 @@ import dashboardWorkoutImage from '../../assets/images/dashobard/ud-workout.jpg'
 import dashboardDietImage from '../../assets/images/dashobard/ud-diet.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -52,9 +54,9 @@ const Dashboard = () => {
           >
             <div>
               <h1 className="mb-2 text-3xl font-bold md:text-4xl">
-                Welcome to Protein Lab, <span className="text-primary">{user?.firstName}!</span>
+                {t('dashboard_welcome')}, <span className="text-primary">{user?.firstName}!</span>
               </h1>
-              <p>Manage and customize your workout and diet plans</p>
+              <p>{t('dashboard_manage_customize')}</p>
             </div>
           </motion.div>
 
@@ -70,11 +72,11 @@ const Dashboard = () => {
               <div className="relative h-[50vh] md:h-[60vh] lg:h-[65vh] overflow-hidden">
                 <img
                   src={dashboardWorkoutImage}
-                  alt="Workout"
+                  alt={t('dashboard_workout_alt')}
                   className="object-cover w-full h-full brightness-50"
                 />
                 <div className="absolute inset-0 flex flex-col justify-between p-6 bg-gradient-to-t from-dark/90">
-                  <h2 className="mb-4 text-3xl font-bold text-accent/30">Workout Plans</h2>
+                  <h2 className="mb-4 text-3xl font-bold text-accent/30">{t('dashboard_workout_title')}</h2>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -86,14 +88,14 @@ const Dashboard = () => {
                       className="flex items-center max-w-xs gap-2 px-6 py-3 mx-auto transition-colors rounded-xl bg-primary hover:bg-green-600 sm:max-w-none sm:mx-0"
                     >
                       <Plus className="w-5 h-5" />
-                      Create Workout
+                      {t('dashboard_create_workout')}
                     </button>
                     <button
                       onClick={handleNavigateToWorkout}
                       className="flex items-center max-w-xs gap-2 px-6 py-3 mx-auto transition-colors rounded-xl bg-secondary hover:bg-dark sm:max-w-none sm:mx-0"
                     >
                       <List className="w-5 h-5" />
-                      Your Plans
+                      {t('dashboard_your_plans')}
                     </button>
                   </motion.div>
                 </div>
@@ -110,11 +112,11 @@ const Dashboard = () => {
               <div className="relative h-[50vh] md:h-[60vh] lg:h-[65vh] overflow-hidden">
                 <img
                   src={dashboardDietImage}
-                  alt="Diet"
+                  alt={t('dashboard_diet_alt')}
                   className="object-cover w-full h-full brightness-50"
                 />
                 <div className="absolute inset-0 flex flex-col justify-between p-6 bg-gradient-to-t from-dark/90">
-                  <h2 className="mb-4 text-3xl font-bold text-accent/30">Diet Plans</h2>
+                  <h2 className="mb-4 text-3xl font-bold text-accent/30">{t('dashboard_diet_title')}</h2>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -126,14 +128,14 @@ const Dashboard = () => {
                       className="flex items-center max-w-xs gap-2 px-6 py-3 mx-auto transition-colors bg-green-500 rounded-xl hover:bg-green-600 sm:max-w-none sm:mx-0"
                     >
                       <Plus className="w-5 h-5" />
-                      Create Diet
+                      {t('dashboard_create_diet')}
                     </button>
                     <button
                       onClick={handleNavigateToDiet}
                       className="flex items-center max-w-xs gap-2 px-6 py-3 mx-auto transition-colors rounded-xl bg-secondary hover:bg-dark sm:max-w-none sm:mx-0"
                     >
                       <List className="w-5 h-5" />
-                      Your Plans
+                      {t('dashboard_your_plans')}
                     </button>
                   </motion.div>
                 </div>

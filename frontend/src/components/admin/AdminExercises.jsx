@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import axios from 'axios';
 import { Trash2, Edit2, Filter, Upload } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const CATEGORIES = [
   'Abs Exercises', 'Chest Exercises', 'Biceps Exercises',
@@ -10,8 +11,7 @@ const CATEGORIES = [
   'Lats Exercises', 'Lower Back Exercises', 'Upper Back Exercises'
 ];
 
-const ImageUploader = ({ name, label, onChange, required = false,existingImage = null,resetTrigger = false 
-}) => {
+const ImageUploader = ({ name, label, onChange, required = false, existingImage = null, resetTrigger = false }) => {
   const [preview, setPreview] = useState(existingImage);
   const fileInputRef = useRef(null);
 
@@ -121,6 +121,7 @@ const ConfirmModal = ({ isOpen, onClose, onConfirm, message }) => {
 
 const AdminExercises = () => {
   const { token } = useAdminAuth();
+  const { t } = useTranslation();
   const [exercises, setExercises] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [formData, setFormData] = useState({
@@ -169,14 +170,14 @@ const AdminExercises = () => {
 
     try {
       if (editingExercise) {
-        await axios.put(`/api/admin/exercises/${editingExercise._id}`, formPayload, {
+        await axios.put(`${import.meta.env.VITE_API_URL}/admin/exercises/${editingExercise._id}`, formPayload, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
           }
         });
       } else {
-        await axios.post('/api/admin/exercises', formPayload, {
+        await axios.post(`${import.meta.env.VITE_API_URL}/admin/exercises`, formPayload, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -193,7 +194,7 @@ const AdminExercises = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`/api/admin/exercises/${id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL}/admin/exercises/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchExercises();
@@ -231,19 +232,19 @@ const AdminExercises = () => {
         isOpen={!!confirmDelete}
         onClose={() => setConfirmDelete(null)}
         onConfirm={() => handleDelete(confirmDelete)}
-        message="Delete this exercise?"
+        message={t('admin_exercises_delete_confirm')}
       />
 
       <div className="container mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold text-accent">Exercise Management</h1>
+          <h1 className="text-4xl font-bold text-accent">{t('admin_exercises_title')}</h1>
         </div>
         
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {/* Exercise Form */}
           <div className="p-6 border lg:col-span-1 bg-dark rounded-2xl border-dark">
             <h2 className="mb-6 text-2xl font-semibold text-accent">
-              {editingExercise ? 'Edit Exercise' : 'Create Exercise'}
+              {editingExercise ? t('admin_exercises_edit') : t('admin_exercises_create')}
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
@@ -251,7 +252,7 @@ const AdminExercises = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                placeholder="Exercise Name"
+                placeholder={t('admin_exercises_name_placeholder')}
                 className="w-full px-3 py-2 border rounded-lg bg-secondary text-accent border-dark focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
@@ -262,9 +263,9 @@ const AdminExercises = () => {
                 className="w-full px-3 py-2 border rounded-lg bg-secondary text-accent border-dark focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               >
-                <option value="">Select Category</option>
+                <option value="">{t('admin_exercises_select_category')}</option>
                 {CATEGORIES.map(cat => (
-                  <option key={cat} value={cat} className="bg-dark">{cat}</option>
+                  <option key={cat} value={cat} className="bg-dark">{t(`admin_exercises_category_${cat.replace(/\s+/g, '_').toLowerCase()}`)}</option>
                 ))}
               </select>
               <input
@@ -272,14 +273,14 @@ const AdminExercises = () => {
                 name="youtubeLink"
                 value={formData.youtubeLink}
                 onChange={handleInputChange}
-                placeholder="YouTube Tutorial Link"
+                placeholder={t('admin_exercises_youtube_placeholder')}
                 className="w-full px-3 py-2 border rounded-lg bg-secondary text-accent border-dark focus:outline-none focus:ring-2 focus:ring-primary"
                 required
               />
               <div className="grid grid-cols-2 gap-4">
                 <ImageUploader
                   name="image"
-                  label="Exercise Image"
+                  label={t('admin_exercises_image')}
                   onChange={handleInputChange}
                   required={!editingExercise}
                   existingImage={editingExercise?.image}
@@ -287,7 +288,7 @@ const AdminExercises = () => {
                 />
                 <ImageUploader
                   name="categoryImage"
-                  label="Category Image"
+                  label={t('admin_exercises_category_image')}
                   onChange={handleInputChange}
                   required={!editingExercise}
                   existingImage={editingExercise?.categoryImage}
@@ -299,7 +300,7 @@ const AdminExercises = () => {
                   type="submit"
                   className="w-full py-2 transition rounded-lg bg-primary text-accent hover:opacity-90"
                 >
-                  {editingExercise ? 'Update Exercise' : 'Add Exercise'}
+                  {editingExercise ? t('admin_exercises_update') : t('admin_exercises_add')}
                 </button>
                 {editingExercise && (
                   <button
@@ -307,7 +308,7 @@ const AdminExercises = () => {
                     onClick={resetForm}
                     className="w-full py-2 transition rounded-lg bg-secondary text-accent/70 hover:opacity-90"
                   >
-                    Cancel
+                    {t('admin_exercises_cancel')}
                   </button>
                 )}
               </div>
@@ -324,9 +325,9 @@ const AdminExercises = () => {
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className="w-full px-3 py-2 border rounded-lg bg-dark text-accent border-dark focus:outline-none focus:ring-2 focus:ring-primary"
                 >
-                  <option value="">All Categories</option>
+                  <option value="">{t('admin_exercises_all_categories')}</option>
                   {CATEGORIES.map(cat => (
-                    <option key={cat} value={cat} className="bg-dark">{cat}</option>
+                    <option key={cat} value={cat} className="bg-dark">{t(`admin_exercises_category_${cat.replace(/\s+/g, '_').toLowerCase()}`)}</option>
                   ))}
                 </select>
               </div>
@@ -345,7 +346,7 @@ const AdminExercises = () => {
                     />
                     <div>
                       <h3 className="text-lg font-semibold text-accent">{exercise.name}</h3>
-                      <p className="text-sm text-accent/50">{exercise.category}</p>
+                      <p className="text-sm text-accent/50">{t(`admin_exercises_category_${exercise.category.replace(/\s+/g, '_').toLowerCase()}`)}</p>
                     </div>
                   </div>
                   <div className="flex space-x-2">

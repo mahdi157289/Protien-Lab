@@ -4,8 +4,9 @@ import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
-const Modal = ({ isOpen, onClose, title, children, onConfirm }) => {
+const Modal = ({ isOpen, onClose, title, children, onConfirm, confirmLabel, cancelLabel }) => {
   if (!isOpen) return null;
 
   return (
@@ -25,13 +26,13 @@ const Modal = ({ isOpen, onClose, title, children, onConfirm }) => {
               onClick={onClose}
               className="px-4 py-2 rounded bg-dark text-accent hover:bg-gray-700"
             >
-              Cancel
+              {cancelLabel || "Cancel"}
             </button>
             <button 
               onClick={onConfirm}
               className="px-4 py-2 rounded bg-primary text-accent hover:bg-green-600"
             >
-              Confirm
+              {confirmLabel || "Confirm"}
             </button>
           </div>
         )}
@@ -46,6 +47,8 @@ Modal.propTypes = {
   title: PropTypes.string,
   children: PropTypes.node,
   onConfirm: PropTypes.func,
+  confirmLabel: PropTypes.string,
+  cancelLabel: PropTypes.string,
 };
 
 const AdminProductManagement = () => {
@@ -63,7 +66,7 @@ const AdminProductManagement = () => {
     descriptionFull: '',
     price: '',
     stock: '',
-    image: null
+    images: [null, null], // Change to array for two images
   });
 
   const [filters, setFilters] = useState({
@@ -75,6 +78,7 @@ const AdminProductManagement = () => {
 
   const { token } = useAdminAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -98,7 +102,13 @@ const AdminProductManagement = () => {
     setIsLoading(true);
     const formData = new FormData();
     Object.keys(newProduct).forEach(key => {
-      formData.append(key, newProduct[key]);
+      if (key === "images") {
+        newProduct.images.forEach((img, idx) => {
+          if (img) formData.append(`images`, img);
+        });
+      } else {
+        formData.append(key, newProduct[key]);
+      }
     });
 
     try {
@@ -121,7 +131,7 @@ const AdminProductManagement = () => {
         descriptionFull: '',
         price: '',
         stock: '',
-        image: null
+        images: [null, null],
       });
     } catch (error) {
       console.error('Failed to add product', error);
@@ -135,7 +145,11 @@ const AdminProductManagement = () => {
     setIsLoading(true);
     const formData = new FormData();
     Object.keys(currentProduct).forEach(key => {
-      if (currentProduct[key] !== null && currentProduct[key] !== undefined) {
+      if (key === "images") {
+        currentProduct.images?.forEach((img, idx) => {
+          if (img) formData.append(`images`, img);
+        });
+      } else if (currentProduct[key] !== null && currentProduct[key] !== undefined) {
         formData.append(key, currentProduct[key]);
       }
     });
@@ -225,19 +239,19 @@ const AdminProductManagement = () => {
     <div className="p-6 bg-secondary text-accent">
       <div className="w-full mx-auto max-w-7xl">
         <div className="flex flex-col items-center justify-between mb-6 sm:flex-row">
-          <h1 className="mb-4 text-3xl font-bold sm:mb-0">Product Management</h1>
+          <h1 className="mb-4 text-3xl font-bold sm:mb-0">{t('admin_products_management_title')}</h1>
           <div className="flex space-x-4">
             <button 
               onClick={() => setIsAddModalOpen(true)}
               className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-green-600"
             >
-              <Plus className="mr-2 size-5" /> Add Product
+              <Plus className="mr-2 size-5" /> {t('admin_products_add_product')}
             </button>
             <button 
               onClick={() => navigate(`/admin/store/orders`)} 
               className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-green-600"
             >
-              <ArrowRight className="mr-2 size-5" /> Go to Orders
+              <ArrowRight className="mr-2 size-5" /> {t('admin_products_go_to_orders')}
             </button>
           </div>
         </div>
@@ -249,7 +263,7 @@ const AdminProductManagement = () => {
               <input
                 type="text"
                 name="search"
-                placeholder="Search Products"
+                placeholder={t('admin_products_search_products')}
                 value={filters.search}
                 onChange={handleFilterChange}
                 className="w-full px-4 py-2 border rounded-lg placeholder-accent/80 bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
@@ -263,14 +277,14 @@ const AdminProductManagement = () => {
               onChange={handleFilterChange}
               className="w-full px-4 py-2 border rounded-lg bg-secondary placeholder-accent/80 text-accent border-accent/50 focus:outline-none focus:border-accent"
             >
-              <option value="name">Sort by Name</option>
-              <option value="price">Sort by Price</option>
+              <option value="name">{t('admin_products_sort_name')}</option>
+              <option value="price">{t('admin_products_sort_price')}</option>
             </select>
 
             <input
               type="number"
               name="minPrice"
-              placeholder="Min Price"
+              placeholder={t('admin_products_min_price')}
               value={filters.minPrice}
               onChange={handleFilterChange}
               className="w-full px-4 py-2 border rounded-lg placeholder-accent/80 bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
@@ -279,7 +293,7 @@ const AdminProductManagement = () => {
             <input
               type="number"
               name="maxPrice"
-              placeholder="Max Price"
+              placeholder={t('admin_products_max_price')}
               value={filters.maxPrice}
               onChange={handleFilterChange}
               className="w-full px-4 py-2 border rounded-lg placeholder-accent/80 bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
@@ -289,7 +303,7 @@ const AdminProductManagement = () => {
               onClick={applyFilters}
               className="flex items-center justify-center w-full px-2 py-2 transition-all rounded-md bg-primary text-accent hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-primary"
             >
-              Search
+              {t('admin_products_search')}
             </button>
           </div>
         </div>
@@ -312,8 +326,8 @@ const AdminProductManagement = () => {
                 <p className="text-accent/80 line-clamp-2">{product.descriptionShort}</p>
                 <div className="flex items-center justify-between mt-4">
                   <div>
-                    <span className="font-bold text-primary">Rs. {product.price}</span>
-                    <p className="text-sm text-accent/80">Stock: {product.stock}</p>
+                    <span className="font-bold text-primary">TND. {product.price}</span>
+                    <p className="text-sm text-accent/80">{t('admin_products_stock', { stock: product.stock })}</p>
                   </div>
                   <div className="flex space-x-2">
                     <button 
@@ -345,14 +359,14 @@ const AdminProductManagement = () => {
         <Modal 
           isOpen={isAddModalOpen} 
           onClose={() => setIsAddModalOpen(false)}
-          title="Add New Product"
+          title={t('admin_products_add_new_title')}
         >
           <form onSubmit={handleAddProduct} className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium">Product Name</label>
+              <label className="block text-sm font-medium">{t('admin_products_product_name')}</label>
               <input 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Enter product name" 
+                placeholder={t('admin_products_product_name')}
                 value={newProduct.name}
                 onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
                 required 
@@ -360,20 +374,37 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium">Product Image</label>
+              <label className="block text-sm font-medium">{t('admin_products_product_image')} 1</label>
               <input 
                 type="file" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent file:hidden"
-                onChange={(e) => setNewProduct({...newProduct, image: e.target.files[0]})}
+                onChange={(e) => {
+                  const files = [...newProduct.images];
+                  files[0] = e.target.files[0];
+                  setNewProduct({ ...newProduct, images: files });
+                }}
+                required 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">{t('admin_products_product_image')} 2</label>
+              <input 
+                type="file" 
+                className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent file:hidden"
+                onChange={(e) => {
+                  const files = [...newProduct.images];
+                  files[1] = e.target.files[0];
+                  setNewProduct({ ...newProduct, images: files });
+                }}
                 required 
               />
             </div>
             
             <div className="col-span-2">
-              <label className="block text-sm font-medium">Short Description</label>
+              <label className="block text-sm font-medium">{t('admin_products_short_description')}</label>
               <input 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Brief product description" 
+                placeholder={t('admin_products_short_description')}
                 value={newProduct.descriptionShort}
                 onChange={(e) => setNewProduct({...newProduct, descriptionShort: e.target.value})}
                 required 
@@ -381,10 +412,10 @@ const AdminProductManagement = () => {
             </div>
             
             <div className="col-span-2">
-              <label className="block text-sm font-medium">Full Description</label>
+              <label className="block text-sm font-medium">{t('admin_products_full_description')}</label>
               <textarea 
                 className="w-full h-24 p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Detailed product description"
+                placeholder={t('admin_products_full_description')}
                 value={newProduct.descriptionFull}
                 onChange={(e) => setNewProduct({...newProduct, descriptionFull: e.target.value})}
                 required 
@@ -392,10 +423,10 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium">Price</label>
+              <label className="block text-sm font-medium">{t('admin_products_price')}</label>
               <input type="number" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Product price" 
+                placeholder={t('admin_products_price')}
                 value={newProduct.price}
                 onChange={(e) => setNewProduct({...newProduct, price: e.target.value})}
                 required 
@@ -403,11 +434,11 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium">Stock</label>
+              <label className="block text-sm font-medium">{t('admin_products_available_quantity')}</label>
               <input 
                 type="number" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Available quantity" 
+                placeholder={t('admin_products_available_quantity')}
                 value={newProduct.stock}
                 onChange={(e) => setNewProduct({...newProduct, stock: e.target.value})}
                 required 
@@ -419,7 +450,7 @@ const AdminProductManagement = () => {
                 type="submit" 
                 className="w-full py-3 transition-colors rounded bg-primary text-accent hover:bg-red-600"
               >
-                Add Product
+                {t('admin_products_add')}
               </button>
             </div>
           </form>
@@ -429,14 +460,14 @@ const AdminProductManagement = () => {
         <Modal 
           isOpen={isEditModalOpen} 
           onClose={() => setIsEditModalOpen(false)}
-          title="Edit Product"
+          title={t('admin_products_edit_title')}
         >
           <form onSubmit={handleEditProduct} className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium">Product Name</label>
+              <label className="block text-sm font-medium">{t('admin_products_product_name')}</label>
               <input 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Enter product name" 
+                placeholder={t('admin_products_product_name')}
                 value={currentProduct?.name || ''}
                 onChange={(e) => setCurrentProduct({...currentProduct, name: e.target.value})}
                 required 
@@ -444,19 +475,35 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium">Product Image</label>
+              <label className="block text-sm font-medium">{t('admin_products_product_image')} 1</label>
               <input 
                 type="file" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent file:hidden"
-                onChange={(e) => setCurrentProduct({...currentProduct, image: e.target.files[0]})}
+                onChange={(e) => {
+                  const files = currentProduct.images ? [...currentProduct.images] : [null, null];
+                  files[0] = e.target.files[0];
+                  setCurrentProduct({ ...currentProduct, images: files });
+                }}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium">{t('admin_products_product_image')} 2</label>
+              <input 
+                type="file" 
+                className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent file:hidden"
+                onChange={(e) => {
+                  const files = currentProduct.images ? [...currentProduct.images] : [null, null];
+                  files[1] = e.target.files[0];
+                  setCurrentProduct({ ...currentProduct, images: files });
+                }}
               />
             </div>
             
             <div className="col-span-2">
-              <label className="block text-sm font-medium">Short Description</label>
+              <label className="block text-sm font-medium">{t('admin_products_short_description')}</label>
               <input 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Brief product description" 
+                placeholder={t('admin_products_short_description')}
                 value={currentProduct?.descriptionShort || ''}
                 onChange={(e) => setCurrentProduct({...currentProduct, descriptionShort: e.target.value})}
                 required 
@@ -464,10 +511,10 @@ const AdminProductManagement = () => {
             </div>
             
             <div className="col-span-2">
-              <label className="block text-sm font-medium">Full Description</label>
+              <label className="block text-sm font-medium">{t('admin_products_full_description')}</label>
               <textarea 
                 className="w-full h-24 p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Detailed product description" 
+                placeholder={t('admin_products_full_description')}
                 value={currentProduct?.descriptionFull || ''}
                 onChange={(e) => setCurrentProduct({...currentProduct, descriptionFull: e.target.value})}
                 required 
@@ -475,11 +522,11 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium">Price</label>
+              <label className="block text-sm font-medium">{t('admin_products_price')}</label>
               <input 
                 type="number" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Product price" 
+                placeholder={t('admin_products_price')}
                 value={currentProduct?.price || ''}
                 onChange={(e) => setCurrentProduct({...currentProduct, price: e.target.value})}
                 required 
@@ -487,11 +534,11 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-sm font-medium">Stock</label>
+              <label className="block text-sm font-medium">{t('admin_products_available_quantity')}</label>
               <input 
                 type="number" 
                 className="w-full p-2 mt-2 border rounded placeholder-accent/60 bg-secondary border-accent/50 focus:outline-none focus:border-accent"
-                placeholder="Available quantity" 
+                placeholder={t('admin_products_available_quantity')}
                 value={currentProduct?.stock || ''}
                 onChange={(e) => setCurrentProduct({...currentProduct, stock: e.target.value})}
                 required 
@@ -503,7 +550,7 @@ const AdminProductManagement = () => {
                 type="submit" 
                 className="w-full py-3 transition-colors rounded bg-primary text-accent hover:bg-red-600"
               >
-                Update Product
+                {t('admin_products_update')}
               </button>
             </div>
           </form>
@@ -513,11 +560,13 @@ const AdminProductManagement = () => {
         <Modal
           isOpen={isDeleteModalOpen}
           onClose={() => setIsDeleteModalOpen(false)}
-          title="Confirm Delete"
+          title={t('admin_products_confirm_delete_title')}
           onConfirm={handleDeleteProduct}
+          confirmLabel={t('admin_products_confirm')}
+          cancelLabel={t('admin_products_cancel')}
         >
           <p className="text-center">
-            Are you sure you want to delete this product?
+            {t('admin_products_confirm_delete_message')}
           </p>
         </Modal>
       </div>

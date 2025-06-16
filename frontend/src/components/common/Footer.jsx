@@ -1,31 +1,41 @@
 import ve from '../../assets/images/common/h1_hero.png'
 import logo from '../../assets/images/common/Protein-Lab.png'
-
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer
-    className="py-8 text-white bg-black bg-center bg-cover "
-    style={{
-      backgroundImage: `url(${ve})`,
-    }}
-  >
+      className="py-8 text-white bg-black bg-center bg-cover "
+      style={{
+        backgroundImage: `url(${ve})`,
+      }}
+    >
       <div className="container px-4 mx-auto">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           {/* Logo and tagline */}
           <div className="space-y-2">
             <div className="flex items-center">
-            <img src={logo} alt="Protein Lab Logo" className=" w-30 max-h-[100px]" />
+              <img src={logo} alt="Protein Lab Logo" className=" w-30 max-h-[100px]" />
             </div>
-            <p className="text-sm text-gray-400 ml-7"> Build Your Body<br />  &ensp; As You Want.</p>
+            <p className="text-sm text-gray-400 ml-7">{t('footer_tagline')}</p>
           </div>
 
           {/* Customer Service */}
           <div className="space-y-3">
-            <h3 className="mb-4 font-semibold">Customer Service</h3>
+            <h3 className="mb-4 font-semibold">{t('footer_customer_service')}</h3>
             <ul className="space-y-2">
-              {['Dashboard', 'Workouts', 'Diet plan', 'Suppliment Store', 'FAQ', 'Account Login', 'Contact Us'].map((item) => (
-                <li key={item}>
+              {[
+                t('footer_dashboard'),
+                t('footer_workouts'),
+                t('footer_diet_plan'),
+                t('footer_supplement_store'),
+                t('footer_faq'),
+                t('footer_account_login'),
+                t('footer_contact_us')
+              ].map((item, idx) => (
+                <li key={idx}>
                   <a href="#" className="text-sm text-gray-400 transition-colors hover:text-white">
                     {item}
                   </a>
@@ -36,10 +46,10 @@ const Footer = () => {
 
           {/* About */}
           <div className="space-y-3">
-            <h3 className="mb-4 font-semibold">About</h3>
+            <h3 className="mb-4 font-semibold">{t('footer_about')}</h3>
             <ul className="space-y-2">
-              {['Our Team', 'Carrees'].map((item) => (
-                <li key={item}>
+              {[t('footer_our_team'), t('footer_careers')].map((item, idx) => (
+                <li key={idx}>
                   <a href="#" className="text-sm text-gray-400 transition-colors hover:text-white">
                     {item}
                   </a>
@@ -50,10 +60,17 @@ const Footer = () => {
 
           {/* Exercises and More */}
           <div className="space-y-3">
-            <h3 className="mb-4 font-semibold">Exercises</h3>
+            <h3 className="mb-4 font-semibold">{t('footer_exercises')}</h3>
             <ul className="space-y-2">
-              {['Tutorials', 'Instructions', 'Victory Wall', 'Membership', 'Community', 'Contact Us'].map((item) => (
-                <li key={item}>
+              {[
+                t('footer_tutorials'),
+                t('footer_instructions'),
+                t('footer_victory_wall'),
+                t('footer_membership'),
+                t('footer_community'),
+                t('footer_contact_us')
+              ].map((item, idx) => (
+                <li key={idx}>
                   <a href="#" className="text-sm text-gray-400 transition-colors hover:text-white">
                     {item}
                   </a>
@@ -66,9 +83,9 @@ const Footer = () => {
         {/* Bottom section with copyright and social icons */}
         <div className="flex flex-col items-center justify-between pt-8 mt-8 border-t-2 border-gray-800 md:flex-row">
           <div className="text-sm text-gray-400">
-            Copywrite © 2025 Protein Lab. All rights reserved.
-            <a href="#" className="ml-4 hover:text-white"><u>Terms of Use</u></a>
-            <a href="#" className="ml-4 hover:text-white"><u>Privacy Policy</u></a>
+            {t('footer_copyright')}
+            <a href="#" className="ml-4 hover:text-white"><u>{t('footer_terms')}</u></a>
+            <a href="#" className="ml-4 hover:text-white"><u>{t('footer_privacy')}</u></a>
           </div>
 
           {/* Social Icons */}

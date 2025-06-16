@@ -1,41 +1,43 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const { t } = useTranslation();
 
   const faqData = [
     {
-      question: "What is Protein Lab?",
-      answer: "Protein Lab is a platform dedicated to helping you achieve your fitness and nutrition goals through tailored workout plans, diet suggestions, and a supplement store."
+      question: t("faq_q1"),
+      answer: t("faq_a1")
     },
     {
-      question: "How do I get started?",
-      answer: "Simply sign up, provide your details, and choose your fitness or nutrition plan. Our system will generate a personalized program for you."
+      question: t("faq_q2"),
+      answer: t("faq_a2")
     },
     {
-      question: "Can I purchase supplements directly through the website?",
-      answer: "Yes! Our supplement store offers a variety of products, with a convenient cash-on-delivery option."
+      question: t("faq_q3"),
+      answer: t("faq_a3")
     },
     {
-      question: "What is the Victory Wall?",
-      answer: "The Victory Wall is where our members share their success stories to inspire and motivate others."
+      question: t("faq_q4"),
+      answer: t("faq_a4")
     },
     {
-      question: "Is there a fee for using the platform?",
-      answer: "Basic features are free. For advanced plans and premium content, subscription options are available."
+      question: t("faq_q5"),
+      answer: t("faq_a5")
     },
     {
-      question: "How do I suggest a new feature or improvement?",
-      answer: "Use our suggestion forum to share your ideas. Our admin team reviews all submissions regularly."
+      question: t("faq_q6"),
+      answer: t("faq_a6")
     },
     {
-      question: "What types of workout plans are available?",
-      answer: "We offer a variety of plans focusing on strength, endurance, weight loss, and more, customized to your needs."
+      question: t("faq_q7"),
+      answer: t("faq_a7")
     },
     {
-      question: "Can I modify my plans later?",
-      answer: "Absolutely! You can update your preferences anytime, and we'll adjust your plans accordingly."
+      question: t("faq_q8"),
+      answer: t("faq_a8")
     }
   ];
 
@@ -53,10 +55,10 @@ const Faq = () => {
         <div className="space-y-2">
           {faqData.map((item, index) => (
             <div
-            key={index}
-            className={`overflow-hidden border rounded-lg transition-colors duration-200 ${
-              openIndex === index ? 'border-white' : 'border-primary'
-            }`}
+              key={index}
+              className={`overflow-hidden border rounded-lg transition-colors duration-200 ${
+                openIndex === index ? 'border-white' : 'border-primary'
+              }`}
             >
               <button
                 onClick={() => toggleQuestion(index)}

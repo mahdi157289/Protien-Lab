@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { Plus, X, Edit, Trash2 } from 'lucide-react';
 import { Loader } from 'lucide-react';
+import { useTranslation } from "react-i18next"; // Add this import
 
 const DietPlanManagement = () => {
+  const { t } = useTranslation(); // Add this line
   const { token } = useAdminAuth();
   const [dietPlans, setDietPlans] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -180,13 +182,13 @@ const DietPlanManagement = () => {
     <div className="min-h-[calc(100vh-5rem)] p-6 ">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold ">Diet Plans Management</h1>
+          <h1 className="text-3xl font-bold ">{t('admin_dietplans_management_title')}</h1>
           <button
             onClick={() => {resetForm();setShowModal(true);}}
             className="flex items-center px-4 py-3 rounded-lg bg-primary hover:bg-green-600"
           >
             <span className="mr-2"><Plus className="w-5 h-5" /></span>
-            Add New Diet Plan
+            {t('admin_dietplans_add_new')}
           </button>
         </div>
 
@@ -211,9 +213,9 @@ const DietPlanManagement = () => {
                 </div>
               </div>
               <div className="space-y-2">
-                <p>Type: {plan.type}</p>
-                <p>Calories: {plan.calorieRange.min} - {plan.calorieRange.max}</p>
-                <p>Activity Level: {plan.activityLevel}</p>
+                <p>{t('admin_dietplans_type')}: {plan.type}</p>
+                <p>{t('admin_dietplans_calories')}: {plan.calorieRange.min} - {plan.calorieRange.max}</p>
+                <p>{t('admin_dietplans_activity_level')}: {plan.activityLevel}</p>
               </div>
             </div>
           ))}
@@ -224,7 +226,7 @@ const DietPlanManagement = () => {
             <div className="w-full max-w-2xl max-h-[80vh] overflow-y-auto p-6 rounded-xl bg-dark">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold ">
-                  {currentPlan ? 'Edit Diet Plan' : 'Create New Diet Plan'}
+                  {currentPlan ? t('admin_dietplans_edit_title') : t('admin_dietplans_create_title')}
                 </h2>
                 <button
                   onClick={() => setShowModal(false)}
@@ -237,7 +239,7 @@ const DietPlanManagement = () => {
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="col-span-2">
-                    <label className="block mb-2 text-sm ">Name</label>
+                    <label className="block mb-2 text-sm ">{t('admin_dietplans_name')}</label>
                     <input
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -247,33 +249,33 @@ const DietPlanManagement = () => {
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm ">Type</label>
+                    <label className="block mb-2 text-sm ">{t('admin_dietplans_type')}</label>
                     <select
                       value={formData.type}
                       onChange={(e) => setFormData({ ...formData, type: e.target.value })}
                       className="w-full p-2 border rounded border-accent/50 bg-secondary focus:border-accent focus:outline-none"
                     >
-                      <option>Weight Loss</option>
-                      <option>Weight Gain</option>
-                      <option>Maintenance</option>
+                      <option>{t('admin_dietplans_type_weight_loss')}</option>
+                      <option>{t('admin_dietplans_type_weight_gain')}</option>
+                      <option>{t('admin_dietplans_type_maintenance')}</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block mb-1 text-sm ">Activity Level</label>
+                    <label className="block mb-1 text-sm ">{t('admin_dietplans_activity_level')}</label>
                     <select
                       value={formData.activityLevel}
                       onChange={(e) => setFormData({ ...formData, activityLevel: e.target.value })}
                       className="w-full p-2 border rounded border-accent/50 bg-secondary focus:border-accent focus:outline-none"
                     >
-                      <option>Active</option>
-                      <option>Moderate</option>
-                      <option>Sedentary</option>
+                      <option>{t('admin_dietplans_activity_active')}</option>
+                      <option>{t('admin_dietplans_activity_moderate')}</option>
+                      <option>{t('admin_dietplans_activity_sedentary')}</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm ">Min Calories</label>
+                    <label className="block mb-2 text-sm ">{t('admin_dietplans_min_calories')}</label>
                     <input
                       type="number"
                       value={formData.calorieRange.min}
@@ -286,7 +288,7 @@ const DietPlanManagement = () => {
                   </div>
 
                   <div>
-                    <label className="block mb-2 text-sm ">Max Calories</label>
+                    <label className="block mb-2 text-sm ">{t('admin_dietplans_max_calories')}</label>
                     <input
                       type="number"
                       value={formData.calorieRange.max}
@@ -302,20 +304,20 @@ const DietPlanManagement = () => {
                 <div className="space-y-4">
                     {Object.entries(formData.meals).map(([mealType, meal]) => (
                     <div key={mealType} className="p-4 rounded-lg bg-secondary">
-                        <h3 className="mb-1 text-lg font-medium capitalize ">{mealType}</h3>
+                        <h3 className="mb-1 text-lg font-medium capitalize ">{t(`admin_dietplans_meal_${mealType}`)}</h3>
 
                         {meal.items.map((item, index) => (
                         <div key={index} className="flex gap-2 mb-2">
                             <input
                             value={item.name}
                             onChange={(e) => handleMealItemChange(mealType, index, 'name', e.target.value)}
-                            placeholder="Food item"
+                            placeholder={t('admin_dietplans_food_item')}
                             className="flex-1 p-2 border rounded border-accent/50 bg-secondary focus:border-accent focus:outline-none"
                             />
                             <input
                             value={item.amount}
                             onChange={(e) => handleMealItemChange(mealType, index, 'amount', e.target.value)}
-                            placeholder="Amount"
+                            placeholder={t('admin_dietplans_amount')}
                             className="w-32 p-2 border rounded border-accent/50 bg-secondary focus:border-accent focus:outline-none"
                             />
                             <button
@@ -333,18 +335,18 @@ const DietPlanManagement = () => {
                         onClick={() => handleAddMealItem(mealType)}
                         className="mt-1 text-sm text-primary hover:text-opacity-80"
                         >
-                        + Add Item
+                        + {t('admin_dietplans_add_item')}
                         </button>
                     </div>
                     ))}
                 </div>
 
                 <div className="mt-4">
-                  <h3 className="mb-2 text-lg font-medium">Nutrition Summary</h3>
+                  <h3 className="mb-2 text-lg font-medium">{t('admin_dietplans_nutrition_summary')}</h3>
                   <div className="grid grid-cols-2 gap-4">
                     {Object.entries(formData.nutritionSummary).map(([key, value]) => (
                       <div key={key}>
-                        <label className="block mb-2 text-sm capitalize ">{key}</label>
+                        <label className="block mb-2 text-sm capitalize ">{t(`admin_dietplans_nutrition_${key}`)}</label>
                         <input
                           value={value}
                           onChange={(e) => setFormData({
@@ -367,13 +369,13 @@ const DietPlanManagement = () => {
                     onClick={() => setShowModal(false)}
                     className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
                   >
-                    Cancel
+                    {t('admin_dietplans_cancel')}
                   </button>
                   <button
                     type="submit"
                     className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
                   >
-                    {currentPlan ? 'Update' : 'Create'} Diet Plan
+                    {currentPlan ? t('admin_dietplans_update') : t('admin_dietplans_create')}
                   </button>
                 </div>
               </form>
@@ -386,23 +388,23 @@ const DietPlanManagement = () => {
             <div className="w-full max-w-md p-6 rounded-lg bg-dark">
             <div className="text-center">
                 <h3 className="mb-2 text-lg font-semibold text-center">
-                Delete Diet Plan
+                {t('admin_dietplans_delete_title')}
                 </h3>
                 <p className="mb-6 text-center">
-                Are you sure you want to delete this diet plan? This action cannot be undone.
+                {t('admin_dietplans_delete_confirm')}
                 </p>
                 <div className="flex justify-center gap-10">
                 <button
                     onClick={() => setDeleteConfirmation({ isOpen: false, planId: null })}
                     className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
                 >
-                    Cancel
+                    {t('admin_dietplans_cancel')}
                 </button>
                 <button
                     onClick={handleDelete}
                     className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
                 >
-                    Delete
+                    {t('admin_dietplans_delete')}
                 </button>
                 </div>
             </div>

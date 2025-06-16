@@ -2,27 +2,30 @@ import { useState, useEffect, useCallback } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { Search, Trash2, UserCircle, Loader } from 'lucide-react';
 import PropTypes from 'prop-types';
+import { useTranslation } from "react-i18next"; // Add this import
 
 const DeleteModal = ({ isOpen, onClose, onConfirm }) => {
+  const { t } = useTranslation(); // Add this line
+
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80">
       <div className="w-full max-w-md p-6 mx-4 rounded-lg bg-dark">
-        <h2 className="mb-4 text-xl font-bold text-center">Confirm Delete</h2>
-        <p className="mb-6 text-center text-accent/80">Are you sure you want to delete this post? This action cannot be undone.</p>
+        <h2 className="mb-4 text-xl font-bold text-center">{t('admin_victorywall_confirm_delete')}</h2>
+        <p className="mb-6 text-center text-accent/80">{t('admin_victorywall_confirm_delete_message')}</p>
         <div className="flex justify-center gap-10">
           <button
             onClick={onClose}
             className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
           >
-            Cancel
+            {t('admin_victorywall_cancel')}
           </button>
           <button
             onClick={onConfirm}
             className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-green-600"
           >
-            Delete
+            {t('admin_victorywall_delete')}
           </button>
         </div>
       </div>
@@ -37,6 +40,7 @@ DeleteModal.propTypes = {
 };
 
 const VictoryWallAdmin = () => {
+  const { t } = useTranslation(); // Add this line
   const { token } = useAdminAuth();
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -144,7 +148,7 @@ const VictoryWallAdmin = () => {
 
       {/* Header Section */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-accent">Victory Wall Management</h1>
+        <h1 className="text-3xl font-bold text-accent">{t('admin_victorywall_management_title')}</h1>
       </div>
 
       {/* Search and Filter Section */}
@@ -154,7 +158,7 @@ const VictoryWallAdmin = () => {
             <Search className="absolute transform -translate-y-1/2 left-3 top-1/2 text-accent/60" />
             <input
               type="text"
-              placeholder="Search posts..."
+              placeholder={t('admin_victorywall_search_placeholder')}
               className="w-full py-2 pl-10 pr-4 border rounded-lg bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -186,8 +190,8 @@ const VictoryWallAdmin = () => {
               onChange={(e) => setSortBy(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg bg-secondary text-accent border-accent/50 focus:outline-none focus:border-accent"
             >
-              <option value="createdAt">Date Created</option>
-              <option value="likes">Likes Count</option>
+              <option value="createdAt">{t('admin_victorywall_sort_date')}</option>
+              <option value="likes">{t('admin_victorywall_sort_likes')}</option>
             </select>
           </div>
           <div className="lg:col-span-2">
@@ -195,7 +199,7 @@ const VictoryWallAdmin = () => {
               type="submit"
               className="w-full px-4 py-2 transition-opacity rounded-lg bg-primary text-accent hover:opacity-90"
             >
-              Search
+              {t('admin_victorywall_search')}
             </button>
           </div>
         </div>
@@ -212,7 +216,7 @@ const VictoryWallAdmin = () => {
                   {post.user.profileImage ? (
                     <img
                       src={`${import.meta.env.VITE_IMAGE_URL}/${post.user.profileImage}`}
-                      alt="Profile"
+                      alt={t('admin_victorywall_profile_alt')}
                       className="object-cover w-12 h-12 rounded-full"
                       onError={(e) => {
                         e.target.onerror = null;
@@ -248,7 +252,7 @@ const VictoryWallAdmin = () => {
                 <div className="mx-1 mb-4">
                   <img 
                     src={`${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
-                    alt="Post" 
+                    alt={t('admin_victorywall_post_image_alt')}
                     className="w-full rounded-sm"
                   />
                 </div>
@@ -256,7 +260,7 @@ const VictoryWallAdmin = () => {
 
               {/* Post Stats */}
               <div className="flex items-center pt-3 border-t text-accent/75 border-accent/10">
-                <span className="text-primary">{post.likes.length} likes</span>
+                <span className="text-primary">{post.likes.length} {t('admin_victorywall_likes')}</span>
               </div>
             </div>
           </div>

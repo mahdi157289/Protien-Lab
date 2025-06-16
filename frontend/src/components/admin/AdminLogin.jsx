@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const AdminLogin = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -9,6 +10,7 @@ const AdminLogin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { login } = useAdminAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,11 +20,11 @@ const AdminLogin = () => {
 
     try {
       if (!form.email || !form.password) {
-        throw new Error('All fields are required');
+        throw new Error(t('admin_login_required_fields'));
       }
 
       if (!form.email.includes('@')) {
-        throw new Error('Please enter a valid email address');
+        throw new Error(t('admin_login_invalid_email'));
       }
 
       await login(form.email, form.password);
@@ -33,7 +35,7 @@ const AdminLogin = () => {
         navigate('/admin/dashboard');
       }, 1000);
     } catch (error) {
-      setError(error.response?.data?.message || error.message || 'Login failed. Please check your credentials.');
+      setError(error.response?.data?.message || error.message || t('admin_login_failed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -64,24 +66,24 @@ const AdminLogin = () => {
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span>Login successful! Redirecting to dashboard...</span>
+              <span>{t('admin_login_success')}</span>
             </div>
           </div>
         )}
 
         <h2 className="text-2xl font-bold text-center text-[#FFFCF9]">
-          Admin Login
+          {t('admin_login_title')}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label htmlFor="email" className="block mb-1 text-sm font-medium text-[#FFFCF9]">
-              Email
+              {t('admin_login_email')}
             </label>
             <input
               type="email"
               id="email"
-              placeholder="Enter your email"
+              placeholder={t('admin_login_email_placeholder')}
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
@@ -91,12 +93,12 @@ const AdminLogin = () => {
 
           <div>
             <label htmlFor="password" className="block mb-1 text-sm font-medium text-[#FFFCF9]">
-              Password
+              {t('admin_login_password')}
             </label>
             <input
               type="password"
               id="password"
-              placeholder="Enter your password"
+              placeholder={t('admin_login_password_placeholder')}
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
               className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
@@ -109,18 +111,18 @@ const AdminLogin = () => {
             className="w-full px-4 py-2 font-medium text-[#FFFCF9] rounded-lg bg-[#40ee45] hover:bg-[#40ee45]/90 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none transition-colors"
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Logging in...' : 'Login'}
+            {isSubmitting ? t('admin_login_logging_in') : t('admin_login_button')}
           </button>
         </form>
 
         <p className="mt-4 text-sm text-center text-[#FFFCF9]">
-          Don&apos;t have an account?{' '}
+          {t('admin_login_no_account')}{' '}
           <button
             onClick={() => navigate('/admin/register')}
             className="text-[#40ee45] hover:underline disabled:opacity-50 transition-colors"
             disabled={isSubmitting}
           >
-            Register here
+            {t('admin_login_register')}
           </button>
         </p>
       </div>

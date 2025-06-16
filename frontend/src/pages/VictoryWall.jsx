@@ -5,9 +5,11 @@ import api from '../config/api';
 import { Image, Heart, Users, PlusSquare, X, MoreVertical, Trash2, Edit2 } from 'lucide-react';
 import {Loader} from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useTranslation } from "react-i18next"; // Add this line
 
 // Confirmation Dialog Component
 const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
+  const { t } = useTranslation(); // Add this line
   if (!isOpen) return null;
   return (
     <motion.div 
@@ -30,8 +32,8 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ type: 'spring', damping: 20 }}
       >
-        <h3 className="mb-2 text-xl font-semibold text-center text-white">{title}</h3>
-        <p className="mb-6 text-center text-accent/80">{message}</p>
+        <h3 className="mb-2 text-xl font-semibold text-center text-white">{t(title)}</h3>
+        <p className="mb-6 text-center text-accent/80">{t(message)}</p>
         <div className="flex justify-center gap-10">
           <motion.button
             onClick={onClose}
@@ -39,7 +41,7 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Cancel
+            {t('common_cancel')}
           </motion.button>
           <motion.button
             onClick={() => {
@@ -50,7 +52,7 @@ const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            Delete
+            {t('victorywall_delete')}
           </motion.button>
         </div>
       </motion.div>
@@ -69,6 +71,7 @@ ConfirmationDialog.propTypes = {
 // Menu Dropdown Component
 const MenuDropdown = ({ onDelete, onEdit }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation(); // Add this line
   return (
     <div className="relative">
       <motion.button
@@ -104,7 +107,7 @@ const MenuDropdown = ({ onDelete, onEdit }) => {
               whileHover={{ x: 5 }}
             >
               <Edit2 size={16} />
-              Edit Post
+              {t('victorywall_edit')}
             </motion.button>
             <motion.button
               onClick={() => {
@@ -115,7 +118,7 @@ const MenuDropdown = ({ onDelete, onEdit }) => {
               whileHover={{ x: 5 }}
             >
               <Trash2 size={16} />
-              Delete Post
+              {t('victorywall_delete')}
             </motion.button>
           </motion.div>
         </>
@@ -694,8 +697,8 @@ const VictoryWall = () => {
           isOpen={isConfirmDeleteOpen}
           onClose={() => setIsConfirmDeleteOpen(false)}
           onConfirm={handleDeleteConfirm}
-          title="Delete Post"
-          message="Are you sure you want to delete this post? This action cannot be undone."
+          title="victorywall_delete"
+          message="victorywall_delete_confirm"
         />
 
         {/* Posts List */}

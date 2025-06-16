@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import api from '../../config/api';
 import { Loader } from "lucide-react";
+import { useTranslation } from 'react-i18next';
 
 const StatsBanner = () => {
+  const { t } = useTranslation();
   const [stats, setStats] = useState({
     activeMembers: 1000,
     exercises: 30,
@@ -26,20 +28,21 @@ const StatsBanner = () => {
         setError(null);
       } catch (error) {
         console.error('Failed to fetch stats:', error);
-        setError('Failed to load statistics');
+        setError(t('stats_error'));
       } finally {
         setLoading(false);
       }
     };
 
     fetchStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const statsArray = [
-    { number: `${stats.activeMembers}+`, label: "Active Members" },
-    { number: `${stats.exercises}+`, label: "Exercises" },
-    { number: `${stats.successStories}+`, label: "Success Stories" },
-    { number: `${stats.products}+`, label: "Supplement Products" }
+    { number: `${stats.activeMembers}+`, label: t("active_members") },
+    { number: `${stats.exercises}+`, label: t("exercises") },
+    { number: `${stats.successStories}+`, label: t("success_stories") },
+    { number: `${stats.products}+`, label: t("supplement_products") }
   ];
 
   if (loading) {
