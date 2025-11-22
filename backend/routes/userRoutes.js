@@ -16,6 +16,9 @@ router.post('/login', login);
 router.get('/products', userProductController.getAllProducts);
 router.get('/products/:id', userProductController.getProductById);
 
+// Guest order route (public, no authentication required)
+router.post('/orders/guest', userOrderController.createGuestOrder);
+
 // Order routes (protected)
 router.post('/orders', protect, userOrderController.createOrder);
 router.get('/orders', protect, userOrderController.getUserOrders);

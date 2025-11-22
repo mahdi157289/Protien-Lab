@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../config/api";
 import { X, Loader, Trash } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useSmokey } from '../../contexts/SmokeyContext';
 
 function OrderPage() {
   const [orders, setOrders] = useState([]);
@@ -14,6 +15,12 @@ function OrderPage() {
   const [actionType, setActionType] = useState(null); // 'cancel' or 'delete'
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { smokeyOn } = useSmokey();
+
+  const buildPlaceholder = (w, h) => `data:image/svg+xml;utf8,${encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}'>`+
+    `<rect width='100%' height='100%' fill='#232323'/></svg>`
+  )}`;
 
   // Fetch user orders from backend
   useEffect(() => {
@@ -82,10 +89,10 @@ function OrderPage() {
   }
 
   return (
-    <div className="min-h-screen px-8 py-10 bg-secondary">
+    <div className="min-h-screen px-8 py-10">
       {/* Page Heading */}
-      <h1 className="mb-8 text-4xl font-bold text-center text-white">{t('orders_title')}</h1>
-      <p className="px-4 mb-8 text-center text-accent/80">
+      <h1 className={`mb-8 text-4xl font-bold text-center ${smokeyOn ? 'text-white' : 'text-black'}`}>{t('orders_title')}</h1>
+      <p className={`px-4 mb-8 text-center ${smokeyOn ? 'text-white' : 'text-black'}`}>
         {t('orders_subtitle')}
       </p>
 
@@ -131,13 +138,19 @@ function OrderPage() {
                 </span>
               </div>
 
-              {order.orderItems.map((item, index) => (
+              {order.orderItems.map((item, index) => {
+                const rawImage = (Array.isArray(item.product?.images) && item.product.images[0]) || item.product?.image || '';
+                const resolvedSrc = rawImage
+                  ? `${import.meta.env.VITE_IMAGE_URL}/${String(rawImage).replace(/^\/+/, '')}`
+                  : buildPlaceholder(120,120);
+                return (
                 <div key={index} className="flex gap-6 ">
                   <div className="flex justify-center items-center bg-[#29292A] w-[150px] h-[150px] p-2 rounded-lg">
                     <img
-                      src={`${import.meta.env.VITE_IMAGE_URL}/${item.product.image}`}
-                      alt={item.product.name}
+                      src={resolvedSrc}
+                      alt={item.product?.name || 'product'}
                       className="w-[120px] h-[120px] object-contain"
+                      onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src=buildPlaceholder(120,120);}}
                     />
                   </div>
                   <div className="flex-1">
@@ -175,7 +188,7 @@ function OrderPage() {
                     </div>
                   </div>
                 </div>
-              ))}
+              )})}
             </div>
           ))
         )}
@@ -206,12 +219,18 @@ function OrderPage() {
             {/* Order Items */}
             <div className="bg-[#29292A] p-4 rounded-lg">
               <h3 className="mb-2 text-lg font-bold">{t('orders_products')}</h3>
-              {selectedOrder.orderItems.map((item, index) => (
+              {selectedOrder.orderItems.map((item, index) => {
+                const rawImage = (Array.isArray(item.product?.images) && item.product.images[0]) || item.product?.image || '';
+                const resolvedSrc = rawImage
+                  ? `${import.meta.env.VITE_IMAGE_URL}/${String(rawImage).replace(/^\/+/, '')}`
+                  : buildPlaceholder(80,80);
+                return (
                 <div key={index} className="flex items-center gap-4 mb-4">
                   <img
-                    src={`${import.meta.env.VITE_IMAGE_URL}/${item.product.image}`}
-                    alt={item.product.name}
+                    src={resolvedSrc}
+                    alt={item.product?.name || 'product'}
                     className="object-contain w-20 h-20"
+                    onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src=buildPlaceholder(80,80);}}
                   />
                   <div>
                     <h4 className="font-bold">{item.product.name}</h4>
@@ -219,7 +238,7 @@ function OrderPage() {
                     <p>{t('orders_price_each', { price: item.price })}</p>
                   </div>
                 </div>
-              ))}
+              )})}
               <div className="pt-4 border-t border-gray-600">
                 <p className="text-lg font-bold">{t('orders_total', { total: selectedOrder.totalAmount })}</p>
                 <p className="text-sm text-gray-400">{t('orders_payment_method', { method: selectedOrder.paymentMethod })}</p>

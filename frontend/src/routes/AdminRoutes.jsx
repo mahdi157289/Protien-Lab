@@ -12,6 +12,7 @@ import AdminNavbar from '../components/common/AdminNavbar';
 import AdminProtectedRoute from '../components/admin/AdminProtectedRoute';
 import DietPlanManagement from '../components/admin/DietPlanManagement';
 import AdminFeedbackPage from '../components/admin/AdminFeedbackPage';
+import PhotoManagement from '../components/admin/PhotoManagement';
 
 const AdminRoutes = () => {
   const { admin } = useAdminAuth();
@@ -19,6 +20,7 @@ const AdminRoutes = () => {
   return (
     <>
       {admin && <AdminNavbar />}
+      {admin && <div className="h-24" />}
       <Routes>
         <Route path="login" element={<AdminLogin />} />
         <Route path="register" element={<AdminRegister />} />
@@ -29,6 +31,7 @@ const AdminRoutes = () => {
         <Route path="users" element={<AdminProtectedRoute><AdminUsers /></AdminProtectedRoute>}/>
         <Route path="victory-wall" element={<AdminProtectedRoute><AdminVictoryWall /></AdminProtectedRoute>}/>
         <Route path="feedback" element={<AdminProtectedRoute><AdminFeedbackPage /></AdminProtectedRoute>}/>
+        <Route path="photos" element={<AdminProtectedRoute><PhotoManagement /></AdminProtectedRoute>}/>
         <Route path="profile" element={<AdminProtectedRoute><AdminProfile /></AdminProtectedRoute>}/>
         <Route path="" element={admin ? <Navigate to="dashboard" replace /> : <Navigate to="login" replace />}/>
       </Routes>

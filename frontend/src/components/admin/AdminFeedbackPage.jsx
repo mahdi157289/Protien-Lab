@@ -32,10 +32,10 @@ const AdminFeedbackPage = () => {
   }, [token]);
 
   return (
-    <div className="min-h-screen p-6 bg-secondary">
+    <div className="min-h-screen p-6 font-source-sans">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-accent">{t('admin_feedback_title')}</h1>
+          <h1 className="text-2xl font-bold text-accent font-orbitron">{t('admin_feedback_title')}</h1>
           <button 
             onClick={fetchFeedbacks}
             className="p-2 transition rounded bg-primary text-accent hover:bg-opacity-80"

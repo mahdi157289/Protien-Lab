@@ -72,10 +72,10 @@ const StatsBanner = () => {
               key={index}
               className="flex items-center justify-center gap-3 px-2 py-4 rounded-lg sm:px-4 sm:py-6 md:px-6 md:py-8 sm:rounded-xl md:rounded-2xl lg:rounded-full bg-secondary"
             >
-              <span className="text-xl font-bold sm:text-2xl md:text-3xl text-primary">
+              <span className="text-xl font-bold sm:text-2xl md:text-3xl text-white">
                 {stat.number}
               </span>
-              <span className="text-base sm:text-lg md:text-xl">
+              <span className="text-base sm:text-lg md:text-xl text-white">
                 {stat.label}
               </span>
             </div>

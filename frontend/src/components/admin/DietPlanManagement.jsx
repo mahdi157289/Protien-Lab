@@ -179,10 +179,10 @@ const DietPlanManagement = () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-5rem)] p-6 ">
+    <div className="min-h-[calc(100vh-5rem)] p-6 font-source-sans">
       <div className="mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold ">{t('admin_dietplans_management_title')}</h1>
+          <h1 className="text-3xl font-bold text-black">{t('admin_dietplans_management_title')}</h1>
           <button
             onClick={() => {resetForm();setShowModal(true);}}
             className="flex items-center px-4 py-3 rounded-lg bg-primary hover:bg-green-600"
@@ -194,7 +194,7 @@ const DietPlanManagement = () => {
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {dietPlans.map((plan) => (
-            <div key={plan._id} className="p-6 rounded-lg bg-dark">
+            <div key={plan._id} className="p-6 rounded-lg bg-dark text-white">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold">{plan.name}</h3>
                 <div className="flex gap-2">

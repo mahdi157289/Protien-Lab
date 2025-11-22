@@ -58,7 +58,11 @@ const adminOrderController = {
             }
 
             const orders = await Order.find(filter)
-                .populate('user', 'firstName lastName email')
+                .populate({
+                    path: 'user',
+                    select: 'firstName lastName email',
+                    options: { strictPopulate: false }  // Allow null users for guest orders
+                })
                 .populate('orderItems.product', 'name price')
                 .skip(skip)
                 .limit(limit)

@@ -141,7 +141,7 @@ const DietPlanner = () => {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-[calc(100vh-5rem)] p-6">
+    <div className="flex flex-col items-center min-h-[calc(100vh-5rem)] p-6 bg-white">
       {/* Delete Confirmation Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-80">
@@ -174,7 +174,7 @@ const DietPlanner = () => {
 
       <div className="grid w-full grid-cols-1 gap-6 max-w-7xl md:grid-cols-2">
         {/* Left Panel - Create Plan Form */}
-        <div className="p-6 rounded-lg bg-dark">
+        <div className="p-6 rounded-lg bg-dark text-white">
           <h2 className="mb-6 text-lg #40ee45">{t('diet_create_title')}</h2>
 
           <div className="mb-6">
@@ -298,7 +298,7 @@ const DietPlanner = () => {
         </div>
 
         {/* Right Panel - Diet Plans List */}
-        <div className="p-6 rounded-lg bg-dark">
+        <div className="p-6 rounded-lg bg-dark text-white">
           {dietPlans.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <p className="text-gray-400">{t('diet_no_plans')}</p>
@@ -344,7 +344,7 @@ const DietPlanner = () => {
               };
 
               return (
-                <div key={key} className="flex flex-col rounded-lg bg-dark">
+                <div key={key} className="flex flex-col rounded-lg bg-dark text-white">
                   <div className="flex-1 p-4">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="text-lg font-semibold">{meal.title}</h3>
@@ -374,7 +374,7 @@ const DietPlanner = () => {
           </div>
 
           {/* Nutrition Summary */}
-          <div className="p-6 rounded-lg bg-dark">
+          <div className="p-6 rounded-lg bg-dark text-white">
             <h3 className="mb-6 text-2xl font-semibold text-center">{t('diet_nutrition_summary')}</h3>
             <div className="grid grid-cols-2 gap-6 py-2 rounded-lg md:grid-cols-4 bg-primary/20">
               <div className="text-center">

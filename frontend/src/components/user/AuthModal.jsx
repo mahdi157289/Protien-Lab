@@ -99,15 +99,15 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
         });
 
         if (response.success) {
-          setIsSignUp(false);
-          setFormData({
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-          });
-          setError(t('auth_success_signup'));
+          // auto-login then close and emit success
+          const loginResp = await login(formData.email, formData.password);
+          if (loginResp.success) {
+            onClose();
+            try { window.dispatchEvent(new Event('auth-success')); } catch {}
+          } else {
+            setIsSignUp(false);
+            setError(t('auth_success_signup'));
+          }
         } else {
           setError(response.error);
         }
@@ -116,7 +116,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
 
         if (response.success) {
           onClose();
-          navigate('/dashboard');
+          try { window.dispatchEvent(new Event('auth-success')); } catch {}
         } else {
           setError(response.error);
         }
@@ -148,7 +148,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-70"
+          className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black bg-opacity-70"
           onClick={onClose}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

@@ -6,12 +6,14 @@ import dashboardDietImage from '../../assets/images/dashobard/ud-diet.jpg';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSmokey } from '../../contexts/SmokeyContext';
 
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { smokeyOn } = useSmokey();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,7 +55,7 @@ const Dashboard = () => {
             className="flex items-center justify-between mb-8"
           >
             <div>
-              <h1 className="mb-2 text-3xl font-bold md:text-4xl">
+              <h1 className={`mb-2 text-3xl font-bold md:text-4xl ${smokeyOn ? 'text-white' : 'text-black'}`}>
                 {t('dashboard_welcome')}, <span className="text-primary">{user?.firstName}!</span>
               </h1>
               <p>{t('dashboard_manage_customize')}</p>
@@ -76,7 +78,7 @@ const Dashboard = () => {
                   className="object-cover w-full h-full brightness-50"
                 />
                 <div className="absolute inset-0 flex flex-col justify-between p-6 bg-gradient-to-t from-dark/90">
-                  <h2 className="mb-4 text-3xl font-bold text-accent/30">{t('dashboard_workout_title')}</h2>
+                  <h2 className="mb-4 text-3xl font-bold text-white">{t('dashboard_workout_title')}</h2>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -116,7 +118,7 @@ const Dashboard = () => {
                   className="object-cover w-full h-full brightness-50"
                 />
                 <div className="absolute inset-0 flex flex-col justify-between p-6 bg-gradient-to-t from-dark/90">
-                  <h2 className="mb-4 text-3xl font-bold text-accent/30">{t('dashboard_diet_title')}</h2>
+                  <h2 className="mb-4 text-3xl font-bold text-white">{t('dashboard_diet_title')}</h2>
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

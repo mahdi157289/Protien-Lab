@@ -14,12 +14,11 @@ const Footer = () => {
     >
       <div className="container px-4 mx-auto">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
-          {/* Logo and tagline */}
+          {/* Logo */}
           <div className="space-y-2">
             <div className="flex items-center">
-              <img src={logo} alt="Protein Lab Logo" className=" w-30 max-h-[100px]" />
+              <img src={logo} alt="Protein Lab Logo" className="max-h-[180px] w-auto" />
             </div>
-            <p className="text-sm text-gray-400 ml-7">{t('footer_tagline')}</p>
           </div>
 
           {/* Customer Service */}
@@ -27,9 +26,6 @@ const Footer = () => {
             <h3 className="mb-4 font-semibold">{t('footer_customer_service')}</h3>
             <ul className="space-y-2">
               {[
-                t('footer_dashboard'),
-                t('footer_workouts'),
-                t('footer_diet_plan'),
                 t('footer_supplement_store'),
                 t('footer_faq'),
                 t('footer_account_login'),

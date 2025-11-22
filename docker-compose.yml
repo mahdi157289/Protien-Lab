@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   backend:
-    build: ./backend
+    image: docker.io/yourusername/protienlab-backend:latest
     ports:
       - "5000:5000"
     environment:
@@ -9,7 +9,7 @@ services:
     restart: always
 
   frontend:
-    build: ./frontend
+    image: docker.io/yourusername/protienlab-frontend:latest
     ports:
       - "3000:80"
     restart: always

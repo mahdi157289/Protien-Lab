@@ -5,7 +5,6 @@ import { UserCircle, LogOut, Settings } from 'lucide-react';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import logo from '../../assets/images/common/Protein-Lab.png';
 import { useTranslation } from 'react-i18next';
-import { LiaLanguageSolid } from "react-icons/lia"; // Add this import
 
 const AdminNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,7 +12,7 @@ const AdminNavbar = ({ onAuthClick }) => {
   const { admin, logout } = useAdminAuth();
   const [logoutConfirm, setLogoutConfirm] = useState(false);
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation(); // Add this to get i18n instance
+  const { t } = useTranslation();
 
   const adminMenuRef = useRef(null);
 
@@ -49,18 +48,16 @@ const AdminNavbar = ({ onAuthClick }) => {
     }
   };
 
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === "en" ? "fr" : "en");
-  };
+  // language toggle removed for admin navbar
 
   const navItems = [
     { label: t('admin_dashboard'), path: '/admin/dashboard' },
     { label: t('admin_exercises'), path: '/admin/exercises' },
-    { label: t('admin_diet_plan'), path: '/admin/diet-plan' },
     { label: t('admin_victory_wall'), path: '/admin/victory-wall' },
     { label: t('admin_store'), path: '/admin/store' },
     { label: t('admin_users'), path: '/admin/users' },
     { label: t('admin_feedback'), path: '/admin/feedback' },
+    { label: 'Photo Management', path: '/admin/photos' },
   ];
 
   return (
@@ -97,16 +94,7 @@ const AdminNavbar = ({ onAuthClick }) => {
                 {item.label}
               </NavLink>
             ))}
-            {/* Language Toggle Desktop */}
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center justify-center p-2 ml-2 text-xl rounded-full hover:bg-secondary transition"
-              title={i18n.language === "en" ? "Français" : "English"}
-              aria-label="Toggle language"
-            >
-              <LiaLanguageSolid />
-              <span className="ml-1 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
-            </button>
+            {/* language toggle removed */}
           </div>
 
           {/* Admin Menu */}
@@ -159,16 +147,6 @@ const AdminNavbar = ({ onAuthClick }) => {
 
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center gap-2">
-            {/* Language Toggle Mobile */}
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center justify-center p-2 text-xl rounded-full hover:bg-secondary transition"
-              title={i18n.language === "en" ? "Français" : "English"}
-              aria-label="Toggle language"
-            >
-              <LiaLanguageSolid />
-              <span className="ml-1 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
-            </button>
             <button onClick={toggleMenu} className="transition-colors text-accent ">
               {isOpen ? (
                 <svg
@@ -218,16 +196,7 @@ const AdminNavbar = ({ onAuthClick }) => {
                 {item.label}
               </NavLink>
             ))}
-            {/* Language Toggle in Mobile Menu */}
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center justify-start p-2 text-xl rounded-full hover:bg-secondary transition"
-              title={i18n.language === "en" ? "Français" : "English"}
-              aria-label="Toggle language"
-            >
-              <LiaLanguageSolid />
-              <span className="ml-2 text-sm font-semibold uppercase">{i18n.language === "en" ? "EN" : "FR"}</span>
-            </button>
+            {/* language toggle removed from mobile menu */}
             {admin ? (
               <>
                 <button

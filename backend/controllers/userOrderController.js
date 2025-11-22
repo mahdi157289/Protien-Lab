@@ -65,7 +65,7 @@ const userOrderController = {
     getUserOrders: async (req, res) => {
         try {
             const orders = await Order.find({ user: req.user._id })
-                .populate('orderItems.product', 'name price image')
+                .populate('orderItems.product', 'name price images image')
                 .sort({ createdAt: -1 });
 
             res.json(orders);
@@ -79,7 +79,7 @@ const userOrderController = {
             const order = await Order.findOne({
                 _id: req.params.id,
                 user: req.user._id
-            }).populate('orderItems.product', 'name price image');
+            }).populate('orderItems.product', 'name price images image');
 
             if (!order) {
                 return res.status(404).json({ message: 'Order not found' });
@@ -149,6 +149,75 @@ const userOrderController = {
             res.json({ message: 'Cancelled order deleted successfully' });
         } catch (error) {
             res.status(500).json({ message: error.message });
+        }
+    },
+
+    createGuestOrder: async (req, res) => {
+        try {
+            const { orderItems, shippingAddress } = req.body;
+
+            if (!orderItems || orderItems.length === 0) {
+                return res.status(400).json({ message: 'No order items' });
+            }
+
+            if (!shippingAddress || !shippingAddress.email || !shippingAddress.fullName || !shippingAddress.address || !shippingAddress.phoneNumber) {
+                return res.status(400).json({ message: 'All shipping information is required' });
+            }
+
+            // Calculate total and verify product availability
+            let totalAmount = 0;
+            const updatedOrderItems = [];
+
+            for (const item of orderItems) {
+                const product = await Product.findById(item.product);
+                if (!product) {
+                    return res.status(404).json({ 
+                        message: `Product not found: ${item.product}` 
+                    });
+                }
+                if (product.stock < item.quantity) {
+                    return res.status(400).json({ 
+                        message: `Insufficient stock for ${product.name}` 
+                    });
+                }
+
+                // Add price to the order item
+                updatedOrderItems.push({
+                    product: item.product,
+                    quantity: item.quantity,
+                    price: product.price
+                });
+
+                totalAmount += product.price * item.quantity;
+
+                // Update product stock
+                await Product.findByIdAndUpdate(item.product, {
+                    $inc: { stock: -item.quantity }
+                });
+            }
+
+            // Create the order without user (guest order)
+            const order = new Order({
+                user: null,  // No user for guest orders
+                orderItems: updatedOrderItems,
+                shippingAddress: {
+                    fullName: shippingAddress.fullName,
+                    address: shippingAddress.address,
+                    phoneNumber: shippingAddress.phoneNumber,
+                    email: shippingAddress.email
+                },
+                totalAmount,
+                paymentMethod: 'Cash on Delivery'
+            });
+
+            const createdOrder = await order.save();
+            res.status(201).json({
+                success: true,
+                message: 'Order placed successfully',
+                order: createdOrder
+            });
+        } catch (error) {
+            res.status(400).json({ message: error.message });
         }
     }
 };

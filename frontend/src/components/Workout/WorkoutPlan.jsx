@@ -172,9 +172,9 @@ const WorkoutPlanner = () => {
           
           <div className="mb-6">
             <h3 className="mb-4 text-sm #40ee45">{t('workout_personal_info')}</h3>
-            <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block mb-2 text-sm text-200">{t('workout_age')}</label>
+              <label className="block mb-2 text-sm text-white">{t('workout_age')}</label>
                 <input 
                   type="text"
                   name="age"
@@ -189,7 +189,7 @@ const WorkoutPlanner = () => {
                 )}
               </div>
               <div>
-                <label className="block mb-2 text-sm text-200">{t('workout_gender')}</label>
+                <label className="block mb-2 text-sm text-white">{t('workout_gender')}</label>
                 <select 
                   name="gender"
                   value={formData.gender}
@@ -214,7 +214,7 @@ const WorkoutPlanner = () => {
             <h3 className="mb-4 text-sm #40ee45">{t('workout_health_info')}</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block mb-2 text-sm text-200">{t('workout_height')}</label>
+                <label className="block mb-2 text-sm text-white">{t('workout_height')}</label>
                 <input 
                   type="text"
                   name="height"
@@ -229,7 +229,7 @@ const WorkoutPlanner = () => {
                 )}
               </div>
               <div>
-                <label className="block mb-2 text-sm text-200">{t('workout_weight')}</label>
+                <label className="block mb-2 text-sm text-white">{t('workout_weight')}</label>
                 <input 
                   type="text"
                   name="weight"
@@ -248,7 +248,7 @@ const WorkoutPlanner = () => {
 
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div>
-              <label className="block mb-2 text-sm text-200">{t('workout_goal')}</label>
+              <label className="block mb-2 text-sm text-white">{t('workout_goal')}</label>
               <select 
                 name="goal"
                 value={formData.goal}
@@ -261,7 +261,7 @@ const WorkoutPlanner = () => {
               </select>
             </div>
             <div>
-              <label className="block mb-2 text-sm text-200">{t('workout_medical_conditions')}</label>
+              <label className="block mb-2 text-sm text-white">{t('workout_medical_conditions')}</label>
               <select 
                 name="medicalConditions"
                 value={formData.medicalConditions}
@@ -293,7 +293,7 @@ const WorkoutPlanner = () => {
             <div className="space-y-1">
               {workoutPlans.map((plan, index) => (
                 <div key={plan._id} className="flex items-center justify-between p-4 rounded-lg bg-secondary">
-                  <span className="text-200">{t('workout_plan')} {index + 1}</span>
+                  <span className="text-white">{t('workout_plan')} {index + 1}</span>
                   <div className="flex gap-2">
                     <button 
                       onClick={() => {
@@ -325,7 +325,7 @@ const WorkoutPlanner = () => {
       {selectedPlanDetails && (
         <div ref={detailsRef} className="w-full p-8 mt-10 rounded-lg bg-dark max-w-7xl">
           <div className="flex items-center justify-between mb-8">
-            <h3 className="text-2xl font-semibold text-gray-200">
+            <h3 className="text-2xl font-semibold text-white">
               {selectedPlanDetails.name}
             </h3>
             <div className="flex items-center gap-2 text-sm text-gray-400">
@@ -343,7 +343,7 @@ const WorkoutPlanner = () => {
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   selectedDay === day 
                     ? 'bg-green-500 text-white' 
-                    : 'bg-secondary  hover:bg-secondary/60'
+                    : 'bg-secondary text-white hover:bg-secondary/60'
                 }`}
               >
                 {t('workout_day')} {day.day}
@@ -354,7 +354,7 @@ const WorkoutPlanner = () => {
           {/* Exercises Display */}
           {selectedDay && (
             <div className="p-6 border border-gray-700 rounded-lg shadow-md bg-secondary">
-              <h4 className="flex items-center mb-4 text-lg font-semibold #40ee45">
+              <h4 className="flex items-center mb-4 text-lg font-semibold text-white">
                 <span className="flex items-center justify-center w-8 h-8 mr-3 text-white bg-green-500 rounded-full">
                   {selectedDay.day}
                 </span>
@@ -371,14 +371,14 @@ const WorkoutPlanner = () => {
                         {exerciseIndex + 1}
                       </div>
                       <div>
-                        <h4 className="font-medium text">{exercise.name}</h4>
-                        <p className="text-sm ">{exercise.category}</p>
+                        <h4 className="font-medium text-white">{exercise.name}</h4>
+                        <p className="text-sm text-white/80">{exercise.category}</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
-                        <p className="font-bold text-gray-200">{t('workout_sets')}</p>
-                        <p className="text-sm text-gray-400">{t('workout_reps')}</p>
+                        <p className="font-bold text-white">{t('workout_sets')}</p>
+                        <p className="text-sm text-white/80">{t('workout_reps')}</p>
                       </div>
                       <button 
                         onClick={() => setSelectedExercise(exercise)}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import SectionDivider from '../common/SectionDivider';
 
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(0);
@@ -48,9 +49,10 @@ const Faq = () => {
   return (
     <div className="w-full px-4 py-12">
       <div className="mx-auto max-w-7xl">
-        <h1 className="mb-12 text-4xl font-bold text-center md:text-5xl">
+        <h1 className="mb-4 text-4xl font-bold text-center md:text-5xl">
           FAQ
         </h1>
+        <SectionDivider />
 
         <div className="space-y-2">
           {faqData.map((item, index) => (
@@ -62,15 +64,15 @@ const Faq = () => {
             >
               <button
                 onClick={() => toggleQuestion(index)}
-                className="flex items-center justify-between w-full p-3 text-left transition-colors duration-200 bg-dark hover:bg-secondary"
+                className="flex items-center justify-between w-full p-3 text-left transition-colors duration-200 bg-dark hover:bg-secondary text-white"
               >
-                <span>
+                <span className="text-white font-source-sans">
                   {item.question}
                 </span>
                 {openIndex === index ? (
-                  <ChevronUp className="w-8 h-8" strokeWidth={1.5} />
+                  <ChevronUp className="w-8 h-8 text-white" strokeWidth={1.5} />
                 ) : (
-                  <ChevronDown className="w-8 h-8" strokeWidth={1.5} />
+                  <ChevronDown className="w-8 h-8 text-white" strokeWidth={1.5} />
                 )}
               </button>
 
@@ -79,7 +81,7 @@ const Faq = () => {
                   openIndex === index ? 'max-h-96' : 'max-h-0'
                 }`}
               >
-                <div className="p-3 bg-dark">
+                <div className="p-3 bg-dark text-white font-source-sans">
                   {item.answer}
                 </div>
               </div>

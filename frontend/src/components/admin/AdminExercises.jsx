@@ -227,7 +227,7 @@ const AdminExercises = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] p-8 bg-secondary text-accent">
+    <div className="min-h-[calc(100vh-4rem)] p-8 text-black font-source-sans">
       <ConfirmModal
         isOpen={!!confirmDelete}
         onClose={() => setConfirmDelete(null)}
@@ -237,7 +237,7 @@ const AdminExercises = () => {
 
       <div className="container mx-auto max-w-7xl">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-bold text-accent">{t('admin_exercises_title')}</h1>
+          <h1 className="text-4xl font-bold text-black">{t('admin_exercises_title')}</h1>
         </div>
         
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">

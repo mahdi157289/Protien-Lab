@@ -3,6 +3,7 @@ import { Send } from 'lucide-react';
 import api from '../../config/api';
 import { useAuth } from '../../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
+import SectionDivider from '../common/SectionDivider';
 
 const Feedback = () => {
   const [suggestion, setSuggestion] = useState('');
@@ -49,10 +50,13 @@ const Feedback = () => {
     <div className="w-full px-4 py-8">
       <div className="p-8 mx-auto bg-dark max-w-7xl rounded-3xl">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-          <h2 className="text-3xl font-bold md:text-center md:text-4xl">
+          <div className="w-full">
+          <h2 className="text-3xl font-bold md:text-center md:text-4xl font-orbitron">
             {t('feedback_title_1')} <span className="text-primary">{t('feedback_title_2')}</span>
             <br className="md:hidden" /> {t('feedback_title_3')}
           </h2>
+          <SectionDivider align="left" className="md:flex md:justify-center" />
+          </div>
           
           <form onSubmit={handleSubmit} className="flex flex-col w-full gap-4 sm:flex-row md:w-full">
             <input
@@ -65,12 +69,12 @@ const Feedback = () => {
                 setError('');
               }}
               placeholder={t('feedback_placeholder')}
-              className="flex-grow px-4 py-3 text-white border-none bg-secondary placeholder-accent rounded-xl focus:ring-2 focus:ring-primary focus:outline-none"
+              className="flex-grow px-4 py-3 text-white border-none bg-secondary placeholder-accent rounded-xl focus:ring-2 focus:ring-primary focus:outline-none font-source-sans"
             />
             <button
               type="submit"
               disabled={!suggestion.trim() || loading || submitted}
-              className={`w-full sm:w-auto px-6 py-3 rounded-xl font-medium text-white transition-all duration-200
+              className={`w-full sm:w-auto px-6 py-3 rounded-xl font-medium text-white transition-all duration-200 font-source-sans
                 ${submitted ? 'bg-green-500' : 'bg-primary hover:bg-opacity-80'}
                 disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex items-center justify-center gap-2`}
             >
@@ -87,7 +91,7 @@ const Feedback = () => {
         </div>
         
         {error && (
-          <div className="mt-4 text-center text-primary">
+          <div className="mt-4 text-center text-primary font-source-sans">
             {error}
           </div>
         )}

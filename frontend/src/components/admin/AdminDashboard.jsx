@@ -123,9 +123,9 @@ const AdminDashboard = () => {
           <div className="p-2 rounded-md bg-primary/10 text-primary">
             {getIcon()}
           </div>
-          <p className="text-sm font-medium text-accent/70">{title}</p>
+          <p className="text-sm font-medium text-accent/70 font-source-sans">{title}</p>
         </div>
-        <p className="pl-1 text-2xl font-semibold text-center text-accent">
+        <p className="pl-1 text-2xl font-semibold text-center text-accent font-source-sans">
           {value.toLocaleString()}
         </p>
       </div>
@@ -147,16 +147,16 @@ const AdminDashboard = () => {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-secondary">
-        <div className="text-xl text-primary">{error}</div>
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-xl text-primary font-source-sans">{error}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-8 bg-secondary">
+    <div className="min-h-screen p-8 font-source-sans">
       <div className="mx-auto max-w-7xl">
-        <h1 className="mb-8 text-3xl font-bold text-accent">{t('admin_dashboard_title')}</h1>
+        <h1 className="mb-8 text-3xl font-bold text-black font-orbitron">{t('admin_dashboard_title')}</h1>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
@@ -174,7 +174,7 @@ const AdminDashboard = () => {
           <div className="p-6 rounded-xl bg-dark">
             <div className="flex items-center gap-3 mb-6">
               <Activity className="w-6 h-6 text-primary" />
-              <h3 className="text-xl font-semibold text-accent">{t('admin_dashboard_user_growth')}</h3>
+              <h3 className="text-xl font-semibold text-accent font-source-sans">{t('admin_dashboard_user_growth')}</h3>
             </div>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={userStats}>
@@ -204,7 +204,7 @@ const AdminDashboard = () => {
           <div className="p-6 rounded-xl bg-dark">
             <div className="flex items-center gap-3 mb-6">
               <Package className="w-6 h-6 text-primary" />
-              <h3 className="text-xl font-semibold text-accent">{t('admin_dashboard_order_trends')}</h3>
+              <h3 className="text-xl font-semibold text-accent font-source-sans">{t('admin_dashboard_order_trends')}</h3>
             </div>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={orderStats}>
@@ -232,10 +232,10 @@ const AdminDashboard = () => {
           <div className="p-6 rounded-xl bg-dark">
             <div className="flex items-center gap-3 mb-6">
               <ClipboardList className="w-6 h-6 text-primary" />
-              <h3 className="text-xl font-semibold text-accent">{t('admin_dashboard_post_analytics')}</h3>
+              <h3 className="text-xl font-semibold text-accent font-source-sans">{t('admin_dashboard_post_analytics')}</h3>
             </div>
             <div className="mb-8">
-              <h4 className="mb-4 text-lg font-medium text-accent/80">{t('admin_dashboard_posts_per_day')}</h4>
+              <h4 className="mb-4 text-lg font-medium text-accent/80 font-source-sans">{t('admin_dashboard_posts_per_day')}</h4>
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={postAnalytics.postsPerDay}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#2D2D2D" />
@@ -259,20 +259,20 @@ const AdminDashboard = () => {
               </ResponsiveContainer>
             </div>
             <div>
-              <h4 className="mb-4 text-lg font-medium text-accent/80">{t('admin_dashboard_top_posters')}</h4>
+              <h4 className="mb-4 text-lg font-medium text-accent/80 font-source-sans">{t('admin_dashboard_top_posters')}</h4>
               <div className="overflow-x-auto border border-gray-700 rounded-lg">
                 <table className="w-full">
                   <thead className="bg-secondary">
                     <tr>
-                      <th className="px-4 py-3 font-medium text-left text-accent/80">{t('admin_dashboard_user')}</th>
-                      <th className="px-4 py-3 font-medium text-right text-accent/80">{t('admin_dashboard_posts')}</th>
+                      <th className="px-4 py-3 font-medium text-left text-accent/80 font-source-sans">{t('admin_dashboard_user')}</th>
+                      <th className="px-4 py-3 font-medium text-right text-accent/80 font-source-sans">{t('admin_dashboard_posts')}</th>
                     </tr>
                   </thead>
                   <tbody>
                     {postAnalytics.topPosters.map((poster) => (
                       <tr key={poster._id} className="border-t border-gray-700">
-                        <td className="px-4 py-3 text-accent/80">{poster.firstName} {poster.lastName}</td>
-                        <td className="px-4 py-3 text-right text-accent/80">{poster.postCount}</td>
+                        <td className="px-4 py-3 text-accent/80 font-source-sans">{poster.firstName} {poster.lastName}</td>
+                        <td className="px-4 py-3 text-right text-accent/80 font-source-sans">{poster.postCount}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -285,25 +285,25 @@ const AdminDashboard = () => {
           <div className="p-6 rounded-xl bg-dark">
             <div className="flex items-center gap-3 mb-6">
               <ShoppingCart className="w-6 h-6 text-primary" />
-              <h3 className="text-xl font-semibold text-accent">{t('admin_dashboard_recent_orders')}</h3>
+              <h3 className="text-xl font-semibold text-accent font-source-sans">{t('admin_dashboard_recent_orders')}</h3>
             </div>
             <div className="overflow-x-auto border border-gray-700 rounded-lg">
               <table className="w-full">
                 <thead className="bg-secondary">
                   <tr>
-                    <th className="px-4 py-3 font-medium text-left text-accent/80">{t('admin_dashboard_order_id')}</th>
-                    <th className="px-4 py-3 font-medium text-left text-accent/80">{t('admin_dashboard_customer')}</th>
-                    <th className="px-4 py-3 font-medium text-left text-accent/80">{t('admin_dashboard_status')}</th>
-                    <th className="px-4 py-3 font-medium text-right text-accent/80">{t('admin_dashboard_amount')}</th>
+                    <th className="px-4 py-3 font-medium text-left text-accent/80 font-source-sans">{t('admin_dashboard_order_id')}</th>
+                    <th className="px-4 py-3 font-medium text-left text-accent/80 font-source-sans">{t('admin_dashboard_customer')}</th>
+                    <th className="px-4 py-3 font-medium text-left text-accent/80 font-source-sans">{t('admin_dashboard_status')}</th>
+                    <th className="px-4 py-3 font-medium text-right text-accent/80 font-source-sans">{t('admin_dashboard_amount')}</th>
                   </tr>
                 </thead>
                 <tbody>
                   {recentOrders.map((order) => (
                     <tr key={order._id} className="border-t border-gray-700">
-                      <td className="px-4 py-3 text-accent/80">{order._id.slice(-6)}</td>
-                      <td className="px-4 py-3 text-accent/80">{order.user?.email || 'N/A'}</td>
+                      <td className="px-4 py-3 text-accent/80 font-source-sans">{order._id.slice(-6)}</td>
+                      <td className="px-4 py-3 text-accent/80 font-source-sans">{order.user?.email || 'N/A'}</td>
                       <td className="px-4 py-3">
-                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium font-source-sans ${
                           order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
                           order.status === 'Processing' ? 'bg-yellow-100 text-yellow-800' :
                           'bg-red-100 text-red-800'
@@ -311,7 +311,7 @@ const AdminDashboard = () => {
                           {order.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-right text-accent/80">
+                      <td className="px-4 py-3 text-right text-accent/80 font-source-sans">
                         ${order.totalAmount?.toFixed(2)}
                       </td>
                     </tr>

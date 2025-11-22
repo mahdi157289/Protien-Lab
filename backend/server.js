@@ -6,6 +6,7 @@ const profileRoutes = require('./routes/profileRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const dietPlanRoutes = require('./routes/dietPlanRoutes');
 const postRoutes = require('./routes/postRoutes');
+const photoRoutes = require('./routes/photoRoutes');
 const path = require('path');
 const cors = require('cors');
 
@@ -13,7 +14,9 @@ const app = express();
 app.use(cors({
     origin: [
         'http://localhost:5173',
-       
+        'https://protienlab-frontend.onrender.com',
+        'https://proteinlab.tn',
+        'https://www.proteinlab.tn'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
@@ -28,6 +31,7 @@ app.use('/api/diet-plans', dietPlanRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/admin', adminRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/photos', photoRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -21,10 +21,10 @@ const AdminProfile = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] py-16">
+    <div className="min-h-[calc(100vh-4rem)] py-16 font-source-sans">
       <div className="max-w-3xl p-8 mx-auto shadow-lg bg-dark rounded-3xl">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold">{t("admin_profile_title")}</h1>
+          <h1 className="text-3xl font-bold font-orbitron">{t("admin_profile_title")}</h1>
           <button
             onClick={() => setIsEditing(!isEditing)}
             className="px-4 py-2 text-sm font-semibold transition-colors rounded-lg bg-secondary hover:bg-secondary/50"

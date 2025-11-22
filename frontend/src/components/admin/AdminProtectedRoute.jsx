@@ -10,7 +10,7 @@ const AdminProtectedRoute = ({ children }) => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-secondary">
+      <div className="flex items-center justify-center min-h-screen">
         <div className="w-16 h-16 border-4 rounded-full border-primary border-t-transparent animate-spin"></div>
       </div>
     );
@@ -21,7 +21,7 @@ const AdminProtectedRoute = ({ children }) => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 bg-secondary text-accent">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] p-4 text-accent">
       <div className="max-w-md mx-auto text-center">
         <div className="p-8 rounded-lg shadow-md bg-dark">
           <div className="flex justify-center mb-6">

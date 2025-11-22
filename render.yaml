@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: protienlab-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    plan: free
+    region: oregon
+    envVars:
+      - key: MONGO_URI
+        value: mongodb+srv://baccarmahdi09:QGOXemXdJ5CigQ09@cluster0.ygb4b3i.mongodb.net/nutrition_store?retryWrites=true&w=majority&appName=Cluster0&tls=true&ssl=true
+    
+  - type: web
+    name: protienlab-frontend
+    env: docker
+    dockerfilePath: ./frontend/Dockerfile
+    plan: free
+    region: oregon
+    buildArgs:
+      - key: VITE_API_URL
+        value: https://protienlab-backend.onrender.com

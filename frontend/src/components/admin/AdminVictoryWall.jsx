@@ -139,7 +139,7 @@ const VictoryWallAdmin = () => {
   }
 
   return (
-    <div className="min-h-screen py-6 mx-auto max-w-7xl bg-secondary">
+    <div className="min-h-screen py-6 mx-auto max-w-7xl font-source-sans">
       <DeleteModal
         isOpen={deleteModalOpen}
         onClose={() => setDeleteModalOpen(false)}
@@ -148,7 +148,7 @@ const VictoryWallAdmin = () => {
 
       {/* Header Section */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-accent">{t('admin_victorywall_management_title')}</h1>
+        <h1 className="text-3xl font-bold text-black">{t('admin_victorywall_management_title')}</h1>
       </div>
 
       {/* Search and Filter Section */}

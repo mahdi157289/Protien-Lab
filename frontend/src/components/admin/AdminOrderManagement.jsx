@@ -4,9 +4,11 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader, X, CheckCircle, Search, Eye } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useSmokey } from '../../contexts/SmokeyContext';
 
 const AdminOrderManagement = () => {
   const { token } = useAdminAuth();
+  const { smokeyOn } = useSmokey();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
@@ -121,12 +123,12 @@ const AdminOrderManagement = () => {
   }
 
   return (
-    <div className="min-h-screen py-6 mx-auto bg-secondary text-accent max-w-7xl">
+    <div className="min-h-screen py-6 mx-auto text-black max-w-7xl font-source-sans">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">{t('admin_orders_management_title')}</h1>
+        <h1 className={`text-3xl font-bold font-orbitron ${smokeyOn ? 'text-white' : 'text-black'}`}>{t('admin_orders_management_title')}</h1>
         <button
           onClick={() => navigate('/admin/store/products')}
-          className="flex items-center px-4 py-3 rounded-lg bg-primary text-accent hover:bg-green-600"
+          className={`flex items-center px-4 py-3 rounded-lg bg-primary hover:bg-green-600 ${smokeyOn ? 'text-accent' : 'text-black'}`}
         >
           <ArrowLeft className='mr-2 size-5' /> {t('admin_orders_go_to_products')}
         </button>
@@ -210,9 +212,9 @@ const AdminOrderManagement = () => {
           <tbody>
             {orders.map((order) => (
               <tr key={order._id} className="border-b border-secondary">
-                <td className="p-3 truncate max-w-[200px]">{order._id}</td>
-                <td className="p-3">{order.user?.firstName} {order.user?.lastName}</td>
-                <td className="p-3">Rs. {order.totalAmount}</td>
+                <td className="p-3 truncate max-w-[200px] text-white">{order._id}</td>
+                <td className="p-3 text-white">{order.user?.firstName} {order.user?.lastName}</td>
+                <td className="p-3 text-white">TD. {order.totalAmount}</td>
                 <td className="p-3">
                   <span className={`px-2 py-1 rounded-lg text-sm ${order.status === 'Pending' ? 'bg-yellow-500' : order.status === 'Processing' ? 'bg-blue-500' : order.status === 'Shipped' ? 'bg-green-500' : order.status === 'Delivered' ? 'bg-purple-500' : 'bg-red-500'}`}>
                     {t(`orders_status_${order.status.toLowerCase()}`)}
@@ -379,7 +381,7 @@ const AdminOrderManagement = () => {
                           <p className="text-accent opacity-70">{t('admin_orders_qty', { qty: item.quantity })}</p>
                         </div>
                         <span className="font-semibold text-accent">
-                          Rs. {item.price} x {item.quantity}
+                          TD. {item.price} x {item.quantity}
                         </span>
                       </div>
                     ))}

@@ -346,9 +346,9 @@ const AdminUserManagement = () => {
   );
 
   return (
-    <div className="mx-auto min-h-[calc(100vh-5rem)] py-6 max-w-7xl sm:px-6 lg:px-0">
+    <div className="mx-auto min-h[calc(100vh-5rem)] py-6 max-w-7xl sm:px-6 lg:px-0 font-source-sans">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-3xl font-bold">{t('admin_users_management_title')}</h1>
+        <h1 className="text-3xl font-bold text-black">{t('admin_users_management_title')}</h1>
       </div>
       {/* Search and Filters */}
       <div className="p-4 mb-6 bg-dark rounded-xl">
@@ -420,26 +420,26 @@ const AdminUserManagement = () => {
       </div>
 
       {/* Users Table */}
-      <div className="overflow-x-auto border rounded-lg border-dark">
+      <div className="overflow-x-auto border rounded-lg border-dark bg-white">
         <table className="w-full">
           <thead className="bg-dark">
             <tr>
-              <th className="p-3 text-left text-accent">{t('admin_users_name')}</th>
-              <th className="p-3 text-left text-accent">{t('admin_users_email')}</th>
-              <th className="p-3 text-left text-accent">{t('admin_users_gender')}</th>
-              <th className="p-3 text-left text-accent">{t('admin_users_registered')}</th>
-              <th className="p-3 text-left text-accent">{t('admin_users_actions')}</th>
+              <th className="p-3 text-left text-black">{t('admin_users_name')}</th>
+              <th className="p-3 text-left text-black">{t('admin_users_email')}</th>
+              <th className="p-3 text-left text-black">{t('admin_users_gender')}</th>
+              <th className="p-3 text-left text-black">{t('admin_users_registered')}</th>
+              <th className="p-3 text-left text-black">{t('admin_users_actions')}</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map((user) => (
               <tr key={user._id} className="border-b border-dark">
-                <td className="p-3 text-accent">
+                <td className="p-3 text-black">
                   {user.firstName} {user.lastName}
                 </td>
-                <td className="p-3 text-accent">{user.email}</td>
-                <td className="p-3 capitalize text-accent">{user.gender}</td>
-                <td className="p-3 text-accent">
+                <td className="p-3 text-black">{user.email}</td>
+                <td className="p-3 capitalize text-black">{user.gender}</td>
+                <td className="p-3 text-black">
                   {new Date(user.createdAt).toLocaleDateString()}
                 </td>
                 <td className="flex p-3 space-x-3">

@@ -10,6 +10,8 @@ const adminAuth = require('../middlewares/adminAuth');
 const adminUserController = require('../controllers/adminUserController');
 const { getAllFeedbacks } = require('../controllers/adminFeedbackController');
 const exerciseController = require('../controllers/adminExerciseController');
+const photoController = require('../controllers/adminPhotoController');
+const photoUpload = require('../config/photoUpload');
 
 // Admin Authentication Routes
 router.post('/register', registerAdmin);
@@ -31,9 +33,9 @@ router.get('/posts/:id', adminAuth, getPostDetails);
 router.delete('/posts/:id', adminAuth, deletePost);
 
 // Product routes
-router.post('/products', adminAuth, upload.array('images', 2), productController.createProduct);
+router.post('/products', adminAuth, upload.array('images', 6), productController.createProduct);
 router.get('/products', adminAuth, productController.getAllProducts);
-router.put('/products/:id', adminAuth, upload.array('images', 2), productController.updateProduct);
+router.put('/products/:id', adminAuth, upload.array('images', 6), productController.updateProduct);
 router.delete('/products/:id', adminAuth, productController.deleteProduct);
 
 // Order routes
@@ -58,5 +60,17 @@ router.get('/exercises', exerciseController.getAllExercises);
 router.get('/exercises/category/:category', exerciseController.getExercisesByCategory);
 router.put('/exercises/:id', adminAuth, exerciseController.updateExercise);
 router.delete('/exercises/:id', adminAuth, exerciseController.deleteExercise);
+
+// Photo routes
+router.get('/photos/test', adminAuth, (req, res) => {
+    console.log('🧪 Photo test endpoint hit');
+    res.json({ message: 'Photo routes are working!', admin: req.admin ? 'Authenticated' : 'Not authenticated' });
+});
+router.post('/photos', adminAuth, photoUpload.array('photos', 10), photoController.uploadPhotos);
+router.get('/photos', adminAuth, photoController.getAllPhotos);
+router.get('/photos/stats', adminAuth, photoController.getPhotoStats);
+router.get('/photos/:id', adminAuth, photoController.getPhotoById);
+router.put('/photos/:id', adminAuth, photoController.updatePhoto);
+router.delete('/photos/:id', adminAuth, photoController.deletePhoto);
 
 module.exports = router;

@@ -47,7 +47,7 @@ const AdminRegister = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-[calc(100vh-8rem)] bg-[#29292A]">
+    <div className="flex items-center justify-center min-h-[calc(100vh-8rem)]">
       <div className="w-full max-w-md p-6 space-y-4 rounded-lg shadow-md bg-[#1C1C1C]">
         {/* Custom Error Alert */}
         {error && (
@@ -58,7 +58,7 @@ const AdminRegister = () => {
                 <line x1="12" y1="8" x2="12" y2="12"></line>
                 <line x1="12" y1="16" x2="12.01" y2="16"></line>
               </svg>
-              <span>{error}</span>
+              <span className="font-source-sans">{error}</span>
             </div>
           </div>
         )}
@@ -71,18 +71,18 @@ const AdminRegister = () => {
                 <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                 <polyline points="22 4 12 14.01 9 11.01"></polyline>
               </svg>
-              <span>{t('admin_register_success')}</span>
+              <span className="font-source-sans">{t('admin_register_success')}</span>
             </div>
           </div>
         )}
 
-        <h2 className="text-2xl font-bold text-center text-[#FFFCF9]">
+        <h2 className="text-2xl font-bold text-center text-[#FFFCF9] font-orbitron">
           {t('admin_register_title')}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="name" className="block mb-1 text-sm font-medium text-[#FFFCF9]">
+            <label htmlFor="name" className="block mb-1 text-sm font-medium text-[#FFFCF9] font-source-sans">
               {t('admin_register_name')}
             </label>
             <input
@@ -91,13 +91,13 @@ const AdminRegister = () => {
               placeholder={t('admin_register_name_placeholder')}
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
+              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9] font-source-sans"
               disabled={isSubmitting}
             />
           </div>
 
           <div>
-            <label htmlFor="email" className="block mb-1 text-sm font-medium text-[#FFFCF9]">
+            <label htmlFor="email" className="block mb-1 text-sm font-medium text-[#FFFCF9] font-source-sans">
               {t('admin_register_email')}
             </label>
             <input
@@ -106,13 +106,13 @@ const AdminRegister = () => {
               placeholder={t('admin_register_email_placeholder')}
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
+              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9] font-source-sans"
               disabled={isSubmitting}
             />
           </div>
 
           <div>
-            <label htmlFor="password" className="block mb-1 text-sm font-medium text-[#FFFCF9]">
+            <label htmlFor="password" className="block mb-1 text-sm font-medium text-[#FFFCF9] font-source-sans">
               {t('admin_register_password')}
             </label>
             <input
@@ -121,25 +121,25 @@ const AdminRegister = () => {
               placeholder={t('admin_register_password_placeholder')}
               value={form.password}
               onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9]"
+              className="w-full px-4 py-2 text-sm border rounded-lg shadow-sm focus:ring-2 focus:ring-[#40ee45] focus:outline-none bg-[#29292A] text-[#FFFCF9] border-[#FFFCF9] font-source-sans"
               disabled={isSubmitting}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full px-4 py-2 font-medium text-[#FFFCF9] rounded-lg bg-[#40ee45] hover:bg-[#40ee45]/90 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none transition-colors"
+            className="w-full px-4 py-2 font-medium text-[#FFFCF9] rounded-lg bg-[#40ee45] hover:bg-[#40ee45]/90 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none transition-colors font-source-sans"
             disabled={isSubmitting}
           >
             {isSubmitting ? t('admin_register_registering') : t('admin_register_register')}
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-center text-[#FFFCF9]">
+        <p className="mt-4 text-sm text-center text-[#FFFCF9] font-source-sans">
           {t('admin_register_already_account')}{' '}
           <button
             onClick={() => navigate('/admin/login')}
-            className="text-[#40ee45] hover:underline disabled:opacity-50 transition-colors"
+            className="text-[#40ee45] hover:underline disabled:opacity-50 transition-colors font-source-sans"
             disabled={isSubmitting}
           >
             {t('admin_register_login_here')}

@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 
 const InputField = memo(({ label, name, value, onChange, isEditing, type = "text" }) => (
   <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-    <label className="block mb-2 text-sm">{label}</label>
+    <label className="block mb-2 text-sm text-white">{label}</label>
     <input
       type={type}
       name={name}
