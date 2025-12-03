@@ -432,9 +432,10 @@ const PhotoManagement = () => {
   return (
     <div className="min-h-screen p-8 font-source-sans">
       <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <h1 className={`text-3xl font-bold ${smokeyOn ? 'text-white' : 'text-black'}`}>{t('admin_photos_management_title')}</h1>
+        {/* Header - Hide when offer form modal is open */}
+        {!showOfferForm && (
+          <div className="flex items-center justify-between mb-8">
+            <h1 className={`text-3xl font-bold ${smokeyOn ? 'text-white' : 'text-black'}`}>{t('admin_photos_management_title')}</h1>
           <div className="flex gap-2">
           <button
             onClick={() => {
@@ -450,7 +451,8 @@ const PhotoManagement = () => {
               {t('admin_photos_upload_photos')}
           </button>
           </div>
-        </div>
+          </div>
+        )}
 
         {/* Messages */}
         <AnimatePresence>

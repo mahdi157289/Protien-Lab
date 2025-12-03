@@ -6,6 +6,7 @@ import { Users, ShoppingCart, Box, FileText, Dumbbell, Utensils, Activity, Clipb
 import PropTypes from 'prop-types';
 import { Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { getApiUrl } from '../../utils/apiUrl';
 
 const AdminDashboard = () => {
   const { token } = useAdminAuth();
@@ -46,13 +47,13 @@ const AdminDashboard = () => {
           dietPlans,
           postAnalyticsRes
         ] = await Promise.all([
-          axios.get(`${import.meta.env.VITE_API_URL}/admin/users`, { headers }),
-          axios.get(`${import.meta.env.VITE_API_URL}/admin/orders`, { headers }),
-          axios.get(`${import.meta.env.VITE_API_URL}/admin/posts`, { headers }),
-          axios.get(`${import.meta.env.VITE_API_URL}/admin/products`, { headers }),
-          axios.get(`${import.meta.env.VITE_API_URL}/admin/exercises`, { headers }),
-          axios.get(`${import.meta.env.VITE_API_URL}/admin/diet-plans`, { headers }),
-          axios.get(`${import.meta.env.VITE_API_URL}/admin/posts/analytics`, { headers })
+          axios.get(getApiUrl('/admin/users'), { headers }),
+          axios.get(getApiUrl('/admin/orders'), { headers }),
+          axios.get(getApiUrl('/admin/posts'), { headers }),
+          axios.get(getApiUrl('/admin/products'), { headers }),
+          axios.get(getApiUrl('/admin/exercises'), { headers }),
+          axios.get(getApiUrl('/admin/diet-plans'), { headers }),
+          axios.get(getApiUrl('/admin/posts/analytics'), { headers })
         ]);
 
         setCounts({

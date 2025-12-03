@@ -6,6 +6,8 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import OfferForm from './OfferForm';
+import { resolveImageUrl } from '../../lib/image';
+import { getApiUrl } from '../../utils/apiUrl';
 
 const Modal = ({ isOpen, onClose, title, children, onConfirm, confirmLabel, cancelLabel }) => {
   if (!isOpen) return null;
@@ -101,7 +103,7 @@ const AdminProductManagement = () => {
 
   const fetchProducts = useCallback(async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/products`, {
+        const response = await axios.get(getApiUrl('/admin/products'), {
           headers: { Authorization: `Bearer ${token}` }
         });
         setProducts(response.data.products);
@@ -138,9 +140,8 @@ const AdminProductManagement = () => {
           return;
         }
         
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
         // Fetch all photos with high limit to get all brands
-        const adminApiUrl = `${API_BASE_URL}/admin/photos?category=${encodeURIComponent('Nos Marque')}&isActive=true&limit=1000`;
+        const adminApiUrl = getApiUrl(`/admin/photos?category=${encodeURIComponent('Nos Marque')}&isActive=true&limit=1000`);
         
         const response = await axios.get(adminApiUrl, {
           headers: {
@@ -234,7 +235,7 @@ const AdminProductManagement = () => {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/admin/products`, 
+        getApiUrl('/admin/products'), 
         formData, 
         {
           headers: { 
@@ -298,7 +299,7 @@ const AdminProductManagement = () => {
 
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/admin/products/${currentProduct._id}`, 
+        getApiUrl(`/admin/products/${currentProduct._id}`), 
         formData, 
         {
           headers: { 
@@ -322,7 +323,7 @@ const AdminProductManagement = () => {
     setIsLoading(true);
     try {
       await axios.delete(
-        `${import.meta.env.VITE_API_URL}/admin/products/${productToDelete._id}`, 
+        getApiUrl(`/admin/products/${productToDelete._id}`), 
         {
           headers: { Authorization: `Bearer ${token}` }
         }
@@ -656,9 +657,14 @@ const AdminProductManagement = () => {
               <div className="flex items-center justify-center p-4 rounded-lg bg-secondary">
                 <img
                   className="object-contain h-48 w-full bg-black rounded"
-                  src={Array.isArray(product.images) && product.images.length > 0 
-                        ? `${import.meta.env.VITE_IMAGE_URL}/${(product.images[0]||'').replace(/^\/+/, '')}`
-                        : product.image ? `${import.meta.env.VITE_IMAGE_URL}/${(product.image||'').replace(/^\/+/, '')}` : 'https://via.placeholder.com/240x180/272727/40ee45?text=No+Image'}
+                  src={
+                    (() => {
+                      const candidate = Array.isArray(product.images) && product.images.length > 0
+                        ? resolveImageUrl(product.images[0])
+                        : resolveImageUrl(product.image);
+                      return candidate || 'https://via.placeholder.com/240x180/272727/40ee45?text=No+Image';
+                    })()
+                  }
                   alt={product.name}
                   onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src='https://via.placeholder.com/240x180/272727/40ee45?text=No+Image';}}
                 />
@@ -1040,7 +1046,7 @@ const AdminProductManagement = () => {
                 form.append('offerData', JSON.stringify(offerData));
                 if (mainPhoto) form.append('photos', mainPhoto);
                 if (additionalPhoto) form.append('photos', additionalPhoto);
-                await axios.post(`${import.meta.env.VITE_API_URL}/admin/photos`, form, {
+                await axios.post(getApiUrl('/admin/photos'), form, {
                   headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'

@@ -2,6 +2,9 @@ const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
 const generateToken = (id) => {
+    if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET is not configured. Please set JWT_SECRET environment variable.');
+    }
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: '30d'
     });
@@ -38,7 +41,11 @@ const signup = async (req, res) => {
             });
         }
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error('Signup error:', error);
+        res.status(400).json({ 
+            message: error.message || 'An error occurred during signup',
+            error: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 };
 
@@ -65,7 +72,11 @@ const login = async (req, res) => {
             res.status(401).json({ message: 'Invalid email or password' });
         }
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        console.error('Login error:', error);
+        res.status(400).json({ 
+            message: error.message || 'An error occurred during login',
+            error: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 };
 

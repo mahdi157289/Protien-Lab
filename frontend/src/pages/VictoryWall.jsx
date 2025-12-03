@@ -6,6 +6,7 @@ import { Image, Heart, Users, PlusSquare, X, MoreVertical, Trash2, Edit2 } from 
 import {Loader} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useTranslation } from "react-i18next"; // Add this line
+import { resolveImageUrl } from '../lib/image';
 
 // Confirmation Dialog Component
 const ConfirmationDialog = ({ isOpen, onClose, onConfirm, title, message }) => {
@@ -283,7 +284,7 @@ const CreatePostModal = ({ isOpen, onClose, onPost }) => {
             >
               {user?.profileImage && (
                 <img
-                  src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`}
+                  src={resolveImageUrl(user.profileImage)}
                   alt="Profile"
                   className="object-cover w-full h-full rounded-full"
                 />
@@ -398,7 +399,7 @@ CreatePostModal.propTypes = {
 const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
   const [postText, setPostText] = useState(post?.text || '');
   const [selectedImages, setSelectedImages] = useState(
-    post?.image ? [{ preview: `${import.meta.env.VITE_IMAGE_URL}${post.image}` }] : []
+    post?.image ? [{ preview: resolveImageUrl(post.image) }] : []
   );
   const fileInputRef = useRef(null);
 
@@ -489,7 +490,7 @@ const EditPostModal = ({ isOpen, onClose, post, onSave }) => {
                 whileHover={{ scale: 1.01 }}
               >
                 <img
-                  src={`${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
+                  src={image.preview}
                   alt={`Selected ${index + 1}`}
                   className="object-cover w-full h-48 rounded-lg"
                 />
@@ -644,7 +645,7 @@ const VictoryWall = () => {
             >
               {user?.profileImage && (
                 <img 
-                  src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`} 
+                  src={resolveImageUrl(user.profileImage)} 
                   alt="Profile" 
                   className="object-cover w-full h-full rounded-full"
                 />
@@ -720,7 +721,7 @@ const VictoryWall = () => {
                   >
                     {post.user?.profileImage && (
                       <img 
-                        src={`${import.meta.env.VITE_IMAGE_URL}/${post.user.profileImage}`} 
+                        src={resolveImageUrl(post.user.profileImage)} 
                         alt="Profile" 
                         className="object-cover w-full h-full rounded-full"
                       />
@@ -770,7 +771,7 @@ const VictoryWall = () => {
                 whileHover={{ scale: 1.01 }}
               >
                 <img
-                  src={`${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
+                  src={resolveImageUrl(post.image)}
                   alt="Post"
                   className="object-cover w-full transition-opacity duration-200 rounded-sm hover:opacity-90"
                 />

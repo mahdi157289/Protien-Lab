@@ -4,6 +4,7 @@ import api from "../../config/api";
 import { X, Loader, Trash } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useSmokey } from '../../contexts/SmokeyContext';
+import { resolveImageUrl } from '../../lib/image';
 
 function OrderPage() {
   const [orders, setOrders] = useState([]);
@@ -140,9 +141,7 @@ function OrderPage() {
 
               {order.orderItems.map((item, index) => {
                 const rawImage = (Array.isArray(item.product?.images) && item.product.images[0]) || item.product?.image || '';
-                const resolvedSrc = rawImage
-                  ? `${import.meta.env.VITE_IMAGE_URL}/${String(rawImage).replace(/^\/+/, '')}`
-                  : buildPlaceholder(120,120);
+                const resolvedSrc = resolveImageUrl(String(rawImage)) || buildPlaceholder(120,120);
                 return (
                 <div key={index} className="flex gap-6 ">
                   <div className="flex justify-center items-center bg-[#29292A] w-[150px] h-[150px] p-2 rounded-lg">
@@ -221,9 +220,7 @@ function OrderPage() {
               <h3 className="mb-2 text-lg font-bold">{t('orders_products')}</h3>
               {selectedOrder.orderItems.map((item, index) => {
                 const rawImage = (Array.isArray(item.product?.images) && item.product.images[0]) || item.product?.image || '';
-                const resolvedSrc = rawImage
-                  ? `${import.meta.env.VITE_IMAGE_URL}/${String(rawImage).replace(/^\/+/, '')}`
-                  : buildPlaceholder(80,80);
+                const resolvedSrc = resolveImageUrl(String(rawImage)) || buildPlaceholder(80,80);
                 return (
                 <div key={index} className="flex items-center gap-4 mb-4">
                   <img

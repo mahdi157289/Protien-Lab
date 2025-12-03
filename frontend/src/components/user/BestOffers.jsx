@@ -290,7 +290,7 @@ const BestOffers = () => {
                 {/* Pricing */}
                 <div className="mb-4">
                   <div className="flex items-center gap-3 mb-1">
-                    <span className="text-2xl font-bold text-green-600 font-orbitron">
+                    <span className="text-2xl font-normal text-green-600 font-orbitron">
                       {offer.newPrice.toFixed(2)} TD
                     </span>
                     <span className="text-lg text-gray-400 line-through">

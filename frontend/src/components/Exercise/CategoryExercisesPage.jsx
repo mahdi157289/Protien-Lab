@@ -4,6 +4,7 @@ import api from '../../config/api';
 import PropTypes from "prop-types";
 import { Loader } from 'lucide-react';
 import { useTranslation } from "react-i18next";
+import { resolveImageUrl } from '../../lib/image';
 
 const CategoryExercisesPage = () => {
   const { category } = useParams();
@@ -60,7 +61,7 @@ const CategoryExercisesPage = () => {
 const ExerciseCard = ({ exercise, onClick, t }) => (
   <div className="flex flex-col overflow-hidden rounded-lg bg-dark">
     <img
-      src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${exercise.image}`}
+      src={resolveImageUrl(exercise.image)}
       alt={exercise.name}
       className="object-cover w-full h-48"
     />

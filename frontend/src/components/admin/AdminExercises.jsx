@@ -3,6 +3,8 @@ import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import axios from 'axios';
 import { Trash2, Edit2, Filter, Upload } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { resolveImageUrl } from '../../lib/image';
+import { getApiUrl } from '../../utils/apiUrl';
 
 const CATEGORIES = [
   'Abs Exercises', 'Chest Exercises', 'Biceps Exercises',
@@ -55,7 +57,7 @@ const ImageUploader = ({ name, label, onChange, required = false, existingImage 
           <img
             src={preview.startsWith('data:')
               ? preview
-              : `${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${preview}`
+              : resolveImageUrl(preview)
             }
             alt="Preview"
             className="object-cover w-full h-full rounded-lg"
@@ -142,8 +144,8 @@ const AdminExercises = () => {
   const fetchExercises = async () => {
     try {
       const url = selectedCategory 
-        ? `${import.meta.env.VITE_API_URL}/admin/exercises/category/${selectedCategory}` 
-        : `${import.meta.env.VITE_API_URL}/admin/exercises`;
+        ? getApiUrl(`/admin/exercises/category/${selectedCategory}`)
+        : getApiUrl('/admin/exercises');
       const response = await axios.get(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -170,14 +172,14 @@ const AdminExercises = () => {
 
     try {
       if (editingExercise) {
-        await axios.put(`${import.meta.env.VITE_API_URL}/admin/exercises/${editingExercise._id}`, formPayload, {
+        await axios.put(getApiUrl(`/admin/exercises/${editingExercise._id}`), formPayload, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
           }
         });
       } else {
-        await axios.post(`${import.meta.env.VITE_API_URL}/admin/exercises`, formPayload, {
+        await axios.post(getApiUrl('/admin/exercises'), formPayload, {
           headers: { 
             Authorization: `Bearer ${token}`,
             'Content-Type': 'multipart/form-data'
@@ -194,7 +196,7 @@ const AdminExercises = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/admin/exercises/${id}`, {
+      await axios.delete(getApiUrl(`/admin/exercises/${id}`), {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchExercises();
@@ -340,7 +342,7 @@ const AdminExercises = () => {
                 >
                   <div className="flex items-center space-x-6">
                     <img 
-                      src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${exercise.image}`}
+                      src={resolveImageUrl(exercise.image)}
                       alt={exercise.name} 
                       className="object-cover w-16 h-16 rounded-lg"
                     />

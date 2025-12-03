@@ -1,25 +1,21 @@
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
+const { ensureUploadDir } = require('./storageUtils');
 
-// Ensure uploads/photos directory exists
-const uploadDir = path.join(__dirname, '../uploads/photos');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
-}
-
-// Configure multer for photo uploads
-const storage = multer.diskStorage({
+// Always use local storage - we'll upload to Cloudinary directly in the controller
+// This bypasses signature issues with multer-storage-cloudinary
+const localStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, uploadDir);
+        cb(null, ensureUploadDir('../uploads/photos'));
     },
     filename: (req, file, cb) => {
-        // Generate unique filename with timestamp
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         const extension = path.extname(file.originalname);
         cb(null, `photo-${uniqueSuffix}${extension}`);
     }
 });
+
+const storage = localStorage;
 
 // File filter for image validation
 const fileFilter = (req, file, cb) => {

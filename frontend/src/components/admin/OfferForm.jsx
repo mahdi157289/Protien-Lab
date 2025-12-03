@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Upload, X, DollarSign, Percent, Tag, Hash, FileText, Image } from 'lucide-react';
 import axios from 'axios';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
+import { getApiUrl } from '../../utils/apiUrl';
 
 const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }) => {
   const { t } = useTranslation();
@@ -160,9 +161,8 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
           return;
         }
         
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
         // Fetch all photos with high limit to get all brands
-        const adminApiUrl = `${API_BASE_URL}/admin/photos?category=${encodeURIComponent('Nos Marque')}&isActive=true&limit=1000`;
+        const adminApiUrl = getApiUrl(`/admin/photos?category=${encodeURIComponent('Nos Marque')}&isActive=true&limit=1000`);
         
         const response = await axios.get(adminApiUrl, {
           headers: {

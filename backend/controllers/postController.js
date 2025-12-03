@@ -1,11 +1,12 @@
 const Post = require('../models/Post');
 const User = require('../models/User');
+const { buildFileUrl, deleteStoredPath } = require('../utils/uploadHelpers');
 
 // Create a new post
 const createPost = async (req, res) => {
     try {
         const { text } = req.body;
-        const image = req.file ? req.file.path : '';
+        const image = req.file ? buildFileUrl('posts', req.file) : '';
 
         const post = await Post.create({
             user: req.user._id,
@@ -52,7 +53,12 @@ const updatePost = async (req, res) => {
         }
 
         const { text } = req.body;
-        const image = req.file ? req.file.path : post.image;
+        let image = post.image;
+
+        if (req.file) {
+            await deleteStoredPath(post.image, 'posts');
+            image = buildFileUrl('posts', req.file);
+        }
 
         post.text = text;
         post.image = image;
@@ -83,6 +89,7 @@ const deletePost = async (req, res) => {
             return res.status(401).json({ message: 'User not authorized' });
         }
 
+        await deleteStoredPath(post.image, 'posts');
         await post.deleteOne();
 
         res.json({ message: 'Post removed' });

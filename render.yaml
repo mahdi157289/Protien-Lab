@@ -17,4 +17,6 @@ services:
     region: oregon
     buildArgs:
       - key: VITE_API_URL
+        value: https://protienlab-backend.onrender.com/api
+      - key: VITE_IMAGE_URL
         value: https://protienlab-backend.onrender.com

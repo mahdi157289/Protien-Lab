@@ -55,10 +55,10 @@ router.get('/users/search', adminAuth, adminUserController.searchUsers);
 router.get('/feedback', adminAuth, getAllFeedbacks);
 
 // Exercise routes
-router.post('/exercises', adminAuth, exerciseController.createExercise);
+router.post('/exercises', adminAuth, ...exerciseController.createExercise);
 router.get('/exercises', exerciseController.getAllExercises);
 router.get('/exercises/category/:category', exerciseController.getExercisesByCategory);
-router.put('/exercises/:id', adminAuth, exerciseController.updateExercise);
+router.put('/exercises/:id', adminAuth, ...exerciseController.updateExercise);
 router.delete('/exercises/:id', adminAuth, exerciseController.deleteExercise);
 
 // Photo routes

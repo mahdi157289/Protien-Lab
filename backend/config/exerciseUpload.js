@@ -1,19 +1,17 @@
 const multer = require('multer');
 const path = require('path');
-const fs = require('fs');
+const { ensureUploadDir } = require('./storageUtils');
 
-// Ensure upload directory exists
-const uploadDir = path.join(__dirname, '../uploads/exercises');
-fs.mkdirSync(uploadDir, { recursive: true });
-
-// Storage configuration
+// Always use local storage - we'll upload to Cloudinary directly in the controller
+// This bypasses signature issues with multer-storage-cloudinary
 const exerciseStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadDir);
+    cb(null, ensureUploadDir('../uploads/exercises'));
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+    const extension = path.extname(file.originalname);
+    cb(null, `exercise-${uniqueSuffix}${extension}`);
   }
 });
 

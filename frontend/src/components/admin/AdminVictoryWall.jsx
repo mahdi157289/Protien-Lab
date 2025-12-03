@@ -3,6 +3,8 @@ import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { Search, Trash2, UserCircle, Loader } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { useTranslation } from "react-i18next"; // Add this import
+import { resolveImageUrl } from "../../lib/image";
+import { getApiUrl } from '../../utils/apiUrl';
 
 const DeleteModal = ({ isOpen, onClose, onConfirm }) => {
   const { t } = useTranslation(); // Add this line
@@ -59,7 +61,7 @@ const VictoryWallAdmin = () => {
   const fetchPosts = useCallback(async (params) => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/admin/posts?search=${params.search}&startDate=${params.startDate}&endDate=${params.endDate}&sortBy=${params.sort}`,
+        getApiUrl(`/admin/posts?search=${params.search}&startDate=${params.startDate}&endDate=${params.endDate}&sortBy=${params.sort}`),
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -92,7 +94,7 @@ const VictoryWallAdmin = () => {
 
   const handleDelete = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/admin/posts/${selectedPostId}`, {
+      await fetch(getApiUrl(`/admin/posts/${selectedPostId}`), {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -215,7 +217,7 @@ const VictoryWallAdmin = () => {
                 <div className="flex items-center gap-3">
                   {post.user.profileImage ? (
                     <img
-                      src={`${import.meta.env.VITE_IMAGE_URL}/${post.user.profileImage}`}
+                      src={resolveImageUrl(post.user.profileImage)}
                       alt={t('admin_victorywall_profile_alt')}
                       className="object-cover w-12 h-12 rounded-full"
                       onError={(e) => {
@@ -251,7 +253,7 @@ const VictoryWallAdmin = () => {
               {post.image && (
                 <div className="mx-1 mb-4">
                   <img 
-                    src={`${import.meta.env.VITE_IMAGE_URL}/${post.image}`}
+                    src={resolveImageUrl(post.image)}
                     alt={t('admin_victorywall_post_image_alt')}
                     className="w-full rounded-sm"
                   />

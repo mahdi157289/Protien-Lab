@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Percent, Star } from "lucide-react";
 import { createPortal } from 'react-dom';
 import { useSmokey } from '../../contexts/SmokeyContext';
+import { resolveImageUrl } from '../../lib/image';
 
 function ProductCard({ product }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -58,7 +59,7 @@ function ProductCard({ product }) {
         {images[0] && (
           <img
             className="object-contain h-48 w-full transition-opacity duration-300 rounded-md bg-black"
-            src={`${import.meta.env.VITE_IMAGE_URL}/${(images[0]||'').replace(/^\/+/,"")}`}
+            src={resolveImageUrl(images[0]) || 'https://via.placeholder.com/240x180/272727/40ee45?text=No+Image'}
             alt={product.name}
             style={{background: '#181818'}}
             onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src='https://via.placeholder.com/240x180/272727/40ee45?text=No+Image';}}
@@ -67,7 +68,7 @@ function ProductCard({ product }) {
         {images[1] && (
           <img
             className="object-contain h-48 w-full absolute left-0 top-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 rounded-md bg-black"
-            src={`${import.meta.env.VITE_IMAGE_URL}/${(images[1]||'').replace(/^\/+/,"")}`}
+            src={resolveImageUrl(images[1]) || 'https://via.placeholder.com/240x180/272727/40ee45?text=No+Image'}
             alt={product.name + " alt"}
             onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src='https://via.placeholder.com/240x180/272727/40ee45?text=No+Image';}}
           />

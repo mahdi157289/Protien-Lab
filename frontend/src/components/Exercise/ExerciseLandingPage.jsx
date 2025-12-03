@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { Loader } from 'lucide-react';
 import exerciseLandingImg from '../../assets/images/exercise/exercise_landing.jpg';
 import { useTranslation } from "react-i18next";
+import { resolveImageUrl } from '../../lib/image';
 
 const ExerciseLandingPage = () => {
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ const CategoryCard = ({ category, onClick, t }) => (
     className="overflow-hidden transition-transform bg-dark rounded-2xl"
   >
     <div className="aspect-[4/3] relative">
-      <img src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${category.image}`} alt={category.name} className="object-cover w-full h-full" />
+      <img src={resolveImageUrl(category.image)} alt={category.name} className="object-cover w-full h-full" />
     </div>
     <div className="p-6 text-center">
       <h3 className="mb-3 text-xl font-semibold text-white">{category.name}</h3>

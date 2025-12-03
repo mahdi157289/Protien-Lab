@@ -1,8 +1,16 @@
 const Photo = require('../models/Photo');
+const Product = require('../models/Product');
+const cloudinary = require('../config/cloudinary');
+const {
+    buildFileUrl,
+    cleanupUploadedFiles,
+    deleteUploadedFile,
+} = require('../utils/uploadHelpers');
+const { shouldUseCloudinary } = require('../config/storageUtils');
 const fs = require('fs');
 const path = require('path');
 
-const Product = require('../models/Product');
+const normalizeProductImagePath = (url = '') => (url.startsWith('http') ? url : url.replace(/^\//, ''));
 
 const adminPhotoController = {
     // Upload single or multiple photos
@@ -90,6 +98,36 @@ const adminPhotoController = {
             }
 
             const uploadedPhotos = [];
+            const useCloudinary = shouldUseCloudinary();
+
+            // Upload files to Cloudinary if enabled (bypasses signature issues)
+            if (useCloudinary && req.files && req.files.length > 0) {
+                console.log('☁️ Uploading files to Cloudinary using preset...');
+                for (const file of req.files) {
+                    try {
+                        const filePath = file.path;
+                        const uploadResult = await cloudinary.uploader.upload(filePath, {
+                            upload_preset: 'protienlab_photos',
+                            resource_type: 'image',
+                        });
+                        
+                        // Update file object with Cloudinary info
+                        file.filename = uploadResult.public_id;
+                        file.path = uploadResult.secure_url;
+                        file.url = uploadResult.secure_url;
+                        
+                        // Delete local file after successful upload
+                        fs.unlink(filePath, (err) => {
+                            if (err) console.error(`Error deleting local file ${filePath}:`, err);
+                        });
+                        
+                        console.log(`✅ Uploaded to Cloudinary: ${uploadResult.secure_url}`);
+                    } catch (uploadError) {
+                        console.error(`❌ Error uploading ${file.filename} to Cloudinary:`, uploadError);
+                        // Continue with local file if Cloudinary upload fails
+                    }
+                }
+            }
 
             // For Best Offers, we expect exactly 2 photos (main + additional)
             if (category === 'Best Offers') {
@@ -104,7 +142,7 @@ const adminPhotoController = {
                 const mainFile = req.files[0];
                 const photoData = {
                     filename: mainFile.filename,
-                    url: `/uploads/photos/${mainFile.filename}`,
+                    url: buildFileUrl('photos', mainFile),
                     category: category
                 };
 
@@ -127,14 +165,14 @@ const adminPhotoController = {
                         const additionalFile = req.files[i];
                         photoData.offerData.additionalPhotos.push({
                             filename: additionalFile.filename,
-                            url: `/uploads/photos/${additionalFile.filename}`
+                            url: buildFileUrl('photos', additionalFile)
                         });
                     }
                 }
 
                 // Create or update linked Product when Best Offers
-                const mainImgUrl = photoData.url.replace(/^\//, '');
-                const additionalImgs = photoData.offerData.additionalPhotos.map(p => p.url.replace(/^\//, ''));
+                const mainImgUrl = normalizeProductImagePath(photoData.url);
+                const additionalImgs = photoData.offerData.additionalPhotos.map(p => normalizeProductImagePath(p.url));
                 const images = [mainImgUrl, additionalImgs[0]].filter(Boolean);
 
                 const upsertData = {
@@ -164,7 +202,7 @@ const adminPhotoController = {
             } else if (category === 'Media') {
                 const slides = req.files.map(file => ({
                     filename: file.filename,
-                    url: `/uploads/photos/${file.filename}`
+                    url: buildFileUrl('photos', file)
                 }));
 
                 const slotData = {
@@ -188,7 +226,7 @@ const adminPhotoController = {
                 for (const file of req.files) {
                     const photoData = {
                         filename: file.filename,
-                        url: `/uploads/photos/${file.filename}`,
+                        url: buildFileUrl('photos', file),
                         category: category
                     };
                     
@@ -211,17 +249,32 @@ const adminPhotoController = {
 
         } catch (error) {
             console.error('❌ Upload error:', error);
+            console.error('❌ Error stack:', error.stack);
+            console.error('❌ Error details:', {
+                message: error.message,
+                name: error.name,
+                code: error.code
+            });
+            
             // Clean up uploaded files if database save fails
-            if (req.files) {
-                req.files.forEach(file => {
-                    fs.unlink(file.path, (err) => {
-                        if (err) console.error('Error deleting file:', err);
-                    });
-                });
+            try {
+                if (req.files && req.files.length > 0) {
+                    await cleanupUploadedFiles(req.files, 'photos');
+                }
+            } catch (cleanupError) {
+                console.error('❌ Error during cleanup:', cleanupError);
             }
-            res.status(400).json({ 
+            
+            // Determine appropriate status code
+            const statusCode = error.status || (error.name === 'ValidationError' ? 400 : 500);
+            
+            res.status(statusCode).json({ 
                 success: false,
-                message: error.message 
+                message: error.message || 'Failed to upload photos',
+                ...(process.env.NODE_ENV === 'development' && { 
+                    error: error.name,
+                    stack: error.stack 
+                })
             });
         }
     },
@@ -518,11 +571,7 @@ const adminPhotoController = {
                 });
             }
 
-            // Delete file from filesystem
-            const filePath = path.join(__dirname, '../uploads/photos', photo.filename);
-            fs.unlink(filePath, (err) => {
-                if (err) console.error('Error deleting file:', err);
-            });
+            await deleteUploadedFile({ filename: photo.filename, path: photo.url }, 'photos');
 
             // Delete from database
             await Photo.findByIdAndDelete(req.params.id);

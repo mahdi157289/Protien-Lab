@@ -1,6 +1,9 @@
 const Product = require('../models/Product');
-const fs = require('fs');
-const path = require('path');
+const {
+    buildFileUrl,
+    cleanupUploadedFiles,
+    deleteStoredPath,
+} = require('../utils/uploadHelpers');
 
 const adminProductController = {
     createProduct: async (req, res) => {
@@ -12,7 +15,7 @@ const adminProductController = {
                 return res.status(400).json({ message: 'Between 2 and 6 product images are required' });
             }
 
-            const imagePaths = req.files.map(file => `/uploads/products/${file.filename}`);
+            const imagePaths = req.files.map(file => buildFileUrl('products', file));
 
             const categories = req.body.categories
                 ? (Array.isArray(req.body.categories) ? req.body.categories : JSON.parse(req.body.categories))
@@ -65,13 +68,7 @@ const adminProductController = {
             if (error.errors) {
                 console.error('❌ Validation errors:', error.errors);
             }
-            if (req.files) {
-                req.files.forEach(file => {
-                    fs.unlink(file.path, (err) => {
-                        if (err) console.error('Error deleting file:', err);
-                    });
-                });
-            }
+            await cleanupUploadedFiles(req.files, 'products');
             res.status(400).json({ message: error.message });
         }
     },
@@ -107,15 +104,9 @@ const adminProductController = {
                 // Delete old images by filename if they exist
                 const oldProduct = await Product.findById(req.params.id);
                 if (oldProduct?.images && Array.isArray(oldProduct.images)) {
-                    oldProduct.images.forEach(imgUrl => {
-                        try {
-                            const filename = path.basename(imgUrl);
-                            const absolutePath = path.join(__dirname, '../uploads/products', filename);
-                            fs.unlink(absolutePath, () => {});
-                        } catch {}
-                    });
+                    await Promise.all(oldProduct.images.map((imgUrl) => deleteStoredPath(imgUrl, 'products')));
                 }
-                updateData.images = req.files.map(file => `/uploads/products/${file.filename}`);
+                updateData.images = req.files.map(file => buildFileUrl('products', file));
             }
 
             if (updateData.price !== undefined) updateData.price = Number(updateData.price);
@@ -140,14 +131,8 @@ const adminProductController = {
                 return res.status(404).json({ message: 'Product not found' });
             }
             res.json(product);
-        } catch (error) {
-            if (req.files) {
-                req.files.forEach(file => {
-                    fs.unlink(file.path, (err) => {
-                        if (err) console.error('Error deleting file:', err);
-                    });
-                });
-            }
+            } catch (error) {
+            await cleanupUploadedFiles(req.files, 'products');
             res.status(400).json({ message: error.message });
         }
     },
@@ -160,11 +145,7 @@ const adminProductController = {
             }
 
             if (product.images && Array.isArray(product.images)) {
-                product.images.forEach(imgPath => {
-                    fs.unlink(imgPath, (err) => {
-                        if (err) console.error('Error deleting image:', err);
-                    });
-                });
+                await Promise.all(product.images.map((imgPath) => deleteStoredPath(imgPath, 'products')));
             }
 
             await product.deleteOne();

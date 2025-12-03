@@ -8,6 +8,8 @@ import logo from '../../assets/images/common/Protein-Lab.png';
 import { useTranslation } from 'react-i18next';
 import { LiaLanguageSolid } from "react-icons/lia"; // Add this import
 import axios from 'axios';
+import { resolveImageUrl } from '../../lib/image';
+import { getApiUrl } from '../../utils/apiUrl';
 
 const UserNavbar = ({ onAuthClick }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,15 +45,6 @@ const UserNavbar = ({ onAuthClick }) => {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        const getApiUrl = (endpoint) => {
-          if (import.meta.env.MODE === 'development') {
-            return `/api${endpoint}`;
-          }
-          const baseUrl = API_BASE_URL.endsWith('/api') ? API_BASE_URL : `${API_BASE_URL}/api`;
-          return `${baseUrl}${endpoint}`;
-        };
-        
         const url = getApiUrl(`/photos/category/${encodeURIComponent('Nos Marque')}`);
         const response = await axios.get(url);
         
@@ -344,7 +337,7 @@ const UserNavbar = ({ onAuthClick }) => {
                   >
                     {shouldShowImage ? (
                       <img
-                        src={`${import.meta.env.VITE_IMAGE_URL}/${user.profileImage}`}
+                        src={resolveImageUrl(user.profileImage)}
                         alt="Profile"
                         className="object-cover w-10 h-10"
                         onError={() => setImageError(true)}

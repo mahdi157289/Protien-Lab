@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader, X, CheckCircle, Search, Eye } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useSmokey } from '../../contexts/SmokeyContext';
+import { getApiUrl } from '../../utils/apiUrl';
 
 const AdminOrderManagement = () => {
   const { token } = useAdminAuth();
@@ -42,7 +43,7 @@ const AdminOrderManagement = () => {
         if (value) params.append(key, value);
       });
 
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/orders?${params.toString()}`, {
+      const response = await axios.get(`${getApiUrl('/admin/orders')}?${params.toString()}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setOrders(response.data.orders);
@@ -87,7 +88,7 @@ const AdminOrderManagement = () => {
   const updateOrderStatus = async () => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/admin/orders/${selectedOrder._id}/status`,
+        getApiUrl(`/admin/orders/${selectedOrder._id}/status`),
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -102,7 +103,7 @@ const AdminOrderManagement = () => {
   const cancelOrder = async () => {
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/admin/orders/${selectedOrder._id}/cancel`,
+        getApiUrl(`/admin/orders/${selectedOrder._id}/cancel`),
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -1,6 +1,9 @@
 const User = require('../models/User');
-const fs = require('fs');
-const path = require('path');
+const {
+    buildFileUrl,
+    deleteStoredPath,
+    cleanupUploadedFiles,
+} = require('../utils/uploadHelpers');
 
 // Get user profile
 const getProfile = async (req, res) => {
@@ -71,21 +74,15 @@ const uploadImage = async (req, res) => {
 
         const user = await User.findById(req.user._id);
         if (!user) {
-            // Delete uploaded file if user not found
-            fs.unlinkSync(req.file.path);
+            await cleanupUploadedFiles([req.file], 'profiles');
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Delete old profile image if it exists
         if (user.profileImage) {
-            const oldImagePath = path.join(__dirname, '..', user.profileImage);
-            if (fs.existsSync(oldImagePath)) {
-                fs.unlinkSync(oldImagePath);
-            }
+            await deleteStoredPath(user.profileImage, 'profiles');
         }
 
-        // Update user with new image path
-        user.profileImage = req.file.path.replace(/\\/g, '/');
+        user.profileImage = buildFileUrl('profiles', req.file);
         await user.save();
 
         res.json({
@@ -93,9 +90,8 @@ const uploadImage = async (req, res) => {
             profileImage: user.profileImage
         });
     } catch (error) {
-        // Delete uploaded file if error occurs
         if (req.file) {
-            fs.unlinkSync(req.file.path);
+            await cleanupUploadedFiles([req.file], 'profiles');
         }
         res.status(500).json({ message: error.message });
     }

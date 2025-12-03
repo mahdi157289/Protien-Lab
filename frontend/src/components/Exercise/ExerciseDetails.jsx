@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import api from '../../config/api';
 import { Loader } from 'lucide-react';
 import { useTranslation } from "react-i18next";
+import { resolveImageUrl } from '../../lib/image';
 
 const ExerciseDetailPage = () => {
   const { id } = useParams();
@@ -71,7 +72,7 @@ const ExerciseDetailPage = () => {
                 ) : (
                   <>
                     <img
-                      src={`${import.meta.env.VITE_IMAGE_URL}/uploads/exercises/${exercise.image}`}
+                      src={resolveImageUrl(exercise.image)}
                       alt="Exercise"
                       className="object-cover w-full h-full"
                     />

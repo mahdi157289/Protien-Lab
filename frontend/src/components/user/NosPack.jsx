@@ -185,7 +185,7 @@ const NosPack = () => {
               {o.reference && <p className="text-sm text-gray-500 mb-3">Ref: {o.reference}</p>}
               <div className="mb-4">
                 <div className="flex items-center gap-3 mb-1">
-                  <span className="text-2xl font-bold text-green-600 font-orbitron">{o.newPrice.toFixed(2)} TD</span>
+                  <span className="text-2xl font-normal text-green-600 font-orbitron">{o.newPrice.toFixed(2)} TD</span>
                   <span className="text-lg text-gray-400 line-through">{o.oldPrice.toFixed(2)} TD</span>
                 </div>
                 <div className="flex items-center gap-2">

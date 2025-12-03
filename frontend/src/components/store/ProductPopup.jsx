@@ -7,6 +7,7 @@ import api from '../../config/api';
 import { useTranslation } from "react-i18next";
 import { useSmokey } from '../../contexts/SmokeyContext';
 import { Star, Truck, ShieldCheck, ArrowLeft, X, CheckCircle, Flame, Dumbbell, Percent, Package, Repeat2, Sparkles, ShoppingBag, ChevronLeft, Tag, Users, AlertTriangle } from 'lucide-react';
+import { resolveImageUrl } from '../../lib/image';
 
 function ProductPopup({ product, onClose, focusOrder }) {
   const { user } = useAuth();
@@ -34,12 +35,6 @@ function ProductPopup({ product, onClose, focusOrder }) {
 
   // Image helpers
   const placeholder = (w=360,h=360) => `data:image/svg+xml;utf8,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}'><rect width='100%' height='100%' fill='#ededed'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' fill='#888' font-size='14'>No Image</text></svg>`)}`;
-  const resolveImageUrl = (url) => {
-    if (!url) return '';
-    const str = String(url);
-    if (/^(https?:)?\/\//.test(str) || str.startsWith('data:')) return str; // absolute or data
-    return `${import.meta.env.VITE_IMAGE_URL}/${str.replace(/^\/+/, '')}`;
-  };
 
   // Gallery state
   const images = Array.isArray(product.images) ? product.images : (product.image ? [product.image] : []);

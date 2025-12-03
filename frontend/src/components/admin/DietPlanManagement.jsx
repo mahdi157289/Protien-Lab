@@ -3,6 +3,7 @@ import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { Plus, X, Edit, Trash2 } from 'lucide-react';
 import { Loader } from 'lucide-react';
 import { useTranslation } from "react-i18next"; // Add this import
+import { getApiUrl } from '../../utils/apiUrl';
 
 const DietPlanManagement = () => {
   const { t } = useTranslation(); // Add this line
@@ -37,7 +38,7 @@ const DietPlanManagement = () => {
 
   const fetchDietPlans = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/diet-plans`, {
+      const response = await fetch(getApiUrl('/admin/diet-plans'), {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -57,8 +58,8 @@ const DietPlanManagement = () => {
     e.preventDefault();
     try {
       const url = currentPlan
-        ? `${import.meta.env.VITE_API_URL}/api/admin/diet-plans/${currentPlan._id}`
-        : `${import.meta.env.VITE_API_URL}/admin/diet-plans`;
+        ? getApiUrl(`/admin/diet-plans/${currentPlan._id}`)
+        : getApiUrl('/admin/diet-plans');
       const method = currentPlan ? 'PUT' : 'POST';
 
       const response = await fetch(url, {
@@ -83,7 +84,7 @@ const DietPlanManagement = () => {
   const handleDelete = async () => {
     if (!deleteConfirmation.planId) return;
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/admin/diet-plans/${deleteConfirmation.planId}`, {
+      const response = await fetch(getApiUrl(`/admin/diet-plans/${deleteConfirmation.planId}`), {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

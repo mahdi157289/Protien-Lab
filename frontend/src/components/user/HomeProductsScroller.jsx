@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 import api from '../../config/api';
+import { resolveImageUrl } from '../../lib/image';
 
 const HomeProductsScroller = () => {
   const [products, setProducts] = useState([]);
@@ -30,7 +31,8 @@ const HomeProductsScroller = () => {
   const toImg = (p) => {
     const imgs = Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []);
     const src = imgs[0] || '';
-    return src ? `${import.meta.env.VITE_IMAGE_URL}/${src.replace(/^\/+/, '')}` : 'https://via.placeholder.com/240x180/ededed/222?text=No+Image';
+    const resolved = resolveImageUrl(src);
+    return resolved || 'https://via.placeholder.com/240x180/ededed/222?text=No+Image';
   };
 
   return (

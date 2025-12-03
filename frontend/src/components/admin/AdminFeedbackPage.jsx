@@ -3,6 +3,7 @@ import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import axios from 'axios';
 import { RefreshCw, Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { getApiUrl } from '../../utils/apiUrl';
 
 const AdminFeedbackPage = () => {
   const { token } = useAdminAuth();
@@ -14,7 +15,7 @@ const AdminFeedbackPage = () => {
   const fetchFeedbacks = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/admin/feedback`, {
+      const response = await axios.get(getApiUrl('/admin/feedback'), {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFeedbacks(response.data);

@@ -3,6 +3,7 @@ import axios from "axios";
 import { Eye, X, User, UserCircle2, Calendar, Phone, MapPin, Ruler, Search, Trash2, Edit } from "lucide-react";
 import PropTypes from "prop-types";
 import { useTranslation } from "react-i18next"; // Add this import
+import { getApiUrl } from '../../utils/apiUrl';
 
 const AdminUserManagement = () => {
   const [users, setUsers] = useState([]);
@@ -38,7 +39,7 @@ const AdminUserManagement = () => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}/admin/users`,
+          getApiUrl('/admin/users'),
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -67,7 +68,7 @@ const AdminUserManagement = () => {
   // Delete user
   const handleDelete = async (userId) => {
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL}/admin/users/${userId}`, {
+      await axios.delete(getApiUrl(`/admin/users/${userId}`), {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
         },
@@ -178,7 +179,7 @@ const AdminUserManagement = () => {
       e.preventDefault();
       try {
         await axios.put(
-          `${import.meta.env.VITE_API_URL}/admin/users/${selectedUser._id}`,
+          getApiUrl(`/admin/users/${selectedUser._id}`),
           formData,
           {
             headers: {
