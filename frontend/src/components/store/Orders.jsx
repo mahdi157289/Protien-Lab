@@ -90,10 +90,10 @@ function OrderPage() {
   }
 
   return (
-    <div className="min-h-screen px-8 py-10">
+    <div className="min-h-screen px-8 py-10 bg-black backdrop-blur-sm">
       {/* Page Heading */}
-      <h1 className={`mb-8 text-4xl font-bold text-center ${smokeyOn ? 'text-white' : 'text-black'}`}>{t('orders_title')}</h1>
-      <p className={`px-4 mb-8 text-center ${smokeyOn ? 'text-white' : 'text-black'}`}>
+      <h1 className="mb-8 text-4xl font-bold text-center text-white">{t('orders_title')}</h1>
+      <p className="px-4 mb-8 text-center text-gray-400">
         {t('orders_subtitle')}
       </p>
 
@@ -116,17 +116,17 @@ function OrderPage() {
       {/* Orders List */}
       <div className="max-w-4xl mx-auto">
         {orders.length === 0 ? (
-          <div className="bg-[#1C1C1C] text-white rounded-lg p-6 shadow-lg text-center">
+          <div className="bg-secondary text-white border border-primary/10 rounded-lg p-6 shadow-lg text-center">
             <p className="text-xl font-semibold text-gray-400">
               {t('orders_no_orders')}
             </p>
           </div>
         ) : (
           orders.map((order) => (
-            <div key={order._id} className="bg-[#1C1C1C] text-white rounded-lg p-6 shadow-lg mb-4">
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-gray-600">
+            <div key={order._id} className="bg-secondary text-white border border-primary/10 rounded-lg p-6 shadow-lg mb-4">
+              <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/5">
                 <div>
-                  <h2 className="font-bold #40ee45">{t('orders_order_number', { number: order._id.slice(-5).toUpperCase() })}</h2>
+                  <h2 className="font-bold text-primary">{t('orders_order_number', { number: order._id.slice(-5).toUpperCase() })}</h2>
                   <p className="text-sm text-gray-400">{t('orders_placed_on', { date: formatDate(order.createdAt) })}</p>
                 </div>
                 <span className={`px-2 py-1 rounded-lg text-sm ${
@@ -144,7 +144,7 @@ function OrderPage() {
                 const resolvedSrc = resolveImageUrl(String(rawImage)) || buildPlaceholder(120,120);
                 return (
                 <div key={index} className="flex gap-6 ">
-                  <div className="flex justify-center items-center bg-[#29292A] w-[150px] h-[150px] p-2 rounded-lg">
+                  <div className="flex justify-center items-center bg-gray-50 border border-gray-100 w-[150px] h-[150px] p-2 rounded-lg">
                     <img
                       src={resolvedSrc}
                       alt={item.product?.name || 'product'}
@@ -153,9 +153,9 @@ function OrderPage() {
                     />
                   </div>
                   <div className="flex-1">
-                    <h3 className="mb-2 text-lg font-bold">{item.product.name}</h3>
-                    <p className="mb-1 text-sm">{t('orders_quantity', { quantity: item.quantity })}</p>
-                    <p className="mb-1 font-medium text-md">
+                    <h3 className="mb-2 text-lg font-bold text-white">{item.product.name}</h3>
+                    <p className="mb-1 text-sm text-gray-400">{t('orders_quantity', { quantity: item.quantity })}</p>
+                    <p className="mb-1 font-medium text-md text-gray-300">
                       {t('orders_price_x_quantity', { price: item.price, quantity: item.quantity })}
                     </p>
                     <div className="flex items-center justify-between mt-4">
@@ -195,50 +195,50 @@ function OrderPage() {
 
       {/* Order Details Modal */}
       {isModalOpen && selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="relative w-full max-w-4xl p-6 rounded-lg shadow-lg bg-dark">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm">
+          <div className="relative w-full max-w-4xl p-6 rounded-lg shadow-2xl bg-secondary text-white border border-primary/20">
             <button
-              className="absolute text-xl font-bold top-4 right-4 hover:text-primary"
+              className="absolute text-xl font-bold top-4 right-4 text-gray-400 hover:text-primary transition-colors"
               onClick={() => setIsModalOpen(false)}
             >
               <X size={24} />
             </button>
 
-            <h2 className="mb-4 text-2xl font-bold">{t('orders_details_title')}</h2>
+            <h2 className="mb-4 text-2xl font-bold text-white">{t('orders_details_title')}</h2>
             
             {/* Shipping Information */}
-            <div className="bg-[#29292A] p-4 rounded-lg mb-6">
-              <h3 className="mb-2 text-lg font-bold">{t('orders_shipping_details')}</h3>
-              <p>{t('orders_shipping_name', { name: selectedOrder.shippingAddress.fullName })}</p>
-              <p>{t('orders_shipping_email', { email: selectedOrder.shippingAddress.email })}</p>
-              <p>{t('orders_shipping_address', { address: selectedOrder.shippingAddress.address })}</p>
-              <p>{t('orders_shipping_phone', { phone: selectedOrder.shippingAddress.phoneNumber })}</p>
+            <div className="bg-dark p-4 rounded-lg mb-6 border border-white/5">
+              <h3 className="mb-2 text-lg font-bold text-primary">{t('orders_shipping_details')}</h3>
+              <p className="text-gray-300">{t('orders_shipping_name', { name: selectedOrder.shippingAddress.fullName })}</p>
+              <p className="text-gray-400">{t('orders_shipping_email', { email: selectedOrder.shippingAddress.email })}</p>
+              <p className="text-gray-300">{t('orders_shipping_address', { address: selectedOrder.shippingAddress.address })}</p>
+              <p className="text-gray-400">{t('orders_shipping_phone', { phone: selectedOrder.shippingAddress.phoneNumber })}</p>
             </div>
 
             {/* Order Items */}
-            <div className="bg-[#29292A] p-4 rounded-lg">
-              <h3 className="mb-2 text-lg font-bold">{t('orders_products')}</h3>
+            <div className="bg-dark p-4 rounded-lg border border-white/5">
+              <h3 className="mb-2 text-lg font-bold text-primary">{t('orders_products')}</h3>
               {selectedOrder.orderItems.map((item, index) => {
                 const rawImage = (Array.isArray(item.product?.images) && item.product.images[0]) || item.product?.image || '';
                 const resolvedSrc = resolveImageUrl(String(rawImage)) || buildPlaceholder(80,80);
                 return (
-                <div key={index} className="flex items-center gap-4 mb-4">
+                <div key={index} className="flex items-center gap-4 mb-4 pb-4 border-b border-white/5 last:border-0 last:mb-0 last:pb-0">
                   <img
                     src={resolvedSrc}
                     alt={item.product?.name || 'product'}
-                    className="object-contain w-20 h-20"
+                    className="object-contain w-20 h-20 bg-white/5 rounded-md p-1"
                     onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src=buildPlaceholder(80,80);}}
                   />
                   <div>
-                    <h4 className="font-bold">{item.product.name}</h4>
-                    <p>{t('orders_quantity', { quantity: item.quantity })}</p>
-                    <p>{t('orders_price_each', { price: item.price })}</p>
+                    <h4 className="font-bold text-white">{item.product.name}</h4>
+                    <p className="text-gray-400">{t('orders_quantity', { quantity: item.quantity })}</p>
+                    <p className="text-gray-300">{t('orders_price_each', { price: item.price })}</p>
                   </div>
                 </div>
               )})}
-              <div className="pt-4 border-t border-gray-600">
-                <p className="text-lg font-bold">{t('orders_total', { total: selectedOrder.totalAmount })}</p>
-                <p className="text-sm text-gray-400">{t('orders_payment_method', { method: selectedOrder.paymentMethod })}</p>
+              <div className="pt-4 border-t border-white/10 mt-4">
+                <p className="text-xl font-bold text-primary">{t('orders_total', { total: selectedOrder.totalAmount })}</p>
+                <p className="text-sm text-gray-400 italic">{t('orders_payment_method', { method: selectedOrder.paymentMethod })}</p>
               </div>
             </div>
           </div>
