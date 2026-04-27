@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import OrderPage from "../components/store/Orders";
 import ProductList from "../components/store/ProductList";
 import ProtectedRoute from "../components/user/ProtectedRoute";
@@ -29,11 +29,13 @@ function Store() {
     <div className="flex flex-col min-h-screen">
       {/* Main content */}
       <div className="flex-grow">
-        <Routes>
-          <Route path="/" element={<ProductList />} /> {/* Matches "/store" */}
-          <Route path="orders" element={<ProtectedRoute onAuthClick={handleAuthModal}><OrderPage /></ProtectedRoute>} /> {/* Matches "/store/orders" */}
-          <Route path="products" element={<ProductList />} /> {/* Matches "/store/products" */}
-        </Routes>
+        {location.pathname.startsWith('/store/orders') ? (
+          <ProtectedRoute onAuthClick={handleAuthModal}>
+            <OrderPage />
+          </ProtectedRoute>
+        ) : (
+          <ProductList />
+        )}
       </div>
       <AuthModal
         isOpen={isAuthModalOpen}

@@ -36,44 +36,44 @@ function ProductCard({ product }) {
 
   return (
     <motion.div 
-      className="w-full max-w-sm mx-auto bg-secondary text-white rounded-xl shadow-2xl overflow-hidden border border-white/5 relative group hover:border-primary/30 transition-colors duration-300"
+      className="w-full max-w-sm mx-auto bg-white text-gray-900 rounded-xl shadow-lg overflow-hidden border border-black/5 relative group hover:shadow-2xl transition-all duration-300"
       layout
     >
       {/* URGENCY/TRUST BADGES (left group) */}
       <div className="absolute z-10 flex flex-wrap gap-2 left-2 top-2 max-w-[80%]">
         {product.isNewProduct && (
-          <span className="inline-flex items-center bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg font-sans uppercase tracking-wider">NEW</span>
+          <span className="inline-flex items-center bg-green-500 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md font-sans uppercase tracking-wider">NEW</span>
         )}
         {product.isBestSeller && (
-          <span className={`inline-flex items-center bg-primary text-[10px] font-bold px-2 py-1 rounded-full shadow-lg font-sans uppercase tracking-wider ${smokeyOn ? 'text-white' : 'text-black'}`}>Best Seller</span>
+          <span className={`inline-flex items-center bg-primary text-[10px] font-bold px-2 py-1 rounded-full shadow-md font-sans uppercase tracking-wider ${smokeyOn ? 'text-white' : 'text-black'}`}>Best Seller</span>
         )}
         {product.fastDelivery && (
-          <span className="inline-flex items-center bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-lg font-sans uppercase tracking-wider">Fast Delivery</span>
+          <span className="inline-flex items-center bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded-full shadow-md font-sans uppercase tracking-wider">Fast Delivery</span>
         )}
       </div>
       {product.limitedStockNotice && (
-        <div className="absolute top-2 right-2 bg-red-600 text-white text-[10px] px-3 py-1 rounded-full font-bold animate-pulse shadow-lg font-sans uppercase tracking-wider z-10">
+        <div className="absolute top-2 right-2 bg-red-600 text-white text-[10px] px-3 py-1 rounded-full font-bold animate-pulse shadow-md font-sans uppercase tracking-wider z-10">
           {product.limitedStockNotice}
         </div>
       )}
 
       {/* Product Images */}
       <div
-        className="bg-white/5 flex justify-center items-center p-4 relative h-80 overflow-hidden cursor-pointer border-b border-white/5 group-hover:bg-white/10 transition-colors duration-500"
+        className="bg-gray-50 flex justify-center items-center p-4 relative h-80 overflow-hidden cursor-pointer border-b border-gray-100 group-hover:bg-gray-100 transition-colors duration-500"
         onClick={() => { setSelectedProduct(product); setOrderDirect(false); }}
       >
         <AnimatePresence mode="wait">
           <motion.img
             key={images[imageIndex] || 'placeholder'}
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.5 }}
-            className="object-contain h-64 w-full drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform group-hover:scale-110 transition-transform duration-700"
-            src={resolveImageUrl(images[imageIndex]) || 'https://via.placeholder.com/240x180/1a1a1a/40ee45?text=No+Image'}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.4 }}
+            className="object-contain h-64 w-full drop-shadow-xl transform group-hover:scale-105 transition-transform duration-500"
+            src={resolveImageUrl(images[imageIndex], { removeBackground: true }) || 'https://via.placeholder.com/240x180/f3f4f6/40ee45?text=No+Image'}
             alt={product.name}
             style={{background: 'transparent'}}
-            onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src='https://via.placeholder.com/240x180/1a1a1a/40ee45?text=No+Image';}}
+            onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src='https://via.placeholder.com/240x180/f3f4f6/40ee45?text=No+Image';}}
           />
         </AnimatePresence>
         {discountPct > 0 && (
@@ -90,36 +90,30 @@ function ProductCard({ product }) {
             <span className="px-2 py-0.5 rounded-md bg-primary/10 text-primary text-[10px] font-bold border border-primary/20 font-sans uppercase" key={f}>{f}</span>
           ))}
           {product.weights && product.weights.map(w => (
-            <span className="px-2 py-0.5 rounded-md bg-white/5 text-gray-400 text-[10px] font-bold border border-white/10 font-sans uppercase" key={w}>{w}</span>
+            <span className="px-2 py-0.5 rounded-md bg-gray-100 text-gray-500 text-[10px] font-bold border border-gray-200 font-sans uppercase" key={w}>{w}</span>
           ))}
         </div>
       )}
       {/* Basic Info */}
       <div className="p-4">
-        <h2 className="mb-2 text-lg font-bold line-clamp-2 font-sans text-white group-hover:text-primary transition-colors duration-300">{product.name}</h2>
+        <h2 className="mb-2 text-lg font-bold line-clamp-2 font-sans text-gray-900 group-hover:text-primary transition-colors duration-300">{product.name}</h2>
         <div className="flex items-center justify-between mb-3">
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-black text-primary font-sans">{product.price.toFixed(2)} TD</span>
+              <span className="text-2xl font-black text-green-600 font-sans">{product.price.toFixed(2)} TD</span>
               {product.oldPrice && product.oldPrice > product.price && (
-                <span className="text-sm line-through text-gray-500 font-sans">{product.oldPrice.toFixed(2)} TD</span>
+                <span className="text-sm line-through text-gray-400 font-sans">{product.oldPrice.toFixed(2)} TD</span>
               )}
             </div>
-            {discountPct > 0 && (
-              <span className="text-[10px] text-green-500 font-bold font-sans uppercase tracking-tight italic">
-                Save {(product.oldPrice - product.price).toFixed(2)} TD Today
-              </span>
-            )}
           </div>
           <div className="flex flex-col items-end gap-1">
-            <div className="flex items-center gap-0.5 text-yellow-500">
+            <div className="flex items-center gap-0.5 text-yellow-400">
               <Star size={14} fill="currentColor" />
               <Star size={14} fill="currentColor" />
               <Star size={14} fill="currentColor" />
               <Star size={14} fill="currentColor" />
               <Star size={14} fill="currentColor" className="opacity-50" />
             </div>
-            <span className="text-[10px] text-gray-500 font-bold uppercase">4.8 Rating</span>
           </div>
         </div>
         
@@ -127,20 +121,20 @@ function ProductCard({ product }) {
           {(product.categories || []).map((c) => (
             <span
               key={c}
-              className="text-[9px] px-2 py-0.5 rounded bg-dark border border-white/5 text-gray-400 font-bold uppercase tracking-wider"
+              className="text-[9px] px-2 py-0.5 rounded bg-gray-50 border border-gray-100 text-gray-500 font-bold uppercase tracking-wider"
             >
               {c.replace('_',' ')}
             </span>
           ))}
         </div>
-        <p className="mb-5 text-sm text-gray-400 line-clamp-2 font-sans leading-relaxed">{product.descriptionShort}</p>
+        <p className="mb-5 text-sm text-gray-600 line-clamp-2 font-sans leading-relaxed">{product.descriptionShort}</p>
         
         {/* Benefits bullets */}
         {product.benefits?.length > 0 && (
-          <ul className="mb-5 grid grid-cols-1 gap-1 text-[11px] text-gray-300 font-sans font-medium">
+          <ul className="mb-5 grid grid-cols-1 gap-1 text-[11px] text-gray-800 font-sans font-medium">
             {product.benefits.slice(0, 3).map((b,i) => (
               <li key={i} className="flex items-center gap-2">
-                <div className="w-1 h-1 bg-primary rounded-full"></div>
+                <div className="w-1 h-1 bg-green-500 rounded-full"></div>
                 {b}
               </li>
             ))}

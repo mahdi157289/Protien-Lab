@@ -22,7 +22,7 @@ const productSchema = new mongoose.Schema({
     images: {
         type: [String],
         required: true,
-        validate: [arr => arr.length >= 2 && arr.length <= 6, 'Between 2 and 6 images are required']
+        validate: [arr => arr.length >= 1 && arr.length <= 25, 'Between 1 and 25 images are required']
     },
     categories: {
         type: [String],
@@ -55,7 +55,7 @@ const productSchema = new mongoose.Schema({
         type: [String],
         default: []
     },
-    isNew: {
+    isNewProduct: {
         type: Boolean,
         default: false
     },

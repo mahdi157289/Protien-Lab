@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const SmokeyContext = createContext();
 
 export const SmokeyProvider = ({ children }) => {
-  const [smokeyOn, setSmokeyOn] = useState(false);
+  const [smokeyOn, setSmokeyOn] = useState(true);
 
   useEffect(() => {
     const apply = () => {
@@ -55,6 +55,11 @@ export const useSmokey = () => {
 };
 
 export default SmokeyContext;
+
+
+
+
+
 
 
 

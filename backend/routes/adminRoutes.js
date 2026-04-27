@@ -9,7 +9,6 @@ const upload = require('../config/uploadProduct');
 const adminAuth = require('../middlewares/adminAuth');
 const adminUserController = require('../controllers/adminUserController');
 const { getAllFeedbacks } = require('../controllers/adminFeedbackController');
-const exerciseController = require('../controllers/adminExerciseController');
 const photoController = require('../controllers/adminPhotoController');
 const photoUpload = require('../config/photoUpload');
 
@@ -54,13 +53,6 @@ router.get('/users/search', adminAuth, adminUserController.searchUsers);
 // Feedback routes
 router.get('/feedback', adminAuth, getAllFeedbacks);
 
-// Exercise routes
-router.post('/exercises', adminAuth, ...exerciseController.createExercise);
-router.get('/exercises', exerciseController.getAllExercises);
-router.get('/exercises/category/:category', exerciseController.getExercisesByCategory);
-router.put('/exercises/:id', adminAuth, ...exerciseController.updateExercise);
-router.delete('/exercises/:id', adminAuth, exerciseController.deleteExercise);
-
 // Photo routes
 router.get('/photos/test', adminAuth, (req, res) => {
     console.log('🧪 Photo test endpoint hit');
@@ -70,7 +62,7 @@ router.post('/photos', adminAuth, photoUpload.array('photos', 10), photoControll
 router.get('/photos', adminAuth, photoController.getAllPhotos);
 router.get('/photos/stats', adminAuth, photoController.getPhotoStats);
 router.get('/photos/:id', adminAuth, photoController.getPhotoById);
-router.put('/photos/:id', adminAuth, photoController.updatePhoto);
+router.put('/photos/:id', adminAuth, photoUpload.array('photos', 10), photoController.updatePhoto);
 router.delete('/photos/:id', adminAuth, photoController.deletePhoto);
 
 module.exports = router;

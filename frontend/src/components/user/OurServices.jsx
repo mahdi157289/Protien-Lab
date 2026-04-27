@@ -1,8 +1,5 @@
-import workoutImage from "../../assets/images/home/workout.png";
-import dietImage from "../../assets/images/home/diet.png";
 import supplementImage from "../../assets/images/home/Supplement.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDumbbell, faUtensils, faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SectionDivider from "../common/SectionDivider";
@@ -13,18 +10,10 @@ const OurServices = () => {
 
   const services = [
     {
-      title: t("workout_plans_title"),
-      description: t("workout_plans_desc"),
-      buttonText: t("workout_plans_btn"),
-      icon: <FontAwesomeIcon icon={faDumbbell} />,
-      image: workoutImage,
-      path: "/workouts",
-    },
-    {
       title: t("supplement_store_title"),
       description: t("supplement_store_desc"),
       buttonText: t("supplement_store_btn"),
-      icon: <FontAwesomeIcon icon={faShoppingCart} />,
+      icon: <ShoppingCart />,
       image: supplementImage,
       path: "/store",
     }
@@ -38,7 +27,7 @@ const OurServices = () => {
       </h1>
       <SectionDivider />
 
-      <div className="grid grid-cols-1 gap-6 mx-auto md:grid-cols-2 max-w-4xl justify-items-center">
+      <div className="flex justify-center items-center gap-6 mx-auto max-w-4xl">
         {services.map((service, index) => (
           <div key={index} className="flex flex-col items-center p-2 pb-6 text-center rounded-2xl bg-dark w-full max-w-sm">
             <div className="w-full mb-6 overflow-hidden rounded-lg aspect-video">

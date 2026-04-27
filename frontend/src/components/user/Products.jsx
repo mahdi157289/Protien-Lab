@@ -1,9 +1,12 @@
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import SectionDivider from "../common/SectionDivider";
+import { SkeletonBrandCard } from "../common/Skeletons";
+import { getCachedData } from "../../utils/apiCache";
+import { resolveImageUrl } from "../../lib/image";
 
 // Brand images are now fetched from admin-uploaded photos (category: "Nos Marque")
 // No static fallback images - only admin-uploaded brands are displayed
@@ -13,9 +16,22 @@ const Products = () => {
   const navigate = useNavigate();
   const [brandImages, setBrandImages] = useState([]); // Start with empty array, not fallback
   const [loading, setLoading] = useState(true);
+  const containerRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const currentXRef = useRef(0);
+  const x = useMotionValue(0);
+
+  useEffect(() => {
+    const unsub = x.on('change', (v) => {
+      currentXRef.current = v;
+    });
+    return () => {
+      if (typeof unsub === 'function') unsub();
+    };
+  }, [x]);
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-  
+
   // For API calls, use the proxy (no base URL needed in dev)
   const getApiUrl = (endpoint) => {
     // In development, Vite proxy handles /api requests
@@ -28,26 +44,28 @@ const Products = () => {
     return fullUrl;
   };
 
-  // Get photo URL - always use full backend URL for images
   const getPhotoUrl = (photoUrl) => {
-    // Remove /api from API_BASE_URL for static file serving
-    const baseUrl = API_BASE_URL.replace('/api', '');
-    return `${baseUrl}${photoUrl}`;
+    return resolveImageUrl(photoUrl);
   };
 
-  // Fetch "Nos Marque" photos from admin
-  const fetchBrandPhotos = async () => {
+  // Fetch "Nos Marque" photos from admin (with caching to prevent duplicate calls)
+  const fetchBrandPhotos = async (isRetry = false) => {
     const url = getApiUrl(`/photos/category/${encodeURIComponent('Nos Marque')}`);
     console.log('🔍 Fetching brand photos from:', url);
-    
+
     try {
-      const response = await axios.get(url);
+      // Use cache to prevent duplicate calls if Navbar is also fetching
+      const response = await getCachedData(
+        url,
+        () => axios.get(url),
+        10000 // Shorter cache TTL (10s) to avoid long empty caching
+      );
       console.log('✅ API Response:', response.data);
-      
+
       if (response.data && response.data.success && response.data.data && Array.isArray(response.data.data)) {
         console.log('📦 Raw API data:', response.data.data);
         console.log('📦 Total photos received:', response.data.data.length);
-        
+
         // Log each photo to see what we have
         response.data.data.forEach((photo, idx) => {
           console.log(`Photo ${idx + 1}:`, {
@@ -59,7 +77,7 @@ const Products = () => {
             hasOfferData: !!photo.offerData
           });
         });
-        
+
         // Filter photos - accept all "Nos Marque" category photos (very permissive for debugging)
         const validBrandPhotos = response.data.data.filter(photo => {
           // First check: is it the right category?
@@ -67,37 +85,37 @@ const Products = () => {
             console.log(`❌ Photo ${photo._id} filtered: wrong category (${photo.category})`);
             return false;
           }
-          
+
           // Check if it has brandName
           if (!photo.brandName) {
             console.log(`⚠️ Photo ${photo._id} has no brandName but keeping it for now`);
             // Keep it anyway for debugging - we'll use filename as fallback
           }
-          
+
           // Check if active
           if (photo.isActive === false) {
             console.log(`❌ Photo ${photo._id} filtered: not active`);
             return false;
           }
-          
+
           console.log(`✅ Photo ${photo._id} passed filter:`, {
             category: photo.category,
             brandName: photo.brandName || 'MISSING',
             isActive: photo.isActive
           });
-          
+
           return true; // Accept all "Nos Marque" photos that are not explicitly inactive
         });
-        
+
         console.log('📸 Valid brand photos after filtering:', validBrandPhotos.length);
-        
+
         if (validBrandPhotos.length > 0) {
           // Convert admin photos to brand format
           const adminBrands = validBrandPhotos.map((photo) => {
             const fullUrl = getPhotoUrl(photo.url);
             const displayName = photo.brandName || photo.filename || 'Brand';
             console.log('🖼️ Brand photo:', displayName, '-> URL:', fullUrl);
-            
+
             return {
               src: fullUrl,
               alt: displayName,
@@ -105,21 +123,31 @@ const Products = () => {
               brandName: photo.brandName || displayName
             };
           });
-          
+
           console.log('✅ Setting brand images:', adminBrands.length);
           setBrandImages(adminBrands);
         } else {
           console.warn('⚠️ No valid brand photos found after filtering');
           console.warn('💡 Make sure photos have: category="Nos Marque", brandName exists, and isActive=true');
+          // Retry once if first attempt returned empty
+          if (!isRetry) {
+            setTimeout(() => fetchBrandPhotos(true), 1200);
+          }
           setBrandImages([]); // Keep empty instead of fallback
         }
       } else {
         console.warn('⚠️ Invalid API response structure:', response.data);
+        if (!isRetry) {
+          setTimeout(() => fetchBrandPhotos(true), 1200);
+        }
         setBrandImages([]); // Keep empty instead of fallback
       }
     } catch (error) {
       console.error('❌ Error fetching brand photos:', error);
       console.error('Error details:', error.response?.data || error.message);
+      if (!isRetry) {
+        setTimeout(() => fetchBrandPhotos(true), 1200);
+      }
       setBrandImages([]); // Keep empty instead of fallback
     } finally {
       setLoading(false);
@@ -128,7 +156,7 @@ const Products = () => {
 
   useEffect(() => {
     fetchBrandPhotos();
-    
+
     // Listen for photo updates
     let bc;
     try {
@@ -141,7 +169,7 @@ const Products = () => {
     } catch (error) {
       console.error('BroadcastChannel not supported:', error);
     }
-    
+
     return () => {
       if (bc) {
         bc.close();
@@ -149,15 +177,31 @@ const Products = () => {
     };
   }, []);
 
-  // Duplicate the array multiple times for seamless infinite scroll
-  // Only duplicate if we have brand images from admin
-  const duplicates = brandImages.length > 0 ? 4 : 0; // Create 4 sets for smooth endless effect
-  const images = brandImages.length > 0 
-    ? Array(duplicates).fill(brandImages).flat().map((brand, idx) => ({
-        ...brand,
-        uniqueKey: brand.id ? `${brand.id}-${idx}` : `brand-${idx}`
-      }))
-    : []; // Empty array if no brands
+  // Calculate dimensions
+  const CARD_WIDTH = 200;
+  const GAP = 48; // gap-12 = 48px
+  const SCROLL_DISTANCE = CARD_WIDTH + GAP;
+
+  // Create duplicated brands array for seamless infinite scroll
+  const duplicatedBrands = brandImages.length > 0
+    ? [...brandImages, ...brandImages].map((brand, idx) => ({
+      ...brand,
+      __k: `${brand.id || 'brand'}-${idx}`
+    }))
+    : [];
+
+  useAnimationFrame((t, delta) => {
+    if (!isHovered && brandImages.length > 0) {
+      const dist = brandImages.length * SCROLL_DISTANCE;
+      const speed = dist / 100;
+      const next = x.get() - speed * (delta / 1000);
+      if (next <= -dist) {
+        x.set(next + dist);
+      } else {
+        x.set(next);
+      }
+    }
+  });
 
   return (
     <div className="w-full px-4 py-12 overflow-hidden relative">
@@ -169,8 +213,12 @@ const Products = () => {
 
       {/* Smooth Horizontal Brand Scroll */}
       {loading ? (
-        <div className="flex items-center justify-center h-32">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        <div className="relative w-full overflow-hidden">
+          <div className="flex gap-12 animate-pulse">
+            {[...Array(8)].map((_, idx) => (
+              <SkeletonBrandCard key={`brand-skel-${idx}`} />
+            ))}
+          </div>
         </div>
       ) : brandImages.length === 0 ? (
         <div className="flex items-center justify-center h-32">
@@ -178,21 +226,32 @@ const Products = () => {
             {t('no_brands_available') || 'No brands available. Admin can add brands in Photo Management.'}
           </p>
         </div>
-      ) : (        <div className="relative w-full overflow-hidden">
+      ) : (
+        <div
+          className="relative w-full overflow-hidden"
+          ref={containerRef}
+          onMouseEnter={() => {
+            setIsHovered(true);
+          }}
+          onMouseLeave={() => {
+            setIsHovered(false);
+          }}
+        >
           <motion.div
             className="flex gap-12"
-            style={{ width: `${images.length * 220}px` }}
-            initial={{ x: 0 }}
-            animate={{ x: `-${brandImages.length * 220}px` }}
-            transition={{
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
+            style={{ width: `${duplicatedBrands.length * SCROLL_DISTANCE}px`, x }}
+            drag="x"
+            dragElastic={0.05}
+            dragMomentum={false}
+            onDragStart={() => {
+              setIsHovered(true);
+            }}
+            onDragEnd={() => {
             }}
           >
-            {images.map((brand, idx) => (
-              <div 
-                key={brand.uniqueKey} 
+            {duplicatedBrands.map((brand, idx) => (
+              <div
+                key={brand.__k || `brand-${idx}`}
                 onClick={() => {
                   if (brand.brandName) {
                     navigate(`/store?brand=${encodeURIComponent(brand.brandName)}`);
@@ -222,5 +281,3 @@ const Products = () => {
 };
 
 export default Products;
-
-

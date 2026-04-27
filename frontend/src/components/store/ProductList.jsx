@@ -128,6 +128,7 @@ function ProductList() {
   const [availableBrands, setAvailableBrands] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingBrands, setLoadingBrands] = useState(false);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const { t } = useTranslation();
 
   // Initialize filters
@@ -317,12 +318,28 @@ function ProductList() {
         
         <motion.button 
           whileHover={{ scale: 1.05 }} 
-          className="w-full sm:w-[420px] h-[60px] border-2 border-green-500 #40ee45 hover:bg-green-500 hover:text-white font-bold rounded-[50px] transition duration-200"
+          className="w-full sm:w-[420px] h-[60px] border-2 border-green-500 text-white hover:bg-green-500 hover:text-white font-bold rounded-[50px] transition duration-200"
           onClick={() => navigate('/store/orders')}
         >
           {t('product_orders')}
         </motion.button>
       </motion.div>
+
+      {/* Mobile Filter Toggle Button */}
+      <div className="flex items-center justify-between mb-4 lg:hidden">
+        <button
+          onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
+          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white text-gray-900 font-bold border border-gray-200 shadow-md hover:bg-gray-50 transition-all duration-200"
+        >
+          <SlidersHorizontal className="w-4 h-4 text-green-600" />
+          {isMobileFilterOpen ? 'Hide Filters' : 'Filters'}
+          {(filters.categories.length > 0 || filters.brands.length > 0 || filters.minPrice || filters.maxPrice || filters.bestSeller || filters.search) && (
+            <span className="ml-1 w-5 h-5 rounded-full bg-green-500 text-white text-xs flex items-center justify-center">
+              {[filters.categories.length > 0, filters.brands.length > 0, !!filters.minPrice, !!filters.maxPrice, filters.bestSeller, !!filters.search].filter(Boolean).length}
+            </span>
+          )}
+        </button>
+      </div>
 
       {/* Filter Section */}
       <motion.div
@@ -335,17 +352,17 @@ function ProductList() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="lg:col-span-3 h-max lg:sticky lg:top-24"
+          className={`lg:col-span-3 h-max lg:sticky lg:top-24 ${isMobileFilterOpen ? 'block' : 'hidden'} lg:block`}
         >
-          <div className="relative p-6 text-white rounded-2xl bg-secondary border border-primary/20 shadow-2xl overflow-hidden font-source-sans">
+          <div className="relative p-6 text-gray-900 rounded-2xl bg-white border border-black/5 shadow-xl overflow-hidden font-source-sans">
             <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-green-500/5 rounded-full blur-2xl"></div>
 
-            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-primary/20 relative z-10">
-              <div className="p-2 rounded-lg bg-primary/10 border border-primary/30">
-                <SlidersHorizontal className="w-5 h-5 text-primary" />
+            <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-100 relative z-10">
+              <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20">
+                <SlidersHorizontal className="w-5 h-5 text-green-600" />
               </div>
-              <h2 className="text-lg font-bold tracking-wide font-sans text-white">
+              <h2 className="text-lg font-bold tracking-wide font-sans text-gray-900">
                 {t('product_search')} & Filters
               </h2>
             </div>
@@ -361,9 +378,9 @@ function ProductList() {
                   placeholder={t('product_search')}
                   value={filters.search}
                   onChange={handleFilterChange}
-                  className="w-full px-4 py-3 pl-11 rounded-xl placeholder-accent/50 bg-dark text-white border border-primary/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                  className="w-full px-4 py-3 pl-11 rounded-xl placeholder-gray-300 bg-gray-50 text-gray-900 border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-300"
                 />
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-primary/60 group-focus-within:text-primary transition-colors duration-300 size-5 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-green-500 transition-colors duration-300 size-5 pointer-events-none" />
               </div>
             </div>
 
@@ -375,16 +392,16 @@ function ProductList() {
                 name="sort"
                 value={filters.sort}
                 onChange={handleFilterChange}
-                className="w-full px-4 py-3 rounded-xl bg-dark text-white border border-primary/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer"
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 text-gray-900 border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-300 cursor-pointer"
               >
-                <option value="name" className="bg-dark">{t('product_sort_name')}</option>
-                <option value="price" className="bg-dark">{t('product_sort_price')}</option>
+                <option value="name">{t('product_sort_name')}</option>
+                <option value="price">{t('product_sort_price')}</option>
               </select>
             </div>
 
-            <div className="mb-6 p-4 rounded-xl bg-dark border border-primary/10 relative z-10">
+            <div className="mb-6 p-4 rounded-xl bg-gray-50 border border-gray-100 relative z-10">
               <div className="flex items-center gap-2 mb-3">
-                <Sparkles className="w-4 h-4 text-primary" />
+                <Sparkles className="w-4 h-4 text-green-600" />
                 <div className="text-xs font-bold uppercase tracking-wider text-gray-400">Categories</div>
               </div>
               <select
@@ -396,20 +413,20 @@ function ProductList() {
                     categories: value ? [value] : [],
                   });
                 }}
-                className="w-full px-4 py-3 rounded-xl bg-dark text-white border border-primary/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer"
+                className="w-full px-4 py-3 rounded-xl bg-white text-gray-900 border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-300 cursor-pointer"
               >
-                <option value="" className="bg-dark">{t('product_all_categories') || 'All categories'}</option>
+                <option value="">{t('product_all_categories') || 'All categories'}</option>
                 {CATEGORY_OPTIONS.map((category) => (
-                  <option key={category} value={category} className="bg-dark">
+                  <option key={category} value={category}>
                     {category}
                   </option>
                 ))}
               </select>
             </div>
 
-            <div className="mb-6 p-4 rounded-xl bg-dark border border-primary/10 relative z-10">
+            <div className="mb-6 p-4 rounded-xl bg-gray-50 border border-gray-100 relative z-10">
               <div className="flex items-center gap-2 mb-3">
-                <Filter className="w-4 h-4 text-primary" />
+                <Filter className="w-4 h-4 text-green-600" />
                 <div className="text-xs font-bold uppercase tracking-wider text-gray-400">Brands</div>
               </div>
               {loadingBrands ? (
@@ -428,11 +445,11 @@ function ProductList() {
                       brands: value ? [value] : [],
                     });
                   }}
-                  className="w-full px-4 py-3 rounded-xl bg-dark text-white border border-primary/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer"
+                  className="w-full px-4 py-3 rounded-xl bg-white text-gray-900 border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-300 cursor-pointer"
                 >
-                  <option value="" className="bg-dark">{t('product_all_brands') || 'All brands'}</option>
+                  <option value="">{t('product_all_brands') || 'All brands'}</option>
                   {availableBrands.map((brand) => (
-                    <option key={brand} value={brand} className="bg-dark">
+                    <option key={brand} value={brand}>
                       {brand}
                     </option>
                   ))}
@@ -451,7 +468,7 @@ function ProductList() {
                   placeholder={t('product_min_price')}
                   value={filters.minPrice}
                   onChange={handleFilterChange}
-                  className="w-full px-4 py-3 rounded-xl placeholder-accent/50 bg-dark text-white border border-primary/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                  className="w-full px-4 py-3 rounded-xl placeholder-gray-300 bg-gray-50 text-gray-900 border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-300"
                 />
                 <input
                   type="number"
@@ -459,12 +476,12 @@ function ProductList() {
                   placeholder={t('product_max_price')}
                   value={filters.maxPrice}
                   onChange={handleFilterChange}
-                  className="w-full px-4 py-3 rounded-xl placeholder-accent/50 bg-dark text-white border border-primary/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                  className="w-full px-4 py-3 rounded-xl placeholder-gray-300 bg-gray-50 text-gray-900 border border-gray-200 focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-300"
                 />
               </div>
             </div>
 
-            <div className="mb-6 p-4 rounded-xl bg-dark border border-primary/20 relative z-10">
+            <div className="mb-6 p-4 rounded-xl bg-gray-50 border border-gray-200 relative z-10">
               <label className="group flex items-center gap-3 cursor-pointer">
                 <div className="relative">
                   <input
@@ -473,15 +490,15 @@ function ProductList() {
                     onChange={(e) => setFilters({ ...filters, bestSeller: e.target.checked })}
                     className="sr-only peer"
                   />
-                  <div className={`w-5 h-5 rounded border-2 transition-all duration-200 relative overflow-hidden ${filters.bestSeller ? 'border-primary bg-primary' : 'border-primary/40 group-hover:border-primary/70'}`}>
+                  <div className={`w-5 h-5 rounded border-2 transition-all duration-200 relative overflow-hidden ${filters.bestSeller ? 'border-green-500 bg-green-500' : 'border-gray-300 group-hover:border-green-400'}`}>
                     {filters.bestSeller && (
-                      <div className="absolute inset-0 bg-primary flex items-center justify-center">
-                        <div className="w-2.5 h-2.5 bg-dark rounded-full"></div>
+                      <div className="absolute inset-0 bg-green-500 flex items-center justify-center">
+                        <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
                       </div>
                     )}
                   </div>
                 </div>
-                <span className={`text-sm font-semibold transition-colors duration-200 ${filters.bestSeller ? 'text-primary' : 'text-gray-400 group-hover:text-primary'}`}>
+                <span className={`text-sm font-semibold transition-colors duration-200 ${filters.bestSeller ? 'text-green-600' : 'text-gray-400 group-hover:text-green-500'}`}>
                   Best Seller Only
                 </span>
               </label>
@@ -490,14 +507,14 @@ function ProductList() {
             <div className="flex gap-3 relative z-10">
               <button
                 onClick={() => applyFilters(products)}
-                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-primary to-green-600 text-dark font-bold hover:from-green-600 hover:to-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 shadow-lg hover:shadow-primary/30 transform hover:scale-[1.02] font-sans"
+                className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-green-600 text-white font-bold hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500/50 transition-all duration-300 shadow-lg hover:shadow-green-500/30 transform hover:scale-[1.02] font-sans"
               >
                 <Filter className="w-4 h-4" />
                 {t('product_apply_filters')}
               </button>
               <button
                 onClick={resetFilters}
-                className="px-4 py-3 rounded-xl border-2 border-accent/30 text-accent/70 hover:text-accent hover:border-primary/50 hover:bg-primary/10 focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                className="px-4 py-3 rounded-xl border-2 border-gray-200 text-gray-400 hover:text-gray-600 hover:border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200 transition-all duration-300"
                 aria-label="Reset filters"
               >
                 <X className="w-4 h-4" />

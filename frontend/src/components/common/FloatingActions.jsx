@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { LiaLanguageSolid } from "react-icons/lia";
-import { FiShoppingBag, FiWind } from "react-icons/fi";
+import { Languages, ShoppingBag, Wind } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useSmokey } from '../../contexts/SmokeyContext';
@@ -37,7 +36,7 @@ function FloatingActions() {
           title={i18n.language === 'en' ? 'Français' : 'English'}
           aria-label="Toggle language"
         >
-          <LiaLanguageSolid className="text-xl md:text-2xl" />
+          <Languages className="text-xl md:text-2xl" />
         </button>
         {/* Hover label */}
         <div
@@ -64,7 +63,7 @@ function FloatingActions() {
           title="Store"
           aria-label="Go to store"
         >
-          <FiShoppingBag className="text-xl md:text-2xl" />
+          <ShoppingBag className="text-xl md:text-2xl" />
         </button>
         <div
           className={`absolute right-full mr-3 top-1/2 -translate-y-1/2 flex items-center overflow-hidden transition-all duration-300 ease-in-out
@@ -88,7 +87,7 @@ function FloatingActions() {
           title="Background"
           aria-label="Toggle background"
         >
-          <FiWind className="text-xl md:text-2xl" />
+          <Wind className="text-xl md:text-2xl" />
         </button>
         <div
           className={`absolute right-full mr-3 top-1/2 -translate-y-1/2 flex items-center overflow-hidden transition-all duration-300 ease-in-out ${bgHovered ? 'opacity-100 max-w-[160px]' : 'opacity-0 max-w-0 pointer-events-none'}`}

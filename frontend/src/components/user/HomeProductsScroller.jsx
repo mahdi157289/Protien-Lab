@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import api from '../../config/api';
 import { resolveImageUrl } from '../../lib/image';
 
 const HomeProductsScroller = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [scrollIndex, setScrollIndex] = useState(0);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     let mounted = true;
@@ -25,8 +28,23 @@ const HomeProductsScroller = () => {
     return () => { mounted = false; };
   }, []);
 
-  // Duplicate for seamless scroll
-  const items = [...products, ...products].map((p, idx) => ({ ...p, __k: `${p._id || 'p'}-${idx}` }));
+  // Calculate dimensions
+  const CARD_WIDTH = 240;
+  const GAP = 24; // gap-6 = 24px
+  const SCROLL_DISTANCE = CARD_WIDTH + GAP;
+  const maxScrollIndex = products.length > 0 ? Math.max(0, products.length - 1) : 0;
+
+  // Handle scroll navigation
+  const handleScrollLeft = () => {
+    setScrollIndex((prev) => Math.max(0, prev - 1));
+  };
+
+  const handleScrollRight = () => {
+    setScrollIndex((prev) => Math.min(maxScrollIndex, prev + 1));
+  };
+
+  // Calculate scroll position
+  const scrollX = -scrollIndex * SCROLL_DISTANCE;
 
   const toImg = (p) => {
     const imgs = Array.isArray(p.images) ? p.images : (p.image ? [p.image] : []);
@@ -50,16 +68,40 @@ const HomeProductsScroller = () => {
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
         </div>
       ) : (
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden" ref={containerRef}>
+          {/* Left Arrow */}
+          {scrollIndex > 0 && (
+            <button
+              onClick={handleScrollLeft}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-dark/80 hover:bg-dark text-accent flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft size={24} />
+            </button>
+          )}
+
+          {/* Right Arrow */}
+          {scrollIndex < maxScrollIndex && (
+            <button
+              onClick={handleScrollRight}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-dark/80 hover:bg-dark text-accent flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
+              aria-label="Scroll right"
+            >
+              <ChevronRight size={24} />
+            </button>
+          )}
+
           <motion.div
             className="flex gap-6"
-            style={{ width: `${items.length * 260}px` }}
-            initial={{ x: 0 }}
-            animate={{ x: `-${(products.length) * 260}px` }}
-            transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}
+            style={{ width: `${products.length * SCROLL_DISTANCE}px` }}
+            animate={{ x: scrollX }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
           >
-            {items.map((p) => (
-              <NavLink key={p.__k} to="/store" className="min-w-[240px]">
+            {products.map((p, idx) => (
+              <NavLink key={p._id || `product-${idx}`} to="/store" className="min-w-[240px]">
                 <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-xl overflow-hidden shadow hover:shadow-lg transition">
                   <div className="h-40 bg-white flex items-center justify-center">
                     <img src={toImg(p)} alt={p.name} className="object-contain max-h-36 w-full" onError={(e)=>{e.currentTarget.src='https://via.placeholder.com/240x180/ededed/222?text=No+Image';}} />

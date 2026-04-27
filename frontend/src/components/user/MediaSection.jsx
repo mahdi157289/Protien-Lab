@@ -5,6 +5,7 @@ const MediaSection = () => {
   const [mediaSlots, setMediaSlots] = useState({ 1: [], 2: [] });
   const [loading, setLoading] = useState(true);
   const [activeSlides, setActiveSlides] = useState({ 1: 0, 2: 0 });
+  const [slotEffects, setSlotEffects] = useState({ 1: 'fade', 2: 'fade' });
   const slideIntervalRef = useRef(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -23,6 +24,8 @@ const MediaSection = () => {
 
   // Get photo URL - always use full backend URL for images
   const getPhotoUrl = (photoUrl) => {
+    if (!photoUrl) return '';
+    if (photoUrl.startsWith('http')) return photoUrl;
     // Remove /api from API_BASE_URL for static file serving
     const baseUrl = API_BASE_URL.replace('/api', '');
     return `${baseUrl}${photoUrl}`;
@@ -37,6 +40,7 @@ const MediaSection = () => {
       
       if (response.data && response.data.success && Array.isArray(response.data.data)) {
         const slots = { 1: [], 2: [] };
+        const effects = { 1: 'fade', 2: 'fade' };
 
         response.data.data
           .filter(photo => photo.isActive !== false && [1, 2].includes(Number(photo.mediaSlot)))
@@ -60,11 +64,15 @@ const MediaSection = () => {
             }
 
             if (normalizedSlides.length > 0) {
+              const validEffects = ['fade', 'blur', 'fadeOut'];
+              const effect = validEffects.includes(photo.transitionEffect) ? photo.transitionEffect : 'fade';
               slots[slotNumber] = normalizedSlides.slice(0, 2);
+              effects[slotNumber] = effect;
             }
           });
 
         setMediaSlots(slots);
+        setSlotEffects(effects);
         setActiveSlides({
           1: slots[1].length ? 0 : 0,
           2: slots[2].length ? 0 : 0
@@ -123,7 +131,7 @@ const MediaSection = () => {
         1: mediaSlots[1].length > 1 ? (prev[1] + 1) % mediaSlots[1].length : prev[1],
         2: mediaSlots[2].length > 1 ? (prev[2] + 1) % mediaSlots[2].length : prev[2],
       }));
-    }, 4000);
+    }, 2000);
 
     return () => {
       if (slideIntervalRef.current) {
@@ -151,6 +159,18 @@ const MediaSection = () => {
   const renderSlot = (slotNumber) => {
     const slides = mediaSlots[slotNumber] || [];
     if (!slides.length) return null;
+    const effect = slotEffects[slotNumber] || 'fade';
+
+    let visibleClass = 'opacity-100 scale-100';
+    let hiddenClass = 'opacity-0 scale-110';
+
+    if (effect === 'blur') {
+      visibleClass = 'opacity-100 scale-100 blur-0';
+      hiddenClass = 'opacity-0 scale-100 blur-md';
+    } else if (effect === 'fadeOut') {
+      visibleClass = 'opacity-100 scale-100';
+      hiddenClass = 'opacity-0 scale-90';
+    }
 
     return (
       <div
@@ -162,8 +182,8 @@ const MediaSection = () => {
             key={slide.id || `${slotNumber}-${index}`}
             src={slide.url}
             alt={slide.filename || `Media ${slotNumber}-${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out ${
-              index === activeSlides[slotNumber] ? 'opacity-100 scale-100' : 'opacity-0 scale-110'
+            className={`absolute inset-0 w-full h-full object-contain transition-all duration-700 ease-in-out ${
+              index === activeSlides[slotNumber] ? visibleClass : hiddenClass
             } group-hover:scale-105`}
             onError={(e) => {
               console.error('Failed to load media image:', slide.url);
@@ -198,4 +218,3 @@ const MediaSection = () => {
 };
 
 export default MediaSection;
-

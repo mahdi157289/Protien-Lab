@@ -7,6 +7,8 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import OfferForm from './OfferForm';
 import { resolveImageUrl } from '../../lib/image';
+import { useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getApiUrl } from '../../utils/apiUrl';
 
 const Modal = ({ isOpen, onClose, title, children, onConfirm, confirmLabel, cancelLabel }) => {
@@ -14,14 +16,14 @@ const Modal = ({ isOpen, onClose, title, children, onConfirm, confirmLabel, canc
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-black bg-opacity-80 overflow-y-auto">
-      <div className="relative w-full max-w-4xl p-6 my-8 rounded-lg bg-dark text-accent">
+      <div className="relative w-full max-w-4xl p-6 my-8 rounded-lg bg-white text-black">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-accent hover:bg-green-600"
+          className="absolute top-4 right-4 text-black hover:bg-gray-200 rounded-full p-1"
         >
           <X />
         </button>
-        <h2 className="mb-4 text-xl font-bold font-orbitron">{title}</h2>
+        <h2 className="mb-4 text-xl font-bold font-orbitron text-black">{title}</h2>
         {children}
         {onConfirm && (
           <div className="flex justify-between mt-4">
@@ -79,7 +81,7 @@ const AdminProductManagement = () => {
     flavors: [],
     weights: [],
     benefits: [],
-    isNew: false,
+    isNewProduct: false,
     fastDelivery: false,
     limitedStockNotice: '',
     brand: ''
@@ -247,7 +249,7 @@ const AdminProductManagement = () => {
       setProducts([...products, response.data]);
       setFilteredProducts([...filteredProducts, response.data]);
       setIsAddModalOpen(false);
-      setNewProduct({ name:'', descriptionShort:'', descriptionFull:'', price:'', stock:'', images:[], categories:[], isBestSeller:false, flavorsInput:'', sizesInput:'', benefitsInput:'', flavors:[], weights:[], benefits:[], isNew:false, fastDelivery:false, limitedStockNotice:'', brand:'' });
+      setNewProduct({ name:'', descriptionShort:'', descriptionFull:'', price:'', stock:'', images:[], categories:[], isBestSeller:false, flavorsInput:'', sizesInput:'', benefitsInput:'', flavors:[], weights:[], benefits:[], isNewProduct:false, fastDelivery:false, limitedStockNotice:'', brand:'' });
     } catch (error) {
       console.error('Failed to add product', error);
       console.error('Error response:', error.response?.data);
@@ -256,6 +258,50 @@ const AdminProductManagement = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const AdminProductImage = ({ product }) => {
+    const imagesArr = useMemo(() => {
+      const arr = Array.isArray(product.images) ? product.images : [];
+      if (arr.length === 0 && product.image) return [product.image];
+      return arr;
+    }, [product.images, product.image]);
+    const [idx, setIdx] = useState(0);
+    useEffect(() => {
+      if (imagesArr.length > 1) {
+        const id = setInterval(() => {
+          setIdx((i) => (i + 1) % imagesArr.length);
+        }, 2000);
+        return () => clearInterval(id);
+      }
+      setIdx(0);
+    }, [imagesArr.length]);
+    const src = resolveImageUrl(imagesArr[idx]) || 'https://via.placeholder.com/240x180/272727/40ee45?text=No+Image';
+    return (
+      <div className="relative h-80 w-full overflow-hidden">
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={imagesArr[idx] || 'placeholder'}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="object-contain h-80 w-full bg-black rounded"
+            src={src}
+            alt={product.name}
+            onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src='https://via.placeholder.com/240x180/272727/40ee45?text=No+Image';}}
+          />
+        </AnimatePresence>
+      </div>
+    );
+  };
+
+  AdminProductImage.propTypes = {
+    product: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      images: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object])),
+      image: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+    }).isRequired
   };
 
   const handleEditProduct = async (e) => {
@@ -394,7 +440,7 @@ const AdminProductManagement = () => {
   }
 
   return (
-    <div className="p-6 text-black font-source-sans">
+    <div className="p-6 text-black font-sans">
       <div className="w-full mx-auto max-w-7xl">
         <div className="flex flex-col items-center justify-between mb-6 sm:flex-row">
           <h1 className="mb-4 text-3xl font-bold sm:mb-0 text-black font-orbitron">{t('admin_products_management_title')}</h1>
@@ -424,7 +470,7 @@ const AdminProductManagement = () => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           {/* Sidebar */}
           <aside className="lg:col-span-3 h-max sticky top-24">
-            <div className="p-6 rounded-2xl bg-gradient-to-br from-dark via-dark to-dark/95 backdrop-blur-xl shadow-2xl border border-primary/20 relative overflow-hidden">
+            <div className="p-6 rounded-2xl bg-white shadow-2xl border border-primary/20 relative overflow-hidden font-source-sans">
               {/* Decorative glow effect */}
               <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl"></div>
@@ -434,16 +480,14 @@ const AdminProductManagement = () => {
                 <div className="p-2 rounded-lg bg-primary/10 border border-primary/30">
                   <SlidersHorizontal className="w-5 h-5 text-primary" />
                 </div>
-                <h2 className="text-lg font-bold tracking-wide" style={{ fontFamily: "'Orbitron', sans-serif" }}>
-                  <span className="bg-gradient-to-r from-accent via-white to-accent bg-clip-text text-transparent">
-                    {t('admin_products_search_products')} & Filters
-                  </span>
+                <h2 className="text-lg font-bold tracking-wide font-sans text-black">
+                  {t('admin_products_search_products')} & Filters
                 </h2>
               </div>
 
               {/* Search */}
               <div className="mb-6 relative z-10">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-black mb-2">
                   {t('admin_products_search_products')}
                 </label>
                 <div className="relative group">
@@ -453,7 +497,7 @@ const AdminProductManagement = () => {
                     placeholder={t('admin_products_search_products')}
                     value={filters.search}
                     onChange={handleFilterChange}
-                    className="w-full px-4 py-3 pl-11 rounded-xl placeholder-accent/50 bg-secondary/50 backdrop-blur-sm text-accent border border-accent/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                    className="w-full px-4 py-3 pl-11 rounded-xl placeholder-accent/50 bg-white text-black border border-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
                   />
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-primary/60 group-focus-within:text-primary transition-colors duration-300 size-5 pointer-events-none" />
                 </div>
@@ -461,14 +505,14 @@ const AdminProductManagement = () => {
 
               {/* Sort */}
               <div className="mb-6 relative z-10">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-black mb-2">
                   {t('admin_products_sort')}
                 </label>
                 <select
                   name="sort"
                   value={filters.sort}
                   onChange={handleFilterChange}
-                  className="w-full px-4 py-3 rounded-xl bg-secondary/50 backdrop-blur-sm text-accent border border-accent/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer"
+                  className="w-full px-4 py-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer"
                 >
                   <option value="name">{t('admin_products_sort_name')}</option>
                   <option value="price">{t('admin_products_sort_price')}</option>
@@ -476,12 +520,23 @@ const AdminProductManagement = () => {
               </div>
 
               {/* Categories */}
-              <div className="mb-6 p-4 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/5 backdrop-blur-sm border border-primary/10 relative z-10">
+              <div className="mb-6 p-4 rounded-xl bg-white border border-primary/10 relative z-10">
                 <div className="flex items-center gap-2 mb-3">
-                  <Sparkles className="w-4 h-4 text-green-400" />
-                  <div className="text-xs font-bold uppercase tracking-wider text-green-400">Categories</div>
+                  <Sparkles className="w-4 h-4 text-green-600" />
+                  <div className="text-xs font-bold uppercase tracking-wider text-black">Categories</div>
                 </div>
-                <div className="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                <select
+                  value={filters.categories[0] || ''}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setFilters({
+                      ...filters,
+                      categories: value ? [value] : [],
+                    });
+                  }}
+                  className="w-full px-4 py-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer"
+                >
+                  <option value="">{t('admin_products_all_categories') || 'All categories'}</option>
                   {[
                     'Whey',
                     'Mass Gainer',
@@ -499,77 +554,48 @@ const AdminProductManagement = () => {
                     'Shakers',
                     'Accesoires',
                   ].map((c)=> (
-                    <label key={c} className="group flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-primary/10 transition-all duration-200">
-                      <div className="relative">
-                        <input
-                          type="checkbox"
-                          checked={filters.categories.includes(c)}
-                          onChange={(e)=>{
-                            const next = e.target.checked ? [...filters.categories, c] : filters.categories.filter(x=>x!==c);
-                            setFilters({ ...filters, categories: next });
-                          }}
-                          className="sr-only peer"
-                        />
-                        <div className="w-4 h-4 rounded border-2 border-primary/40 peer-checked:border-primary peer-checked:bg-primary transition-all duration-200 relative overflow-hidden group-hover:border-primary/70">
-                          {filters.categories.includes(c) && (
-                            <div className="absolute inset-0 bg-primary flex items-center justify-center">
-                              <div className="w-2 h-2 bg-dark rounded-full"></div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <span className={`text-xs transition-colors duration-200 ${filters.categories.includes(c) ? 'text-green-400 font-semibold' : 'text-green-300 group-hover:text-green-400'}`}>
-                        {c}
-                      </span>
-                    </label>
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
                   ))}
-                </div>
+                </select>
               </div>
 
               {/* Brands */}
-              <div className="mb-6 p-4 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/5 backdrop-blur-sm border border-primary/10 relative z-10">
+              <div className="mb-6 p-4 rounded-xl bg-white border border-primary/10 relative z-10">
                 <div className="flex items-center gap-2 mb-3">
-                  <Filter className="w-4 h-4 text-green-400" />
-                  <div className="text-xs font-bold uppercase tracking-wider text-green-400">Brands</div>
+                  <Filter className="w-4 h-4 text-green-600" />
+                  <div className="text-xs font-bold uppercase tracking-wider text-black">Brands</div>
                 </div>
                 {loadingBrands ? (
-                  <div className="text-xs text-green-300/70 italic py-2">Loading brands...</div>
+                  <div className="text-xs text-gray-500 italic py-2">Loading brands...</div>
                 ) : availableBrands.length === 0 ? (
-                  <div className="text-xs text-green-300/70 italic py-2">No brands available</div>
+                  <div className="text-xs text-gray-500 italic py-2">No brands available</div>
                 ) : (
-                  <div className="grid grid-cols-1 gap-2 max-h-40 overflow-y-auto pr-2 custom-scrollbar">
+                  <select
+                    value={filters.brands[0] || ''}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setFilters({
+                        ...filters,
+                        brands: value ? [value] : [],
+                      });
+                    }}
+                    className="w-full px-4 py-3 rounded-xl bg-white text-black border border-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300 cursor-pointer"
+                  >
+                    <option value="">{t('admin_products_all_brands') || 'All brands'}</option>
                     {availableBrands.map((brand)=> (
-                      <label key={brand} className="group flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-primary/10 transition-all duration-200">
-                        <div className="relative">
-                          <input
-                            type="checkbox"
-                            checked={filters.brands.includes(brand)}
-                            onChange={(e)=>{
-                              const next = e.target.checked ? [...filters.brands, brand] : filters.brands.filter(x=>x!==brand);
-                              setFilters({ ...filters, brands: next });
-                            }}
-                            className="sr-only peer"
-                          />
-                          <div className="w-4 h-4 rounded border-2 border-primary/40 peer-checked:border-primary peer-checked:bg-primary transition-all duration-200 relative overflow-hidden group-hover:border-primary/70">
-                            {filters.brands.includes(brand) && (
-                              <div className="absolute inset-0 bg-primary flex items-center justify-center">
-                                <div className="w-2 h-2 bg-dark rounded-full"></div>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <span className={`text-xs transition-colors duration-200 ${filters.brands.includes(brand) ? 'text-green-400 font-semibold' : 'text-green-300 group-hover:text-green-400'}`}>
-                          {brand}
-                        </span>
-                      </label>
+                      <option key={brand} value={brand}>
+                        {brand}
+                      </option>
                     ))}
-                  </div>
+                  </select>
                 )}
               </div>
 
               {/* Price Range */}
               <div className="mb-6 relative z-10">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+                <label className="block text-xs font-semibold uppercase tracking-wider text-black mb-2">
                   Price Range
                 </label>
                 <div className="grid grid-cols-2 gap-3">
@@ -579,7 +605,7 @@ const AdminProductManagement = () => {
                     placeholder={t('admin_products_min_price')}
                     value={filters.minPrice}
                     onChange={handleFilterChange}
-                    className="w-full px-4 py-3 rounded-xl placeholder-accent/50 bg-secondary/50 backdrop-blur-sm text-accent border border-accent/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                    className="w-full px-4 py-3 rounded-xl placeholder-accent/50 bg-white text-black border border-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
                   />
                   <input
                     type="number"
@@ -587,13 +613,13 @@ const AdminProductManagement = () => {
                     placeholder={t('admin_products_max_price')}
                     value={filters.maxPrice}
                     onChange={handleFilterChange}
-                    className="w-full px-4 py-3 rounded-xl placeholder-accent/50 bg-secondary/50 backdrop-blur-sm text-accent border border-accent/20 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+                    className="w-full px-4 py-3 rounded-xl placeholder-accent/50 bg-white text-black border border-gray-300 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
                   />
                 </div>
               </div>
 
               {/* Best Seller */}
-              <div className="mb-6 p-4 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 backdrop-blur-sm border border-primary/20 relative z-10">
+              <div className="mb-6 p-4 rounded-xl bg-white border border-primary/20 relative z-10">
                 <label className="group flex items-center gap-3 cursor-pointer">
                   <div className="relative">
                     <input
@@ -610,7 +636,7 @@ const AdminProductManagement = () => {
                       )}
                     </div>
                   </div>
-                  <span className={`text-sm font-semibold transition-colors duration-200 ${filters.bestSeller ? 'text-green-400' : 'text-green-300 group-hover:text-green-400'}`}>
+                  <span className={`text-sm font-semibold transition-colors duration-200 ${filters.bestSeller ? 'text-green-600' : 'text-gray-700 group-hover:text-green-600'}`}>
                     Best Seller Only
                   </span>
                 </label>
@@ -620,8 +646,7 @@ const AdminProductManagement = () => {
               <div className="flex gap-3 relative z-10">
                 <button
                   onClick={applyFilters}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-primary to-green-600 text-dark font-bold hover:from-green-600 hover:to-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 shadow-lg hover:shadow-primary/30 transform hover:scale-[1.02]"
-                  style={{ fontFamily: "'Orbitron', sans-serif" }}
+                  className="flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-gradient-to-r from-primary to-green-600 text-dark font-bold hover:from-green-600 hover:to-primary focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all duration-300 shadow-lg hover:shadow-primary/30 transform hover:scale-[1.02] font-sans"
                 >
                   <Filter className="w-4 h-4" />
                   {t('admin_products_search')}
@@ -648,34 +673,24 @@ const AdminProductManagement = () => {
           </aside>
 
           {/* Products grid */}
-          <div className="lg:col-span-9 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+          <div className="lg:col-span-9 grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 justify-items-center">
           {filteredProducts.map(product => (
             <div 
               key={product._id} 
-              className="p-2 shadow-md rounded-xl bg-dark"
+              className="w-full max-w-sm p-3 shadow-md rounded-xl bg-white border border-black/10"
             >
               <div className="flex items-center justify-center p-4 rounded-lg bg-secondary">
-                <img
-                  className="object-contain h-48 w-full bg-black rounded"
-                  src={
-                    (() => {
-                      const candidate = Array.isArray(product.images) && product.images.length > 0
-                        ? resolveImageUrl(product.images[0])
-                        : resolveImageUrl(product.image);
-                      return candidate || 'https://via.placeholder.com/240x180/272727/40ee45?text=No+Image';
-                    })()
-                  }
-                  alt={product.name}
-                  onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src='https://via.placeholder.com/240x180/272727/40ee45?text=No+Image';}}
-                />
+                <AdminProductImage product={product} />
               </div>
               <div className="p-2 mt-2">
-                <h2 className="text-xl font-bold text-accent">{product.name}</h2>
-                <p className="text-accent/80 line-clamp-2">{product.descriptionShort}</p>
+                <h2 className="text-lg font-bold text-black font-sans line-clamp-2">{product.name}</h2>
+                <p className="mt-1 text-sm text-gray-700 line-clamp-2">{product.descriptionShort}</p>
                 <div className="flex items-center justify-between mt-4">
                   <div>
-                    <span className="font-bold text-primary">TD. {product.price}</span>
-                    <p className="text-sm text-accent/80">{t('admin_products_stock', { stock: product.stock })}</p>
+                    <span className="font-bold text-primary text-base">TD. {product.price}</span>
+                    <p className="text-xs font-medium text-gray-700 mt-1">
+                      {t('admin_products_stock', { stock: product.stock })}
+                    </p>
                   </div>
                   <div className="flex space-x-2">
                     <button 
@@ -720,7 +735,7 @@ const AdminProductManagement = () => {
         >
           <form onSubmit={handleAddProduct} className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 {t('admin_products_product_name')}
               </label>
@@ -735,7 +750,7 @@ const AdminProductManagement = () => {
 
             {/* Brand Dropdown */}
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 Brand
               </label>
@@ -773,7 +788,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div className="col-span-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 Images (2–6)
               </label>
@@ -788,16 +803,16 @@ const AdminProductManagement = () => {
                   required 
                 />
                 <label htmlFor="product-images-upload" className="cursor-pointer">
-                  <div className="text-green-300/70">
+                  <div className="text-black">
                     Click to select images (2-6 required)
                   </div>
                 </label>
               </div>
-              <p className="mt-2 text-xs text-green-300/70">Select between 2 and 6 images.</p>
+              <p className="mt-2 text-xs text-black">Select between 2 and 6 images.</p>
             </div>
             
             <div className="col-span-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 {t('admin_products_short_description')}
               </label>
@@ -811,7 +826,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div className="col-span-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 {t('admin_products_full_description')}
               </label>
@@ -825,7 +840,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 {t('admin_products_price')}
               </label>
@@ -840,7 +855,7 @@ const AdminProductManagement = () => {
             </div>
             
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 {t('admin_products_available_quantity')}
               </label>
@@ -856,7 +871,7 @@ const AdminProductManagement = () => {
             <div className="col-span-2 p-4 rounded-xl bg-gradient-to-br from-secondary/20 to-secondary/5 backdrop-blur-sm border border-primary/10">
               <div className="flex items-center gap-2 mb-3">
                 <Sparkles className="w-4 h-4 text-green-400" />
-                <label className="text-xs font-bold uppercase tracking-wider text-green-400">Categories</label>
+                <label className="text-sm font-bold uppercase tracking-wider text-black">Categories</label>
               </div>
               <div className="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
                 {[
@@ -895,7 +910,7 @@ const AdminProductManagement = () => {
                         )}
                       </div>
                     </div>
-                    <span className={`text-xs transition-colors duration-200 ${newProduct.categories.includes(val) ? 'text-green-400 font-semibold' : 'text-green-300 group-hover:text-green-400'}`}>
+                    <span className={`text-xs transition-colors duration-200 ${newProduct.categories.includes(val) ? 'text-black font-semibold' : 'text-gray-700 group-hover:text-black'}`}>
                       {label}
                     </span>
                   </label>
@@ -905,7 +920,7 @@ const AdminProductManagement = () => {
             
             {/* Flavors */}
             <div className="col-span-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 Flavors (comma separated)
               </label>
@@ -918,7 +933,7 @@ const AdminProductManagement = () => {
             </div>
             {/* Weights */}
             <div className="col-span-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 Weights (comma separated)
               </label>
@@ -931,7 +946,7 @@ const AdminProductManagement = () => {
             </div>
             {/* Benefits */}
             <div className="col-span-2">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+              <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                 <Tag size={14} className="inline mr-2" />
                 Benefits (comma separated)
               </label>
@@ -961,7 +976,7 @@ const AdminProductManagement = () => {
                       )}
                     </div>
                   </div>
-                  <span className={`text-sm font-semibold transition-colors duration-200 ${newProduct.isBestSeller ? 'text-green-400' : 'text-green-300 group-hover:text-green-400'}`}>
+                  <span className={`text-sm font-semibold transition-colors duration-200 ${newProduct.isBestSeller ? 'text-black' : 'text-gray-700 group-hover:text-black'}`}>
                     Best Seller
                   </span>
                 </label>
@@ -981,7 +996,7 @@ const AdminProductManagement = () => {
                       )}
                     </div>
                   </div>
-                  <span className={`text-sm font-semibold transition-colors duration-200 ${newProduct.isNew ? 'text-green-400' : 'text-green-300 group-hover:text-green-400'}`}>
+                  <span className={`text-sm font-semibold transition-colors duration-200 ${newProduct.isNew ? 'text-black' : 'text-gray-700 group-hover:text-black'}`}>
                     New
                   </span>
                 </label>
@@ -1001,13 +1016,13 @@ const AdminProductManagement = () => {
                       )}
                     </div>
                   </div>
-                  <span className={`text-sm font-semibold transition-colors duration-200 ${newProduct.fastDelivery ? 'text-green-400' : 'text-green-300 group-hover:text-green-400'}`}>
+                  <span className={`text-sm font-semibold transition-colors duration-200 ${newProduct.fastDelivery ? 'text-black' : 'text-gray-700 group-hover:text-black'}`}>
                     Fast Delivery
                   </span>
                 </label>
               </div>
               <div className="mt-4">
-                <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+                <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
                   Limited Stock Notice
                 </label>
                 <input
@@ -1253,7 +1268,7 @@ const AdminProductManagement = () => {
                 <span>Best Selles</span>
               </label>
               <label className="flex items-center gap-2">
-                <input type="checkbox" checked={currentProduct?.isNew || false} onChange={(e)=> setCurrentProduct({...currentProduct, isNew: e.target.checked})} />
+                <input type="checkbox" checked={currentProduct?.isNewProduct || false} onChange={(e)=> setCurrentProduct({...currentProduct, isNewProduct: e.target.checked})} />
                 <span>New</span>
               </label>
               <label className="flex items-center gap-2">

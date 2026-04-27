@@ -10,22 +10,65 @@ const photoRoutes = require('./routes/photoRoutes');
 const path = require('path');
 const cors = require('cors');
 const { shouldUseCloudinary } = require('./config/storageUtils');
+const cloudinary = require('./config/cloudinary');
 
 const app = express();
+// Trigger restart
+const parseCorsOrigins = () => {
+    const v = process.env.CORS_ORIGINS;
+    if (!v) {
+        return [
+            'http://localhost:3000',
+            'http://localhost:5173',
+            'http://localhost:5174',
+            'http://localhost:5175',
+            'https://protienlab-frontend.onrender.com',
+            'https://proteinlab.tn',
+            'https://www.proteinlab.tn',
+        ];
+    }
+    return v.split(',').map(s => s.trim()).filter(Boolean);
+};
+const corsOrigins = parseCorsOrigins();
 app.use(cors({
-    origin: [
-        'http://localhost:5173',
-        'https://protienlab-frontend.onrender.com',
-        'https://proteinlab.tn',
-        'https://www.proteinlab.tn'
-    ],
+    origin: (origin, callback) => {
+        if (!origin || corsOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(null, false);
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.options('*', cors());
+const validateConfig = async () => {
+    const missing = [];
+    ['MONGO_URI', 'JWT_SECRET'].forEach(k => {
+        if (!process.env[k]) missing.push(k);
+    });
+    const useCloud = process.env.USE_CLOUDINARY === 'true' || process.env.NODE_ENV === 'production';
+    if (useCloud) {
+        ['CLOUDINARY_CLOUD_NAME', 'CLOUDINARY_API_KEY', 'CLOUDINARY_API_SECRET'].forEach(k => {
+            if (!process.env[k]) missing.push(k);
+        });
+        try {
+            await cloudinary.api.get_upload_preset('protienlab_photos');
+        } catch (e) {
+            console.warn('Cloudinary preset protienlab_photos not accessible');
+        }
+    }
+    if (missing.length) {
+        console.warn('Missing environment variables: ' + missing.join(','));
+    }
+};
+validateConfig();
 connectDB();
 
 app.use(express.json());
+app.get('/health', (req, res) => {
+    res.json({ status: 'ok' });
+});
 app.use('/api/users', userRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/diet-plans', dietPlanRoutes);

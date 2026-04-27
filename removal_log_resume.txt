@@ -1,0 +1,460 @@
+2026-04-19 22:37:44,091  INFO      ============================================================
+2026-04-19 22:37:44,091  INFO      Background Removal – RESUME (JPGs only)  –  2026-04-19 22:37:44
+2026-04-19 22:37:44,091  INFO      Cert keywords: ['gmp', 'halal', 'fssc', 'nsf', 'informed', 'cert']
+2026-04-19 22:37:44,091  INFO      NOTE: 'iso' is NOT excluded — iso-whey etc. are products, not certs
+2026-04-19 22:37:44,091  INFO      ============================================================
+2026-04-19 22:37:46,945  INFO      ✅ rembg is installed.
+2026-04-19 22:37:46,948  INFO      💾 Backup folder: C:\Users\bacca\Desktop\Protien Lab\backup_originals
+
+2026-04-19 22:37:47,025  INFO      
+📁 Scanning C:\Users\bacca\Desktop\Protien Lab\backend\uploads\products  (140 JPG/JPEG files remaining)
+
+2026-04-19 22:37:47,025  INFO      [1/140]
+2026-04-19 22:37:47,025  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769484919016-0.jpg
+2026-04-19 22:37:51,378  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769484919016-0.jpg  →  iso-hd-bpi-2-2kg-1769484919016-0.png
+2026-04-19 22:37:51,378  INFO      [2/140]
+2026-04-19 22:37:51,380  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769484919373-1.jpg
+2026-04-19 22:37:55,752  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769484919373-1.jpg  →  iso-hd-bpi-2-2kg-1769484919373-1.png
+2026-04-19 22:37:55,754  INFO      [3/140]
+2026-04-19 22:37:55,754  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769484919805-2.jpg
+2026-04-19 22:38:00,150  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769484919805-2.jpg  →  iso-hd-bpi-2-2kg-1769484919805-2.png
+2026-04-19 22:38:00,155  INFO      [4/140]
+2026-04-19 22:38:00,159  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769484920362-3.jpg
+2026-04-19 22:38:05,041  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769484920362-3.jpg  →  iso-hd-bpi-2-2kg-1769484920362-3.png
+2026-04-19 22:38:05,041  INFO      [5/140]
+2026-04-19 22:38:05,041  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769484920902-4.jpg
+2026-04-19 22:38:10,813  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769484920902-4.jpg  →  iso-hd-bpi-2-2kg-1769484920902-4.png
+2026-04-19 22:38:10,819  INFO      [6/140]
+2026-04-19 22:38:10,819  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769636132091-0.jpg
+2026-04-19 22:38:14,235  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769636132091-0.jpg  →  iso-hd-bpi-2-2kg-1769636132091-0.png
+2026-04-19 22:38:14,236  INFO      [7/140]
+2026-04-19 22:38:14,236  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769636133446-1.jpg
+2026-04-19 22:38:18,920  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769636133446-1.jpg  →  iso-hd-bpi-2-2kg-1769636133446-1.png
+2026-04-19 22:38:18,920  INFO      [8/140]
+2026-04-19 22:38:18,923  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769636134140-2.jpg
+2026-04-19 22:38:23,435  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769636134140-2.jpg  →  iso-hd-bpi-2-2kg-1769636134140-2.png
+2026-04-19 22:38:23,437  INFO      [9/140]
+2026-04-19 22:38:23,437  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769636135216-3.jpg
+2026-04-19 22:38:28,096  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769636135216-3.jpg  →  iso-hd-bpi-2-2kg-1769636135216-3.png
+2026-04-19 22:38:28,097  INFO      [10/140]
+2026-04-19 22:38:28,098  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769636136147-4.jpg
+2026-04-19 22:38:33,660  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769636136147-4.jpg  →  iso-hd-bpi-2-2kg-1769636136147-4.png
+2026-04-19 22:38:33,663  INFO      [11/140]
+2026-04-19 22:38:33,664  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769637664042-0.jpg
+2026-04-19 22:38:38,632  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769637664042-0.jpg  →  iso-hd-bpi-2-2kg-1769637664042-0.png
+2026-04-19 22:38:38,632  INFO      [12/140]
+2026-04-19 22:38:38,632  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769637664492-1.jpg
+2026-04-19 22:38:44,150  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769637664492-1.jpg  →  iso-hd-bpi-2-2kg-1769637664492-1.png
+2026-04-19 22:38:44,150  INFO      [13/140]
+2026-04-19 22:38:44,152  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769637666243-2.jpg
+2026-04-19 22:38:49,749  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769637666243-2.jpg  →  iso-hd-bpi-2-2kg-1769637666243-2.png
+2026-04-19 22:38:49,750  INFO      [14/140]
+2026-04-19 22:38:49,750  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769637667274-3.jpg
+2026-04-19 22:38:55,783  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769637667274-3.jpg  →  iso-hd-bpi-2-2kg-1769637667274-3.png
+2026-04-19 22:38:55,785  INFO      [15/140]
+2026-04-19 22:38:55,785  INFO      🔄 Processing     iso-hd-bpi-2-2kg-1769637667875-4.jpg
+2026-04-19 22:39:01,773  INFO      ✅ Done           iso-hd-bpi-2-2kg-1769637667875-4.jpg  →  iso-hd-bpi-2-2kg-1769637667875-4.png
+2026-04-19 22:39:01,773  INFO      [16/140]
+2026-04-19 22:39:01,774  INFO      🔄 Processing     iso-whey-zero-black-1-8kg-1769484927408-0.jpg
+2026-04-19 22:39:06,594  INFO      ✅ Done           iso-whey-zero-black-1-8kg-1769484927408-0.jpg  →  iso-whey-zero-black-1-8kg-1769484927408-0.png
+2026-04-19 22:39:06,595  INFO      [17/140]
+2026-04-19 22:39:06,595  INFO      🔄 Processing     iso-whey-zero-black-1-8kg-1769484927903-1.jpg
+2026-04-19 22:39:10,813  INFO      ✅ Done           iso-whey-zero-black-1-8kg-1769484927903-1.jpg  →  iso-whey-zero-black-1-8kg-1769484927903-1.png
+2026-04-19 22:39:10,813  INFO      [18/140]
+2026-04-19 22:39:10,813  INFO      🔄 Processing     iso-whey-zero-black-1-8kg-1769636149896-0.jpg
+2026-04-19 22:39:16,505  INFO      ✅ Done           iso-whey-zero-black-1-8kg-1769636149896-0.jpg  →  iso-whey-zero-black-1-8kg-1769636149896-0.png
+2026-04-19 22:39:16,505  INFO      [19/140]
+2026-04-19 22:39:16,505  INFO      🔄 Processing     iso-whey-zero-black-1-8kg-1769636151240-1.jpg
+2026-04-19 22:39:22,505  INFO      ✅ Done           iso-whey-zero-black-1-8kg-1769636151240-1.jpg  →  iso-whey-zero-black-1-8kg-1769636151240-1.png
+2026-04-19 22:39:22,507  INFO      [20/140]
+2026-04-19 22:39:22,507  INFO      🔄 Processing     iso-whey-zero-black-1-8kg-1769637680341-0.jpg
+2026-04-19 22:39:28,747  INFO      ✅ Done           iso-whey-zero-black-1-8kg-1769637680341-0.jpg  →  iso-whey-zero-black-1-8kg-1769637680341-0.png
+2026-04-19 22:39:28,750  INFO      [21/140]
+2026-04-19 22:39:28,750  INFO      🔄 Processing     iso-whey-zero-black-1-8kg-1769637681141-1.jpg
+2026-04-19 22:39:34,819  INFO      ✅ Done           iso-whey-zero-black-1-8kg-1769637681141-1.jpg  →  iso-whey-zero-black-1-8kg-1769637681141-1.png
+2026-04-19 22:39:34,819  INFO      [22/140]
+2026-04-19 22:39:34,819  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484749820-0.jpg
+2026-04-19 22:39:40,350  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484749820-0.jpg  →  isolate-whey-animal-1-81kg-1769484749820-0.png
+2026-04-19 22:39:40,350  INFO      [23/140]
+2026-04-19 22:39:40,352  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484750260-1.jpg
+2026-04-19 22:39:46,132  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484750260-1.jpg  →  isolate-whey-animal-1-81kg-1769484750260-1.png
+2026-04-19 22:39:46,132  INFO      [24/140]
+2026-04-19 22:39:46,132  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484750725-2.jpg
+2026-04-19 22:39:50,129  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484750725-2.jpg  →  isolate-whey-animal-1-81kg-1769484750725-2.png
+2026-04-19 22:39:50,129  INFO      [25/140]
+2026-04-19 22:39:50,131  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484751201-3.jpg
+2026-04-19 22:39:54,139  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484751201-3.jpg  →  isolate-whey-animal-1-81kg-1769484751201-3.png
+2026-04-19 22:39:54,139  INFO      [26/140]
+2026-04-19 22:39:54,139  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484751629-4.jpg
+2026-04-19 22:39:57,360  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484751629-4.jpg  →  isolate-whey-animal-1-81kg-1769484751629-4.png
+2026-04-19 22:39:57,360  INFO      [27/140]
+2026-04-19 22:39:57,360  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484752168-5.jpg
+2026-04-19 22:40:01,098  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484752168-5.jpg  →  isolate-whey-animal-1-81kg-1769484752168-5.png
+2026-04-19 22:40:01,098  INFO      [28/140]
+2026-04-19 22:40:01,098  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484836276-0.jpg
+2026-04-19 22:40:04,479  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484836276-0.jpg  →  isolate-whey-animal-1-81kg-1769484836276-0.png
+2026-04-19 22:40:04,479  INFO      [29/140]
+2026-04-19 22:40:04,480  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484836757-1.jpg
+2026-04-19 22:40:08,944  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484836757-1.jpg  →  isolate-whey-animal-1-81kg-1769484836757-1.png
+2026-04-19 22:40:08,944  INFO      [30/140]
+2026-04-19 22:40:08,944  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484837191-2.jpg
+2026-04-19 22:40:12,821  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484837191-2.jpg  →  isolate-whey-animal-1-81kg-1769484837191-2.png
+2026-04-19 22:40:12,824  INFO      [31/140]
+2026-04-19 22:40:12,824  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484837665-3.jpg
+2026-04-19 22:40:16,407  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484837665-3.jpg  →  isolate-whey-animal-1-81kg-1769484837665-3.png
+2026-04-19 22:40:16,410  INFO      [32/140]
+2026-04-19 22:40:16,410  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484838099-4.jpg
+2026-04-19 22:40:19,571  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484838099-4.jpg  →  isolate-whey-animal-1-81kg-1769484838099-4.png
+2026-04-19 22:40:19,573  INFO      [33/140]
+2026-04-19 22:40:19,573  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769484838648-5.jpg
+2026-04-19 22:40:23,887  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769484838648-5.jpg  →  isolate-whey-animal-1-81kg-1769484838648-5.png
+2026-04-19 22:40:23,887  INFO      [34/140]
+2026-04-19 22:40:23,887  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635793990-0.jpg
+2026-04-19 22:40:28,650  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635793990-0.jpg  →  isolate-whey-animal-1-81kg-1769635793990-0.png
+2026-04-19 22:40:28,650  INFO      [35/140]
+2026-04-19 22:40:28,650  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635794686-1.jpg
+2026-04-19 22:40:33,166  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635794686-1.jpg  →  isolate-whey-animal-1-81kg-1769635794686-1.png
+2026-04-19 22:40:33,169  INFO      [36/140]
+2026-04-19 22:40:33,169  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635795716-2.jpg
+2026-04-19 22:40:39,000  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635795716-2.jpg  →  isolate-whey-animal-1-81kg-1769635795716-2.png
+2026-04-19 22:40:39,002  INFO      [37/140]
+2026-04-19 22:40:39,002  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635796401-3.jpg
+2026-04-19 22:40:43,480  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635796401-3.jpg  →  isolate-whey-animal-1-81kg-1769635796401-3.png
+2026-04-19 22:40:43,485  INFO      [38/140]
+2026-04-19 22:40:43,493  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635797053-4.jpg
+2026-04-19 22:40:47,963  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635797053-4.jpg  →  isolate-whey-animal-1-81kg-1769635797053-4.png
+2026-04-19 22:40:47,963  INFO      [39/140]
+2026-04-19 22:40:47,963  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635798106-5.jpg
+2026-04-19 22:40:51,845  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635798106-5.jpg  →  isolate-whey-animal-1-81kg-1769635798106-5.png
+2026-04-19 22:40:51,847  INFO      [40/140]
+2026-04-19 22:40:51,847  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635980551-0.jpg
+2026-04-19 22:40:56,327  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635980551-0.jpg  →  isolate-whey-animal-1-81kg-1769635980551-0.png
+2026-04-19 22:40:56,328  INFO      [41/140]
+2026-04-19 22:40:56,329  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635981120-1.jpg
+2026-04-19 22:41:00,860  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635981120-1.jpg  →  isolate-whey-animal-1-81kg-1769635981120-1.png
+2026-04-19 22:41:00,865  INFO      [42/140]
+2026-04-19 22:41:00,867  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635982814-2.jpg
+2026-04-19 22:41:07,883  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635982814-2.jpg  →  isolate-whey-animal-1-81kg-1769635982814-2.png
+2026-04-19 22:41:07,884  INFO      [43/140]
+2026-04-19 22:41:07,884  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635983541-3.jpg
+2026-04-19 22:41:12,354  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635983541-3.jpg  →  isolate-whey-animal-1-81kg-1769635983541-3.png
+2026-04-19 22:41:12,355  INFO      [44/140]
+2026-04-19 22:41:12,355  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635984103-4.jpg
+2026-04-19 22:41:15,976  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635984103-4.jpg  →  isolate-whey-animal-1-81kg-1769635984103-4.png
+2026-04-19 22:41:15,977  INFO      [45/140]
+2026-04-19 22:41:15,977  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769635984989-5.jpg
+2026-04-19 22:41:21,933  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769635984989-5.jpg  →  isolate-whey-animal-1-81kg-1769635984989-5.png
+2026-04-19 22:41:21,936  INFO      [46/140]
+2026-04-19 22:41:21,938  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637313534-0.jpg
+2026-04-19 22:41:25,663  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637313534-0.jpg  →  isolate-whey-animal-1-81kg-1769637313534-0.png
+2026-04-19 22:41:25,663  INFO      [47/140]
+2026-04-19 22:41:25,663  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637314135-1.jpg
+2026-04-19 22:41:29,009  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637314135-1.jpg  →  isolate-whey-animal-1-81kg-1769637314135-1.png
+2026-04-19 22:41:29,009  INFO      [48/140]
+2026-04-19 22:41:29,009  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637314933-2.jpg
+2026-04-19 22:41:32,636  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637314933-2.jpg  →  isolate-whey-animal-1-81kg-1769637314933-2.png
+2026-04-19 22:41:32,637  INFO      [49/140]
+2026-04-19 22:41:32,637  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637315706-3.jpg
+2026-04-19 22:41:37,961  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637315706-3.jpg  →  isolate-whey-animal-1-81kg-1769637315706-3.png
+2026-04-19 22:41:37,961  INFO      [50/140]
+2026-04-19 22:41:37,963  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637316280-4.jpg
+2026-04-19 22:41:41,312  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637316280-4.jpg  →  isolate-whey-animal-1-81kg-1769637316280-4.png
+2026-04-19 22:41:41,312  INFO      [51/140]
+2026-04-19 22:41:41,313  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637316959-5.jpg
+2026-04-19 22:41:46,570  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637316959-5.jpg  →  isolate-whey-animal-1-81kg-1769637316959-5.png
+2026-04-19 22:41:46,571  INFO      [52/140]
+2026-04-19 22:41:46,571  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637498055-0.jpg
+2026-04-19 22:41:53,266  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637498055-0.jpg  →  isolate-whey-animal-1-81kg-1769637498055-0.png
+2026-04-19 22:41:53,266  INFO      [53/140]
+2026-04-19 22:41:53,268  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637501390-1.jpg
+2026-04-19 22:41:58,552  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637501390-1.jpg  →  isolate-whey-animal-1-81kg-1769637501390-1.png
+2026-04-19 22:41:58,552  INFO      [54/140]
+2026-04-19 22:41:58,552  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637501952-2.jpg
+2026-04-19 22:42:03,476  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637501952-2.jpg  →  isolate-whey-animal-1-81kg-1769637501952-2.png
+2026-04-19 22:42:03,477  INFO      [55/140]
+2026-04-19 22:42:03,477  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637502516-3.jpg
+2026-04-19 22:42:07,506  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637502516-3.jpg  →  isolate-whey-animal-1-81kg-1769637502516-3.png
+2026-04-19 22:42:07,507  INFO      [56/140]
+2026-04-19 22:42:07,507  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637503066-4.jpg
+2026-04-19 22:42:12,034  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637503066-4.jpg  →  isolate-whey-animal-1-81kg-1769637503066-4.png
+2026-04-19 22:42:12,034  INFO      [57/140]
+2026-04-19 22:42:12,034  INFO      🔄 Processing     isolate-whey-animal-1-81kg-1769637505410-5.jpg
+2026-04-19 22:42:17,021  INFO      ✅ Done           isolate-whey-animal-1-81kg-1769637505410-5.jpg  →  isolate-whey-animal-1-81kg-1769637505410-5.png
+2026-04-19 22:42:17,025  INFO      [58/140]
+2026-04-19 22:42:17,025  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769484983318-0.jpg
+2026-04-19 22:42:20,836  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769484983318-0.jpg  →  isowhey-muscletech-2-27-kg-1769484983318-0.png
+2026-04-19 22:42:20,838  INFO      [59/140]
+2026-04-19 22:42:20,838  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769484983847-1.jpg
+2026-04-19 22:42:25,834  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769484983847-1.jpg  →  isowhey-muscletech-2-27-kg-1769484983847-1.png
+2026-04-19 22:42:25,834  INFO      [60/140]
+2026-04-19 22:42:25,836  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769484984184-2.jpg
+2026-04-19 22:42:29,019  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769484984184-2.jpg  →  isowhey-muscletech-2-27-kg-1769484984184-2.png
+2026-04-19 22:42:29,019  INFO      [61/140]
+2026-04-19 22:42:29,020  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769484984565-3.jpg
+2026-04-19 22:42:33,373  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769484984565-3.jpg  →  isowhey-muscletech-2-27-kg-1769484984565-3.png
+2026-04-19 22:42:33,374  INFO      [62/140]
+2026-04-19 22:42:33,374  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769636220156-0.jpg
+2026-04-19 22:42:38,307  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769636220156-0.jpg  →  isowhey-muscletech-2-27-kg-1769636220156-0.png
+2026-04-19 22:42:38,307  INFO      [63/140]
+2026-04-19 22:42:38,307  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769636220682-1.jpg
+2026-04-19 22:42:41,995  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769636220682-1.jpg  →  isowhey-muscletech-2-27-kg-1769636220682-1.png
+2026-04-19 22:42:41,995  INFO      [64/140]
+2026-04-19 22:42:41,995  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769636221067-2.jpg
+2026-04-19 22:42:46,830  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769636221067-2.jpg  →  isowhey-muscletech-2-27-kg-1769636221067-2.png
+2026-04-19 22:42:46,830  INFO      [65/140]
+2026-04-19 22:42:46,832  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769636221423-3.jpg
+2026-04-19 22:42:50,952  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769636221423-3.jpg  →  isowhey-muscletech-2-27-kg-1769636221423-3.png
+2026-04-19 22:42:50,954  INFO      [66/140]
+2026-04-19 22:42:50,955  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769637781302-0.jpg
+2026-04-19 22:42:55,975  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769637781302-0.jpg  →  isowhey-muscletech-2-27-kg-1769637781302-0.png
+2026-04-19 22:42:55,976  INFO      [67/140]
+2026-04-19 22:42:55,976  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769637781831-1.jpg
+2026-04-19 22:43:01,552  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769637781831-1.jpg  →  isowhey-muscletech-2-27-kg-1769637781831-1.png
+2026-04-19 22:43:01,554  INFO      [68/140]
+2026-04-19 22:43:01,554  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769637782159-2.jpg
+2026-04-19 22:43:06,482  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769637782159-2.jpg  →  isowhey-muscletech-2-27-kg-1769637782159-2.png
+2026-04-19 22:43:06,482  INFO      [69/140]
+2026-04-19 22:43:06,482  INFO      🔄 Processing     isowhey-muscletech-2-27-kg-1769637782444-3.jpg
+2026-04-19 22:43:09,840  INFO      ✅ Done           isowhey-muscletech-2-27-kg-1769637782444-3.jpg  →  isowhey-muscletech-2-27-kg-1769637782444-3.png
+2026-04-19 22:43:09,840  INFO      [70/140]
+2026-04-19 22:43:09,840  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769484968779-0.jpg
+2026-04-19 22:43:13,910  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769484968779-0.jpg  →  phormx-iso-luxury-nutrition-2kg-1769484968779-0.png
+2026-04-19 22:43:13,911  INFO      [71/140]
+2026-04-19 22:43:13,911  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769484969209-1.jpg
+2026-04-19 22:43:18,408  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769484969209-1.jpg  →  phormx-iso-luxury-nutrition-2kg-1769484969209-1.png
+2026-04-19 22:43:18,411  INFO      [72/140]
+2026-04-19 22:43:18,411  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769484969540-2.jpg
+2026-04-19 22:43:23,758  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769484969540-2.jpg  →  phormx-iso-luxury-nutrition-2kg-1769484969540-2.png
+2026-04-19 22:43:23,763  INFO      [73/140]
+2026-04-19 22:43:23,763  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769484969845-3.jpg
+2026-04-19 22:43:28,446  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769484969845-3.jpg  →  phormx-iso-luxury-nutrition-2kg-1769484969845-3.png
+2026-04-19 22:43:28,446  INFO      [74/140]
+2026-04-19 22:43:28,447  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769636201505-0.jpg
+2026-04-19 22:43:33,904  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769636201505-0.jpg  →  phormx-iso-luxury-nutrition-2kg-1769636201505-0.png
+2026-04-19 22:43:33,904  INFO      [75/140]
+2026-04-19 22:43:33,906  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769636202315-1.jpg
+2026-04-19 22:43:38,445  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769636202315-1.jpg  →  phormx-iso-luxury-nutrition-2kg-1769636202315-1.png
+2026-04-19 22:43:38,445  INFO      [76/140]
+2026-04-19 22:43:38,445  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769636202709-2.jpg
+2026-04-19 22:43:42,078  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769636202709-2.jpg  →  phormx-iso-luxury-nutrition-2kg-1769636202709-2.png
+2026-04-19 22:43:42,079  INFO      [77/140]
+2026-04-19 22:43:42,079  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769636203128-3.jpg
+2026-04-19 22:43:46,702  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769636203128-3.jpg  →  phormx-iso-luxury-nutrition-2kg-1769636203128-3.png
+2026-04-19 22:43:46,704  INFO      [78/140]
+2026-04-19 22:43:46,706  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769637767683-0.jpg
+2026-04-19 22:43:52,001  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769637767683-0.jpg  →  phormx-iso-luxury-nutrition-2kg-1769637767683-0.png
+2026-04-19 22:43:52,002  INFO      [79/140]
+2026-04-19 22:43:52,007  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769637768108-1.jpg
+2026-04-19 22:43:56,465  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769637768108-1.jpg  →  phormx-iso-luxury-nutrition-2kg-1769637768108-1.png
+2026-04-19 22:43:56,465  INFO      [80/140]
+2026-04-19 22:43:56,470  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769637768434-2.jpg
+2026-04-19 22:44:00,747  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769637768434-2.jpg  →  phormx-iso-luxury-nutrition-2kg-1769637768434-2.png
+2026-04-19 22:44:00,747  INFO      [81/140]
+2026-04-19 22:44:00,748  INFO      🔄 Processing     phormx-iso-luxury-nutrition-2kg-1769637768721-3.jpg
+2026-04-19 22:44:05,831  INFO      ✅ Done           phormx-iso-luxury-nutrition-2kg-1769637768721-3.jpg  →  phormx-iso-luxury-nutrition-2kg-1769637768721-3.png
+2026-04-19 22:44:05,831  INFO      [82/140]
+2026-04-19 22:44:05,832  INFO      🔄 Processing     product-6977d3af9652dac56a864988-5-1769473718936.jpg
+2026-04-19 22:44:05,832  INFO         (backup already exists, skipping backup step)
+2026-04-19 22:44:08,001  ERROR     ✗ rembg subprocess failed for product-6977d3af9652dac56a864988-5-1769473718936.jpg: age, Image.open(io.BytesIO(cast(bytes, data))))
+  File "C:\Users\bacca\AppData\Local\Programs\Python\Python39\lib\site-packages\PIL\Image.py", line 3305, in open
+    raise UnidentifiedImageError(msg)
+PIL.UnidentifiedImageError: cannot identify image file <_io.BytesIO object at 0x000001F0E9277950>
+2026-04-19 22:44:08,002  INFO      [83/140]
+2026-04-19 22:44:08,003  INFO      🔄 Processing     product-6977d3e09652dac56a864993-5-1769473722253.jpg
+2026-04-19 22:44:08,003  INFO         (backup already exists, skipping backup step)
+2026-04-19 22:44:09,929  ERROR     ✗ rembg subprocess failed for product-6977d3e09652dac56a864993-5-1769473722253.jpg: age, Image.open(io.BytesIO(cast(bytes, data))))
+  File "C:\Users\bacca\AppData\Local\Programs\Python\Python39\lib\site-packages\PIL\Image.py", line 3305, in open
+    raise UnidentifiedImageError(msg)
+PIL.UnidentifiedImageError: cannot identify image file <_io.BytesIO object at 0x0000020BFE5E79A0>
+2026-04-19 22:44:09,929  INFO      [84/140]
+2026-04-19 22:44:09,929  INFO      🔄 Processing     product-6977d3f49652dac56a864999-5-1769473723818.jpg
+2026-04-19 22:44:09,930  INFO         (backup already exists, skipping backup step)
+2026-04-19 22:44:11,576  ERROR     ✗ rembg subprocess failed for product-6977d3f49652dac56a864999-5-1769473723818.jpg: age, Image.open(io.BytesIO(cast(bytes, data))))
+  File "C:\Users\bacca\AppData\Local\Programs\Python\Python39\lib\site-packages\PIL\Image.py", line 3305, in open
+    raise UnidentifiedImageError(msg)
+PIL.UnidentifiedImageError: cannot identify image file <_io.BytesIO object at 0x000001EAD7F879A0>
+2026-04-19 22:44:11,578  INFO      [85/140]
+2026-04-19 22:44:11,578  INFO      🔄 Processing     product-6977d4059652dac56a86499f-5-1769473725416.jpg
+2026-04-19 22:44:11,579  INFO         (backup already exists, skipping backup step)
+2026-04-19 22:44:13,520  ERROR     ✗ rembg subprocess failed for product-6977d4059652dac56a86499f-5-1769473725416.jpg: age, Image.open(io.BytesIO(cast(bytes, data))))
+  File "C:\Users\bacca\AppData\Local\Programs\Python\Python39\lib\site-packages\PIL\Image.py", line 3305, in open
+    raise UnidentifiedImageError(msg)
+PIL.UnidentifiedImageError: cannot identify image file <_io.BytesIO object at 0x000002987E7E7950>
+2026-04-19 22:44:13,521  INFO      [86/140]
+2026-04-19 22:44:13,521  INFO      🔄 Processing     product-6977d40f9652dac56a8649a4-5-1769473727252.jpg
+2026-04-19 22:44:13,523  INFO         (backup already exists, skipping backup step)
+2026-04-19 22:44:15,405  ERROR     ✗ rembg subprocess failed for product-6977d40f9652dac56a8649a4-5-1769473727252.jpg: age, Image.open(io.BytesIO(cast(bytes, data))))
+  File "C:\Users\bacca\AppData\Local\Programs\Python\Python39\lib\site-packages\PIL\Image.py", line 3305, in open
+    raise UnidentifiedImageError(msg)
+PIL.UnidentifiedImageError: cannot identify image file <_io.BytesIO object at 0x000001DA771279A0>
+2026-04-19 22:44:15,406  INFO      [87/140]
+2026-04-19 22:44:15,406  INFO      🔄 Processing     pure-iso-2kg-1769484933430-0.jpg
+2026-04-19 22:44:20,863  INFO      ✅ Done           pure-iso-2kg-1769484933430-0.jpg  →  pure-iso-2kg-1769484933430-0.png
+2026-04-19 22:44:20,866  INFO      [88/140]
+2026-04-19 22:44:20,866  INFO      🔄 Processing     pure-iso-2kg-1769484933772-1.jpg
+2026-04-19 22:44:25,103  INFO      ✅ Done           pure-iso-2kg-1769484933772-1.jpg  →  pure-iso-2kg-1769484933772-1.png
+2026-04-19 22:44:25,103  INFO      [89/140]
+2026-04-19 22:44:25,103  INFO      🔄 Processing     pure-iso-2kg-1769636158185-0.jpg
+2026-04-19 22:44:28,709  INFO      ✅ Done           pure-iso-2kg-1769636158185-0.jpg  →  pure-iso-2kg-1769636158185-0.png
+2026-04-19 22:44:28,710  INFO      [90/140]
+2026-04-19 22:44:28,712  INFO      🔄 Processing     pure-iso-2kg-1769636158610-1.jpg
+2026-04-19 22:44:33,363  INFO      ✅ Done           pure-iso-2kg-1769636158610-1.jpg  →  pure-iso-2kg-1769636158610-1.png
+2026-04-19 22:44:33,365  INFO      [91/140]
+2026-04-19 22:44:33,365  INFO      🔄 Processing     pure-iso-2kg-1769637694464-0.jpg
+2026-04-19 22:44:37,830  INFO      ✅ Done           pure-iso-2kg-1769637694464-0.jpg  →  pure-iso-2kg-1769637694464-0.png
+2026-04-19 22:44:37,833  INFO      [92/140]
+2026-04-19 22:44:37,833  INFO      🔄 Processing     pure-iso-2kg-1769637696654-1.jpg
+2026-04-19 22:44:43,279  INFO      ✅ Done           pure-iso-2kg-1769637696654-1.jpg  →  pure-iso-2kg-1769637696654-1.png
+2026-04-19 22:44:43,280  INFO      [93/140]
+2026-04-19 22:44:43,281  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769485009652-0.jpg
+2026-04-19 22:44:48,369  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769485009652-0.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769485009652-0.png
+2026-04-19 22:44:48,371  INFO      [94/140]
+2026-04-19 22:44:48,371  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769485010147-1.jpg
+2026-04-19 22:44:52,521  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769485010147-1.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769485010147-1.png
+2026-04-19 22:44:52,523  INFO      [95/140]
+2026-04-19 22:44:52,523  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769485010482-2.jpg
+2026-04-19 22:44:56,552  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769485010482-2.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769485010482-2.png
+2026-04-19 22:44:56,552  INFO      [96/140]
+2026-04-19 22:44:56,554  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769485010815-3.jpg
+2026-04-19 22:44:59,710  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769485010815-3.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769485010815-3.png
+2026-04-19 22:44:59,710  INFO      [97/140]
+2026-04-19 22:44:59,710  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769636244131-0.jpg
+2026-04-19 22:45:03,360  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769636244131-0.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769636244131-0.png
+2026-04-19 22:45:03,360  INFO      [98/140]
+2026-04-19 22:45:03,360  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769636244974-1.jpg
+2026-04-19 22:45:08,017  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769636244974-1.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769636244974-1.png
+2026-04-19 22:45:08,017  INFO      [99/140]
+2026-04-19 22:45:08,020  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769636245605-2.jpg
+2026-04-19 22:45:12,689  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769636245605-2.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769636245605-2.png
+2026-04-19 22:45:12,691  INFO      [100/140]
+2026-04-19 22:45:12,691  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769636246098-3.jpg
+2026-04-19 22:45:16,904  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769636246098-3.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769636246098-3.png
+2026-04-19 22:45:16,904  INFO      [101/140]
+2026-04-19 22:45:16,904  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769637799711-0.jpg
+2026-04-19 22:45:21,104  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769637799711-0.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769637799711-0.png
+2026-04-19 22:45:21,104  INFO      [102/140]
+2026-04-19 22:45:21,105  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769637800162-1.jpg
+2026-04-19 22:45:25,904  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769637800162-1.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769637800162-1.png
+2026-04-19 22:45:25,906  INFO      [103/140]
+2026-04-19 22:45:25,907  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769637800559-2.jpg
+2026-04-19 22:45:31,060  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769637800559-2.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769637800559-2.png
+2026-04-19 22:45:31,063  INFO      [104/140]
+2026-04-19 22:45:31,063  INFO      🔄 Processing     pure-whey-isolate-95-olimpsport-2-2-kg-1769637800837-3.jpg
+2026-04-19 22:45:34,389  INFO      ✅ Done           pure-whey-isolate-95-olimpsport-2-2-kg-1769637800837-3.jpg  →  pure-whey-isolate-95-olimpsport-2-2-kg-1769637800837-3.png
+2026-04-19 22:45:34,391  INFO      [105/140]
+2026-04-19 22:45:34,391  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485021084-0.jpg
+2026-04-19 22:45:39,846  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485021084-0.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485021084-0.png
+2026-04-19 22:45:39,846  INFO      [106/140]
+2026-04-19 22:45:39,846  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485021666-1.jpg
+2026-04-19 22:45:44,067  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485021666-1.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485021666-1.png
+2026-04-19 22:45:44,067  INFO      [107/140]
+2026-04-19 22:45:44,067  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022241-2.jpg
+2026-04-19 22:45:49,504  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022241-2.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022241-2.png
+2026-04-19 22:45:49,507  INFO      [108/140]
+2026-04-19 22:45:49,507  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022562-3.jpg
+2026-04-19 22:45:54,614  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022562-3.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022562-3.png
+2026-04-19 22:45:54,614  INFO      [109/140]
+2026-04-19 22:45:54,615  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022902-4.jpg
+2026-04-19 22:45:59,629  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022902-4.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485022902-4.png
+2026-04-19 22:45:59,629  INFO      [110/140]
+2026-04-19 22:45:59,630  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485023410-5.jpg
+2026-04-19 22:46:04,449  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485023410-5.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769485023410-5.png
+2026-04-19 22:46:04,449  INFO      [111/140]
+2026-04-19 22:46:04,452  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636263083-0.jpg
+2026-04-19 22:46:07,746  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636263083-0.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636263083-0.png
+2026-04-19 22:46:07,748  INFO      [112/140]
+2026-04-19 22:46:07,748  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636263750-1.jpg
+2026-04-19 22:46:13,259  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636263750-1.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636263750-1.png
+2026-04-19 22:46:13,263  INFO      [113/140]
+2026-04-19 22:46:13,265  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636264472-2.jpg
+2026-04-19 22:46:19,750  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636264472-2.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636264472-2.png
+2026-04-19 22:46:19,754  INFO      [114/140]
+2026-04-19 22:46:19,755  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265027-3.jpg
+2026-04-19 22:46:24,778  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265027-3.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265027-3.png
+2026-04-19 22:46:24,781  INFO      [115/140]
+2026-04-19 22:46:24,781  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265487-4.jpg
+2026-04-19 22:46:30,729  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265487-4.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265487-4.png
+2026-04-19 22:46:30,730  INFO      [116/140]
+2026-04-19 22:46:30,731  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265930-5.jpg
+2026-04-19 22:46:35,693  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265930-5.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769636265930-5.png
+2026-04-19 22:46:35,695  INFO      [117/140]
+2026-04-19 22:46:35,696  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637811207-0.jpg
+2026-04-19 22:46:40,904  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637811207-0.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637811207-0.png
+2026-04-19 22:46:40,905  INFO      [118/140]
+2026-04-19 22:46:40,905  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637811571-1.jpg
+2026-04-19 22:46:45,911  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637811571-1.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637811571-1.png
+2026-04-19 22:46:45,913  INFO      [119/140]
+2026-04-19 22:46:45,915  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812084-2.jpg
+2026-04-19 22:46:51,001  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812084-2.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812084-2.png
+2026-04-19 22:46:51,003  INFO      [120/140]
+2026-04-19 22:46:51,003  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812401-3.jpg
+2026-04-19 22:46:55,840  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812401-3.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812401-3.png
+2026-04-19 22:46:55,843  INFO      [121/140]
+2026-04-19 22:46:55,846  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812700-4.jpg
+2026-04-19 22:47:00,643  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812700-4.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812700-4.png
+2026-04-19 22:47:00,643  INFO      [122/140]
+2026-04-19 22:47:00,645  INFO      🔄 Processing     r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812995-5.jpg
+2026-04-19 22:47:05,508  INFO      ✅ Done           r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812995-5.jpg  →  r1-protein-whey-isolate-hydrolysate-2-22-kg-1769637812995-5.png
+2026-04-19 22:47:05,508  INFO      [123/140]
+2026-04-19 22:47:05,508  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769484771453-0.jpg
+2026-04-19 22:47:10,429  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769484771453-0.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769484771453-0.png
+2026-04-19 22:47:10,429  INFO      [124/140]
+2026-04-19 22:47:10,430  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769484772250-1.jpg
+2026-04-19 22:47:14,455  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769484772250-1.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769484772250-1.png
+2026-04-19 22:47:14,457  INFO      [125/140]
+2026-04-19 22:47:14,457  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769484772637-2.jpg
+2026-04-19 22:47:20,285  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769484772637-2.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769484772637-2.png
+2026-04-19 22:47:20,286  INFO      [126/140]
+2026-04-19 22:47:20,286  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769484773013-3.jpg
+2026-04-19 22:47:24,600  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769484773013-3.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769484773013-3.png
+2026-04-19 22:47:24,600  INFO      [127/140]
+2026-04-19 22:47:24,600  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769484773514-4.jpg
+2026-04-19 22:47:30,413  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769484773514-4.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769484773514-4.png
+2026-04-19 22:47:30,417  INFO      [128/140]
+2026-04-19 22:47:30,418  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769484774415-5.jpg
+2026-04-19 22:47:34,965  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769484774415-5.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769484774415-5.png
+2026-04-19 22:47:34,967  INFO      [129/140]
+2026-04-19 22:47:34,967  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769635841051-0.jpg
+2026-04-19 22:47:41,395  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769635841051-0.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769635841051-0.png
+2026-04-19 22:47:41,398  INFO      [130/140]
+2026-04-19 22:47:41,398  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769635841620-1.jpg
+2026-04-19 22:47:48,056  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769635841620-1.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769635841620-1.png
+2026-04-19 22:47:48,059  INFO      [131/140]
+2026-04-19 22:47:48,059  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769635842214-2.jpg
+2026-04-19 22:47:54,159  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769635842214-2.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769635842214-2.png
+2026-04-19 22:47:54,159  INFO      [132/140]
+2026-04-19 22:47:54,159  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769635843187-3.jpg
+2026-04-19 22:48:00,350  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769635843187-3.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769635843187-3.png
+2026-04-19 22:48:00,351  INFO      [133/140]
+2026-04-19 22:48:00,351  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769635843841-4.jpg
+2026-04-19 22:48:04,699  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769635843841-4.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769635843841-4.png
+2026-04-19 22:48:04,700  INFO      [134/140]
+2026-04-19 22:48:04,700  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769635844749-5.jpg
+2026-04-19 22:48:10,995  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769635844749-5.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769635844749-5.png
+2026-04-19 22:48:10,995  INFO      [135/140]
+2026-04-19 22:48:11,000  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769637357024-0.jpg
+2026-04-19 22:48:16,943  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769637357024-0.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769637357024-0.png
+2026-04-19 22:48:16,944  INFO      [136/140]
+2026-04-19 22:48:16,944  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769637357677-1.jpg
+2026-04-19 22:48:22,309  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769637357677-1.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769637357677-1.png
+2026-04-19 22:48:22,309  INFO      [137/140]
+2026-04-19 22:48:22,309  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769637358262-2.jpg
+2026-04-19 22:48:27,050  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769637358262-2.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769637358262-2.png
+2026-04-19 22:48:27,051  INFO      [138/140]
+2026-04-19 22:48:27,052  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769637358716-3.jpg
+2026-04-19 22:48:32,946  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769637358716-3.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769637358716-3.png
+2026-04-19 22:48:32,946  INFO      [139/140]
+2026-04-19 22:48:32,948  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769637359450-4.jpg
+2026-04-19 22:48:39,209  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769637359450-4.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769637359450-4.png
+2026-04-19 22:48:39,211  INFO      [140/140]
+2026-04-19 22:48:39,211  INFO      🔄 Processing     whey-isolate-scitec-nutrition-700-gr-1769637360203-5.jpg
+2026-04-19 22:48:43,923  INFO      ✅ Done           whey-isolate-scitec-nutrition-700-gr-1769637360203-5.jpg  →  whey-isolate-scitec-nutrition-700-gr-1769637360203-5.png
+2026-04-19 22:48:43,925  INFO      
+============================================================
+2026-04-19 22:48:43,925  INFO      ✅ DONE
+2026-04-19 22:48:43,925  INFO         Processed : 135
+2026-04-19 22:48:43,925  INFO         Skipped   : 0  (certifications)
+2026-04-19 22:48:43,925  INFO         Errors    : 5
+2026-04-19 22:48:43,925  INFO         Backup at : C:\Users\bacca\Desktop\Protien Lab\backup_originals
+2026-04-19 22:48:43,930  INFO      ============================================================
+2026-04-19 22:48:43,930  INFO      Full log saved to: C:\Users\bacca\Desktop\Protien Lab\removal_log_resume.txt

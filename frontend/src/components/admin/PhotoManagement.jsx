@@ -19,6 +19,7 @@ const PhotoManagement = () => {
   const [brandName, setBrandName] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [editingPhoto, setEditingPhoto] = useState(null);
+  const [editingFile, setEditingFile] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showOfferForm, setShowOfferForm] = useState(false);
   const [error, setError] = useState('');
@@ -26,6 +27,7 @@ const PhotoManagement = () => {
   const initialMediaFiles = { 1: [], 2: [] };
   const [mediaFiles, setMediaFiles] = useState(initialMediaFiles);
   const [mediaUploadingSlot, setMediaUploadingSlot] = useState(null);
+  const [transitionEffect, setTransitionEffect] = useState('fade');
 
   const categories = [
     { value: 'Welcome', label: 'Welcome' },
@@ -199,6 +201,7 @@ const PhotoManagement = () => {
       const formData = new FormData();
       formData.append('category', 'Media');
       formData.append('mediaSlot', slot);
+      formData.append('transitionEffect', transitionEffect);
       mediaFiles[slot].forEach((file, index) => {
         console.log(`📎 Adding media slot ${slot} file ${index + 1}:`, file.name, file.size, file.type);
         formData.append('photos', file);
@@ -256,6 +259,9 @@ const PhotoManagement = () => {
       formData.append('category', selectedCategory);
       if (selectedCategory === 'Nos Marque') {
         formData.append('brandName', brandName);
+      }
+      if (selectedCategory === 'Welcome') {
+        formData.append('transitionEffect', transitionEffect);
       }
       selectedFiles.forEach((file, index) => {
         console.log(`📎 Adding file ${index + 1}:`, file.name, file.size, file.type);
@@ -331,17 +337,39 @@ const PhotoManagement = () => {
     console.log('✏️ Updating photo:', url);
 
     try {
-      await axios.put(url, {
-        category: editingPhoto.category,
-        brandName: editingPhoto.brandName,
-        isActive: editingPhoto.isActive
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      if (editingFile) {
+        const formData = new FormData();
+        formData.append('category', editingPhoto.category);
+        if (editingPhoto.category === 'Nos Marque' && editingPhoto.brandName) {
+          formData.append('brandName', editingPhoto.brandName);
+        }
+        formData.append('isActive', editingPhoto.isActive);
+        if (editingPhoto.category === 'Welcome' || editingPhoto.category === 'Media') {
+          formData.append('transitionEffect', editingPhoto.transitionEffect || 'fade');
+        }
+        formData.append('photos', editingFile);
+
+        await axios.put(url, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+      } else {
+        await axios.put(url, {
+          category: editingPhoto.category,
+          brandName: editingPhoto.brandName,
+          isActive: editingPhoto.isActive,
+          transitionEffect: editingPhoto.transitionEffect
+        }, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      }
       console.log('✅ Photo updated successfully');
       setSuccess(t('admin_photos_update_success'));
       setShowEditModal(false);
       setEditingPhoto(null);
+      setEditingFile(null);
       fetchPhotos();
     } catch (error) {
       console.error('❌ Update failed:', error);
@@ -561,13 +589,13 @@ const PhotoManagement = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-center z-50 overflow-y-auto"
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-dark p-6 rounded-lg w-full max-w-md mx-4"
+              className="bg-dark p-6 rounded-lg w-full max-w-5xl mx-4 mt-10 mb-10 max-h-[90vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-accent">{t('admin_photos_upload_photos')}</h2>
@@ -596,6 +624,7 @@ const PhotoManagement = () => {
                       if (value !== 'Media') {
                         resetMediaSelections();
                       }
+                      setTransitionEffect('fade');
                     }}
                     className="w-full p-3 bg-secondary border border-gray-600 rounded-lg text-accent focus:outline-none focus:border-primary"
                   >
@@ -619,6 +648,23 @@ const PhotoManagement = () => {
                       placeholder="Enter brand name"
                       className="w-full p-3 bg-secondary border border-gray-600 rounded-lg text-accent focus:outline-none focus:border-primary"
                     />
+                  </div>
+                )}
+
+                {(selectedCategory === 'Welcome' || selectedCategory === 'Media') && (
+                  <div>
+                    <label className="block text-sm font-medium text-accent mb-2">
+                      Transition effect
+                    </label>
+                    <select
+                      value={transitionEffect}
+                      onChange={(e) => setTransitionEffect(e.target.value)}
+                      className="w-full p-3 bg-secondary border border-gray-600 rounded-lg text-accent focus:outline-none focus:border-primary"
+                    >
+                      <option value="fade">Fade</option>
+                      <option value="blur">Blur</option>
+                      <option value="fadeOut">Fade out</option>
+                    </select>
                   </div>
                 )}
 
@@ -819,7 +865,6 @@ const PhotoManagement = () => {
                   </select>
                 </div>
 
-                {/* Brand Name input - only show for Nos Marque */}
                 {editingPhoto.category === 'Nos Marque' && (
                   <div>
                     <label className="block text-sm font-medium text-accent mb-2">
@@ -835,6 +880,23 @@ const PhotoManagement = () => {
                   </div>
                 )}
 
+                {(editingPhoto.category === 'Welcome' || editingPhoto.category === 'Media') && (
+                  <div>
+                    <label className="block text-sm font-medium text-accent mb-2">
+                      Transition effect
+                    </label>
+                    <select
+                      value={editingPhoto.transitionEffect || 'fade'}
+                      onChange={(e) => setEditingPhoto({ ...editingPhoto, transitionEffect: e.target.value })}
+                      className="w-full p-3 bg-secondary border border-gray-600 rounded-lg text-accent focus:outline-none focus:border-primary"
+                    >
+                      <option value="fade">Fade</option>
+                      <option value="blur">Blur</option>
+                      <option value="fadeOut">Fade out</option>
+                    </select>
+                  </div>
+                )}
+
                 <div>
                   <label className="flex items-center gap-2">
                     <input
@@ -845,6 +907,21 @@ const PhotoManagement = () => {
                     />
                     <span className="text-accent">{t('admin_photos_active')}</span>
                   </label>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-accent mb-2">
+                    Change Photo (Optional)
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setEditingFile(e.target.files[0])}
+                    className="w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-dark hover:file:bg-primary/90"
+                  />
+                  {editingFile && (
+                     <p className="mt-1 text-sm text-green-400">Selected: {editingFile.name}</p>
+                  )}
                 </div>
 
                 <div className="flex gap-3">
@@ -901,4 +978,3 @@ const PhotoManagement = () => {
 };
 
 export default PhotoManagement;
-

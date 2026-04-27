@@ -52,8 +52,6 @@ const AdminNavbar = ({ onAuthClick }) => {
 
   const navItems = [
     { label: t('admin_dashboard'), path: '/admin/dashboard' },
-    { label: t('admin_exercises'), path: '/admin/exercises' },
-    { label: t('admin_victory_wall'), path: '/admin/victory-wall' },
     { label: t('admin_store'), path: '/admin/store' },
     { label: t('admin_users'), path: '/admin/users' },
     { label: t('admin_feedback'), path: '/admin/feedback' },
@@ -61,17 +59,17 @@ const AdminNavbar = ({ onAuthClick }) => {
   ];
 
   return (
-    <nav style={{ background: "linear-gradient(60deg, rgba(88, 88, 88, 1) 80%, rgba(255, 250, 252, 1) 100%)" }} className="fixed top-0 z-40 w-full px-6 py-4 bg-dark bg-opacity-95">
-      <div className="mx-auto max-w-7xl">
-        <div className="flex items-center justify-between">
+    <nav style={{ background: "linear-gradient(60deg, rgba(88, 88, 88, 1) 80%, rgba(255, 250, 252, 1) 100%)" }} className="fixed top-0 z-40 w-full px-6 h-24 bg-dark bg-opacity-95">
+      <div className="mx-auto max-w-7xl h-full">
+        <div className="flex items-center justify-between h-full">
           {/* Logo */}
-          <div className="flex items-center h-16">
+          <div className="flex items-center h-full">
             <NavLink to="/admin/dashboard" className="h-full">
               <img 
                 src={logo} 
                 alt="Protein Lab Admin" 
                 className="h-full object-contain" 
-                style={{ maxWidth: '200px' }}
+                style={{ maxWidth: '300px' }}
               />
             </NavLink>
           </div>
@@ -81,10 +79,9 @@ const AdminNavbar = ({ onAuthClick }) => {
             {navItems.map((item) => (
               <NavLink
                 key={item.label}
-                style={{ fontFamily: "'Orbitron', sans-serif" }} 
                 to={item.path}
                 className={({ isActive }) =>
-                  `text-accent transition-all duration-500 relative text-base md:text-lg ${
+                  `font-source-sans text-accent transition-all duration-500 relative text-lg md:text-xl lg:text-2xl ${
                     isActive
                       ? ' text-accent after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300'
                       : 'text-primary after:absolute after:bottom-[-5px] after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 '
@@ -186,7 +183,7 @@ const AdminNavbar = ({ onAuthClick }) => {
                 to={item.path}
                 onClick={closeMenu}
                 className={({ isActive }) =>
-                  `text-accent hover:bg-green-600 transition-all duration-500 relative ${
+                  `text-accent hover:bg-green-600 transition-all duration-500 relative text-lg ${
                     isActive
                       ? 'text-primary after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-100 after:origin-left after:transition-transform after:duration-300'
                       : 'after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-primary after:transform after:scale-x-0 after:origin-left after:transition-transform after:duration-300 hover:after:scale-x-100'

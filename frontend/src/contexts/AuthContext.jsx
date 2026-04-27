@@ -96,7 +96,7 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated: !!user
       }}
     >
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
 };

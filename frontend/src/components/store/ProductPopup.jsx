@@ -5,19 +5,27 @@ import { useAuth } from "../../contexts/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
 import api from '../../config/api';
 import { useTranslation } from "react-i18next";
-import { useSmokey } from '../../contexts/SmokeyContext';
 import { Star, Truck, ShieldCheck, ArrowLeft, X, CheckCircle, Flame, Dumbbell, Percent, Package, Repeat2, Sparkles, ShoppingBag, ChevronLeft, Tag, Users, AlertTriangle } from 'lucide-react';
 import { resolveImageUrl } from '../../lib/image';
 
 function ProductPopup({ product, onClose, focusOrder }) {
-  const { user } = useAuth();
-  const { smokeyOn } = useSmokey();
+  const { user, updateUser, login } = useAuth();
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [ordering, setOrdering] = useState(false);
+  const [successNotice, setSuccessNotice] = useState(null);
+  useEffect(() => {
+    if (successNotice) {
+      const id = setTimeout(() => {
+        setSuccessNotice(null);
+        onClose();
+      }, 5000);
+      return () => clearTimeout(id);
+    }
+  }, [successNotice, onClose]);
 
   const [selectedFlavor, setSelectedFlavor] = useState(product.flavors?.[0] || '');
   const [selectedWeight, setSelectedWeight] = useState(product.weights?.[0] || '');
@@ -39,7 +47,7 @@ function ProductPopup({ product, onClose, focusOrder }) {
   // Gallery state
   const images = Array.isArray(product.images) ? product.images : (product.image ? [product.image] : []);
   const [galleryIdx, setGalleryIdx] = useState(0);
-  const mainImgSrc = resolveImageUrl(images[galleryIdx]) || placeholder();
+  const mainImgSrc = resolveImageUrl(images[galleryIdx], { removeBackground: true }) || placeholder();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -72,6 +80,10 @@ function ProductPopup({ product, onClose, focusOrder }) {
     try {
       setLoading(true);
       setError(null);
+
+      // Allow all offers, even virtual ones
+      const isVirtualOffer =
+        typeof product._id === 'string' && product._id.startsWith('offer-');
 
       // Validate form data
       if (!formData.name || !formData.email || !formData.address || !formData.phone) {
@@ -110,14 +122,31 @@ function ProductPopup({ product, onClose, focusOrder }) {
       navigate('/store/orders');
       onClose();
       } else {
-        // Guest order - no account needed
         const response = await api.post('/users/orders/guest', orderData);
-        
         if (response.data.success) {
-          // Show success message
-          alert('Order placed successfully! You will receive a confirmation email shortly.');
-          // Close the popup
-          onClose();
+          setOrdering(false);
+          const { auth, createdAccount, credentials } = response.data;
+          if (createdAccount) {
+            if (auth?.token && auth?.user) {
+              try {
+                localStorage.setItem('userToken', auth.token);
+                localStorage.setItem('user', JSON.stringify(auth.user));
+                api.defaults.headers.common['Authorization'] = `Bearer ${auth.token}`;
+                updateUser(auth.user);
+                navigate('/store/orders');
+              } catch {}
+            } else if (credentials?.email && credentials?.tempPassword) {
+              try {
+                const res = await login(credentials.email, credentials.tempPassword);
+                if (res?.success) {
+                  navigate('/store/orders');
+                } else {
+                  updateUser({ email: credentials.email });
+                }
+              } catch {}
+            }
+          }
+          setSuccessNotice({ createdAccount: !!createdAccount });
         }
       }
     } catch (error) {
@@ -141,11 +170,19 @@ function ProductPopup({ product, onClose, focusOrder }) {
           initial={{ scale: 0.95 }}
           animate={{ scale: 1 }}
           exit={{ scale: 0.95 }}
-          className="w-full max-w-3xl sm:max-w-4xl md:max-w-5xl xl:max-w-6xl bg-white text-black rounded-lg shadow-2xl p-2 md:p-7 relative border border-white/10 mx-2 my-8"
+          className="relative w-full max-w-3xl sm:max-w-4xl md:max-w-5xl xl:max-w-6xl bg-white text-black rounded-lg shadow-2xl border border-white/10 mx-2 my-8 max-h-[90vh] overflow-y-auto"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Close Button */}
-          <button className="absolute text-3xl font-bold top-4 right-4 hover:text-primary z-10 focus:outline-none" onClick={onClose} aria-label="Close"><X/></button>
+          {/* Sticky Header with Close */}
+          <div className="sticky top-0 z-10 flex items-center justify-end bg-white/95 backdrop-blur px-3 md:px-7 py-3 border-b">
+            <button
+              className="text-2xl font-bold hover:text-primary focus:outline-none"
+              onClick={onClose}
+              aria-label="Close"
+            >
+              <X />
+            </button>
+          </div>
 
           {/* Overlay: ORDER FORM step — draw over details if ordering */}
           {ordering && (
@@ -186,6 +223,36 @@ function ProductPopup({ product, onClose, focusOrder }) {
             </motion.div>
           )}
 
+          {successNotice && (
+            <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 flex items-center justify-center z-50">
+              <div className="relative max-w-md w-full mx-4 rounded-xl shadow-2xl p-5 border border-primary/30 bg-white text-black">
+                <button
+                  onClick={() => { setSuccessNotice(null); onClose(); }}
+                  className="absolute top-2 right-2 p-1 rounded hover:bg-gray-100"
+                  aria-label="Close"
+                >
+                  <X />
+                </button>
+                <div className="text-center text-2xl font-black text-primary mb-2">
+                  {t('product_order_success_title')}
+                </div>
+                <div className="text-center text-black/80">
+                  {successNotice.createdAccount
+                    ? t('product_account_created_notice')
+                    : t('product_order_success_notice')}
+                </div>
+                <div className="mt-4 flex justify-center">
+                  <button
+                    onClick={() => { setSuccessNotice(null); onClose(); }}
+                    className="px-4 py-2 rounded bg-primary text-white hover:bg-green-600"
+                  >
+                    {t('product_notice_close') || 'Close'}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
           {/* Main content: details only if not ordering */}
           {!ordering && (
           <div className="flex flex-col md:flex-row gap-8">
@@ -203,7 +270,7 @@ function ProductPopup({ product, onClose, focusOrder }) {
                   {images.map((img, idx) => (
                     <button key={img+idx} onClick={()=>setGalleryIdx(idx)}
                       className={`w-14 h-14 bg-gray-200 rounded-lg border ${galleryIdx===idx?'border-primary':'border-gray-200'} transition-all flex items-center justify-center`}>
-                      <img src={resolveImageUrl(img) || placeholder(56,56)}
+                      <img src={resolveImageUrl(img, { removeBackground: true, width: 200, height: 200 }) || placeholder(56,56)}
                         alt={`thumb ${idx}`}
                         className="object-contain w-12 h-12"
                         onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src=placeholder(56,56);}}
@@ -226,7 +293,7 @@ function ProductPopup({ product, onClose, focusOrder }) {
                 )}
               </div>
               {/* Name/Title */}
-              <h2 className={`text-2xl md:text-3xl font-black leading-tight flex gap-2 items-center mb-0 ${smokeyOn ? 'text-white' : 'text-black'}`}>
+              <h2 className="text-2xl md:text-3xl font-black leading-tight flex gap-2 items-center mb-0 text-black">
                 {product.name} <span className="text-yellow-400 flex gap-1 ml-2 mt-1">{[...Array(4)].map((_,i)=> <Star key={i} className="w-5" fill="#FFD700"/>)}<Star className="w-5"/></span>
               </h2>
               {/* Short Description as subtitle */}
@@ -266,15 +333,13 @@ function ProductPopup({ product, onClose, focusOrder }) {
                     ))}
                   </div>
                 )}
-                {/* Stock */}
-                {typeof product.stock === 'number' && (
-                  <span className={`${product.stock < 5 ? 'bg-red-50 border-red-400 text-red-800' : 'bg-green-50 border-green-600 text-green-900'} flex items-center gap-1 text-xs px-2 py-1 rounded-full font-bold border`}>
-                    <Package className="w-4 inline-block"/>{product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
-                  </span>
-                )}
+                {/* Stock status - always available as per user request */}
+                <span className="bg-green-50 border-green-600 text-green-900 flex items-center gap-1 text-xs px-2 py-1 rounded-full font-bold border">
+                  <Package className="w-4 inline-block"/>{t('product_available') || 'Available'}
+                </span>
                 {/* Badges */}
                 {product.isBestSeller && (<span className="flex items-center gap-1 bg-primary text-black text-xs font-bold px-2 py-1 rounded-full"><Flame className="w-4"/> Best Selles</span>)}
-                {product.isNew && (<span className="flex items-center gap-1 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full"><Sparkles className="w-4"/> NEW</span>)}
+                {product.isNewProduct && (<span className="flex items-center gap-1 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full"><Sparkles className="w-4"/> NEW</span>)}
                 {product.fastDelivery && (<span className="flex items-center gap-1 bg-primary text-black text-xs font-semibold px-2 py-1 rounded-full"><Truck className="w-4"/>Fast Delivery</span>)}
                 {product.limitedStockNotice && (<span className="flex items-center gap-1 bg-red-600 text-white text-xs px-3 py-1 rounded-full font-bold animate-pulse shadow"><AlertTriangle className="w-4"/> {product.limitedStockNotice}</span>)}
               </div>

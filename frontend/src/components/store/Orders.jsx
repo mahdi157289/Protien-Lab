@@ -116,24 +116,24 @@ function OrderPage() {
       {/* Orders List */}
       <div className="max-w-4xl mx-auto">
         {orders.length === 0 ? (
-          <div className="bg-secondary text-white border border-primary/10 rounded-lg p-6 shadow-lg text-center">
-            <p className="text-xl font-semibold text-gray-400">
+          <div className="bg-white text-gray-900 border border-black/5 rounded-2xl p-8 shadow-xl text-center">
+            <p className="text-xl font-bold text-gray-400">
               {t('orders_no_orders')}
             </p>
           </div>
         ) : (
           orders.map((order) => (
-            <div key={order._id} className="bg-secondary text-white border border-primary/10 rounded-lg p-6 shadow-lg mb-4">
-              <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/5">
+            <div key={order._id} className="bg-white text-gray-900 border border-black/5 rounded-2xl p-6 shadow-xl mb-6 hover:shadow-2xl transition-shadow duration-300">
+              <div className="flex items-center justify-between pb-4 mb-6 border-b border-gray-100">
                 <div>
-                  <h2 className="font-bold text-primary">{t('orders_order_number', { number: order._id.slice(-5).toUpperCase() })}</h2>
-                  <p className="text-sm text-gray-400">{t('orders_placed_on', { date: formatDate(order.createdAt) })}</p>
+                  <h2 className="font-bold text-green-600 tracking-tight font-sans">{t('orders_order_number', { number: order._id.slice(-5).toUpperCase() })}</h2>
+                  <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">{t('orders_placed_on', { date: formatDate(order.createdAt) })}</p>
                 </div>
-                <span className={`px-2 py-1 rounded-lg text-sm ${
-                  order.status === 'Pending' ? 'bg-yellow-500' :
-                  order.status === 'Processing' ? 'bg-blue-500' :
-                  order.status === 'Shipped' ? 'bg-green-500' :
-                  order.status === 'Delivered' ? 'bg-purple-500' : 'bg-red-500'
+                <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm ${
+                  order.status === 'Pending' ? 'bg-yellow-500 text-white' :
+                  order.status === 'Processing' ? 'bg-blue-500 text-white' :
+                  order.status === 'Shipped' ? 'bg-green-500 text-white' :
+                  order.status === 'Delivered' ? 'bg-purple-500 text-white' : 'bg-red-500 text-white'
                 }`}>
                   {t(`orders_status_${order.status.toLowerCase()}`, { defaultValue: order.status })}
                 </span>
@@ -153,17 +153,20 @@ function OrderPage() {
                     />
                   </div>
                   <div className="flex-1">
-                    <h3 className="mb-2 text-lg font-bold text-white">{item.product.name}</h3>
-                    <p className="mb-1 text-sm text-gray-400">{t('orders_quantity', { quantity: item.quantity })}</p>
-                    <p className="mb-1 font-medium text-md text-gray-300">
+                    <h3 className="mb-2 text-lg font-bold text-gray-900 group-hover:text-green-600 transition-colors font-sans">{item.product.name}</h3>
+                    <p className="mb-1 text-sm font-medium text-gray-500 uppercase tracking-wide">{t('orders_quantity', { quantity: item.quantity })}</p>
+                    <p className="mb-4 font-bold text-md text-gray-700">
                       {t('orders_price_x_quantity', { price: item.price, quantity: item.quantity })}
                     </p>
-                    <div className="flex items-center justify-between mt-4">
-                      <p className="text-xl font-bold text-primary">{t('orders_total', { total: order.totalAmount })}</p>
+                    <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-50">
+                      <div className="flex flex-col">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Total Commande</span>
+                        <p className="text-2xl font-black text-green-600 font-sans">{t('orders_total', { total: order.totalAmount })}</p>
+                      </div>
                       <div className="flex gap-2">
                         <button
                           onClick={() => openOrderDetails(order)}
-                          className="px-4 py-2 text-white transition bg-blue-500 rounded-md hover:bg-blue-600"
+                          className="px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition bg-blue-600 rounded-xl hover:bg-blue-700 shadow-md hover:shadow-blue-500/20"
                         >
                           {t('orders_view_details')}
                         </button>
@@ -171,16 +174,16 @@ function OrderPage() {
                         {order.status === 'Pending' || order.status === 'Processing' ? (
                           <button
                             onClick={() => openConfirmationModal(order, 'cancel')}
-                            className="px-4 py-2 text-white transition bg-green-500 rounded-md hover:bg-green-600"
+                            className="px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white transition bg-green-600 rounded-xl hover:bg-green-700 shadow-md hover:shadow-green-500/20"
                           >
                             {t('orders_cancel_order')}
                           </button>
                         ) : order.status === 'Cancelled' && (
                           <button
                             onClick={() => openConfirmationModal(order, 'delete')}
-                            className="flex items-center gap-2 px-4 py-2 text-white bg-green-500 rounded-md hover:bg-green-600"
+                            className="flex items-center gap-2 px-6 py-2.5 text-xs font-bold uppercase tracking-widest text-white bg-green-600 rounded-xl hover:bg-green-700 shadow-md hover:shadow-green-500/20"
                           >
-                            <Trash size={16} /> {t('orders_delete')}
+                            <Trash size={14} /> {t('orders_delete')}
                           </button>
                         )}
                       </div>
@@ -195,50 +198,60 @@ function OrderPage() {
 
       {/* Order Details Modal */}
       {isModalOpen && selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm">
-          <div className="relative w-full max-w-4xl p-6 rounded-lg shadow-2xl bg-secondary text-white border border-primary/20">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4">
+          <div className="relative w-full max-w-lg p-8 rounded-3xl shadow-2xl bg-white text-gray-900 border border-black/5">
             <button
-              className="absolute text-xl font-bold top-4 right-4 text-gray-400 hover:text-primary transition-colors"
+              className="absolute text-xl font-bold top-6 right-6 text-gray-400 hover:text-green-600 transition-colors"
               onClick={() => setIsModalOpen(false)}
             >
               <X size={24} />
             </button>
 
-            <h2 className="mb-4 text-2xl font-bold text-white">{t('orders_details_title')}</h2>
+            <h2 className="mb-6 text-3xl font-black text-gray-900 tracking-tight font-sans">{t('orders_details_title')}</h2>
             
             {/* Shipping Information */}
-            <div className="bg-dark p-4 rounded-lg mb-6 border border-white/5">
-              <h3 className="mb-2 text-lg font-bold text-primary">{t('orders_shipping_details')}</h3>
-              <p className="text-gray-300">{t('orders_shipping_name', { name: selectedOrder.shippingAddress.fullName })}</p>
-              <p className="text-gray-400">{t('orders_shipping_email', { email: selectedOrder.shippingAddress.email })}</p>
-              <p className="text-gray-300">{t('orders_shipping_address', { address: selectedOrder.shippingAddress.address })}</p>
-              <p className="text-gray-400">{t('orders_shipping_phone', { phone: selectedOrder.shippingAddress.phoneNumber })}</p>
+            <div className="bg-gray-50 p-6 rounded-2xl mb-6 border border-gray-100">
+              <h3 className="mb-3 text-xs font-bold uppercase tracking-widest text-green-600">{t('orders_shipping_details')}</h3>
+              <p className="text-sm font-bold text-gray-900">{selectedOrder.shippingAddress.fullName}</p>
+              <p className="text-xs font-medium text-gray-500 mb-2">{selectedOrder.shippingAddress.email}</p>
+              <p className="text-sm text-gray-700 leading-relaxed">{selectedOrder.shippingAddress.address}</p>
+              <p className="text-xs font-bold text-gray-500 mt-2">{selectedOrder.shippingAddress.phoneNumber}</p>
             </div>
 
             {/* Order Items */}
-            <div className="bg-dark p-4 rounded-lg border border-white/5">
-              <h3 className="mb-2 text-lg font-bold text-primary">{t('orders_products')}</h3>
-              {selectedOrder.orderItems.map((item, index) => {
-                const rawImage = (Array.isArray(item.product?.images) && item.product.images[0]) || item.product?.image || '';
-                const resolvedSrc = resolveImageUrl(String(rawImage)) || buildPlaceholder(80,80);
-                return (
-                <div key={index} className="flex items-center gap-4 mb-4 pb-4 border-b border-white/5 last:border-0 last:mb-0 last:pb-0">
-                  <img
-                    src={resolvedSrc}
-                    alt={item.product?.name || 'product'}
-                    className="object-contain w-20 h-20 bg-white/5 rounded-md p-1"
-                    onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src=buildPlaceholder(80,80);}}
-                  />
-                  <div>
-                    <h4 className="font-bold text-white">{item.product.name}</h4>
-                    <p className="text-gray-400">{t('orders_quantity', { quantity: item.quantity })}</p>
-                    <p className="text-gray-300">{t('orders_price_each', { price: item.price })}</p>
+            <div className="bg-gray-50 p-6 rounded-2xl border border-gray-100">
+              <h3 className="mb-4 text-xs font-bold uppercase tracking-widest text-green-600">{t('orders_products')}</h3>
+              <div className="max-h-[30vh] overflow-y-auto pr-2 custom-scrollbar">
+                {selectedOrder.orderItems.map((item, index) => {
+                  const rawImage = (Array.isArray(item.product?.images) && item.product.images[0]) || item.product?.image || '';
+                  const resolvedSrc = resolveImageUrl(String(rawImage)) || buildPlaceholder(80,80);
+                  return (
+                  <div key={index} className="flex items-center gap-4 mb-4 pb-4 border-b border-gray-100 last:border-0 last:mb-0 last:pb-0">
+                    <img
+                      src={resolvedSrc}
+                      alt={item.product?.name || 'product'}
+                      className="object-contain w-16 h-16 bg-white rounded-xl p-1 border border-gray-200"
+                      onError={(e)=>{e.currentTarget.onerror=null;e.currentTarget.src=buildPlaceholder(80,80);}}
+                    />
+                    <div className="min-w-0">
+                      <h4 className="font-bold text-gray-900 text-sm truncate">{item.product.name}</h4>
+                      <div className="flex gap-3 items-center mt-1">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Qté: {item.quantity}</span>
+                        <span className="text-[10px] font-bold text-green-600">{item.price.toFixed(2)} TD</span>
+                      </div>
+                    </div>
                   </div>
+                )})}
+              </div>
+              <div className="pt-6 border-t border-gray-200 mt-6 flex items-end justify-between">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-1">Total Montant</span>
+                  <p className="text-3xl font-black text-green-600 font-sans">{selectedOrder.totalAmount.toFixed(2)} TD</p>
                 </div>
-              )})}
-              <div className="pt-4 border-t border-white/10 mt-4">
-                <p className="text-xl font-bold text-primary">{t('orders_total', { total: selectedOrder.totalAmount })}</p>
-                <p className="text-sm text-gray-400 italic">{t('orders_payment_method', { method: selectedOrder.paymentMethod })}</p>
+                <div className="text-right">
+                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Paiement</p>
+                  <p className="text-xs font-bold text-gray-700">{selectedOrder.paymentMethod}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -247,32 +260,36 @@ function OrderPage() {
 
       {/* Confirmation Modal */}
       {isConfirmationModalOpen && selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
-          <div className="relative w-full max-w-md p-6 rounded-lg shadow-lg bg-dark">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md px-4">
+          <div className="relative w-full max-w-md p-8 rounded-3xl shadow-2xl bg-white text-gray-900 border border-black/5 text-center">
             <button
-              className="absolute text-xl font-bold top-4 right-4 hover:text-primary"
+              className="absolute text-xl font-bold top-6 right-6 text-gray-400 hover:text-red-600 transition-colors"
               onClick={() => setIsConfirmationModalOpen(false)}
             >
               <X size={24} />
             </button>
 
-            <h2 className="mb-4 text-2xl font-bold text-center">
+            <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Trash className="w-8 h-8 text-red-500" />
+            </div>
+
+            <h2 className="mb-4 text-2xl font-black text-gray-900 tracking-tight font-sans">
               {actionType === 'cancel' ? t('orders_cancel_order') : t('orders_delete_order')}
             </h2>
-            <p className="mb-6 text-center text-accent/80">
+            <p className="mb-8 text-gray-500 font-medium">
               {t('orders_confirm_action', { action: t(actionType === 'cancel' ? 'orders_cancel_order' : 'orders_delete_order') })}
             </p>
 
-            <div className="flex justify-center gap-10">
+            <div className="flex gap-4">
               <button
                 onClick={() => setIsConfirmationModalOpen(false)}
-                className="px-8 py-2 transition border rounded-lg text-primary bg-secondary hover:bg-dark border-primary"
+                className="flex-1 px-6 py-3 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all"
               >
                 {t('orders_no_go_back')}
               </button>
               <button
                 onClick={handleConfirmAction}
-                className="px-8 py-2 transition border rounded-lg border-primary bg-primary hover:bg-red-600"
+                className="flex-1 px-6 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 transition-all shadow-lg shadow-red-600/20"
               >
                 {t('orders_yes_action', { action: t(actionType === 'cancel' ? 'orders_cancel' : 'orders_delete') })}
               </button>

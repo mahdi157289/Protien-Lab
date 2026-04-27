@@ -315,10 +315,10 @@ const AdminOrderManagement = () => {
 
       {/* View Order Details Modal */}
       {isViewModalOpen && selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-80">
-          <div className="w-full max-w-4xl overflow-hidden shadow-2xl bg-dark rounded-2xl">
+        <div className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-black bg-opacity-80 overflow-y-auto">
+          <div className="relative w-full max-w-4xl bg-dark rounded-2xl my-8 max-h-[90vh] overflow-y-auto">
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 ">
+            <div className="sticky top-0 z-10 flex items-center justify-between p-6 bg-dark">
               <h2 className="text-3xl font-bold text-primary">{t('admin_orders_order_number', { number: selectedOrder._id?.slice(-6) })}</h2>
               <button 
                 onClick={() => setIsViewModalOpen(false)} 

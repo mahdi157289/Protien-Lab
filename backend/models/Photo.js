@@ -55,6 +55,11 @@ const photoSchema = new mongoose.Schema({
             message: 'Media entries require exactly 2 slides'
         }]
     },
+    transitionEffect: {
+        type: String,
+        enum: ['fade', 'blur', 'fadeOut'],
+        default: 'fade'
+    },
     isActive: {
         type: Boolean,
         default: true
@@ -116,4 +121,3 @@ photoSchema.index({ uploadDate: -1 });
 photoSchema.index({ isActive: 1 });
 
 module.exports = mongoose.model('Photo', photoSchema);
-

@@ -220,7 +220,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
   }, [isEditing, initialData?.offerData?.brand, token]);
 
   return (
-    <div className="space-y-6 p-6 rounded-2xl bg-gradient-to-br from-dark via-dark to-dark/95 backdrop-blur-xl shadow-2xl border border-primary/20 relative overflow-hidden font-source-sans">
+    <div className="space-y-6 p-6 rounded-2xl bg-white backdrop-blur-xl shadow-2xl border border-primary/20 relative overflow-hidden font-source-sans">
       {/* Decorative glow effect */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-24 h-24 bg-accent/5 rounded-full blur-2xl"></div>
@@ -265,7 +265,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Offer Name */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
               <Tag size={14} className="inline mr-2" />
               {t('admin_offers_name')}
             </label>
@@ -284,7 +284,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
 
           {/* Brand */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
               <Tag size={14} className="inline mr-2" />
               {t('admin_offers_brand')}
             </label>
@@ -333,7 +333,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Stock */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
               {t('admin_offers_stock')}
             </label>
             <input
@@ -352,7 +352,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
 
           {/* Display Section */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
               {t('admin_offers_display_section')}
             </label>
             <select
@@ -371,7 +371,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Old Price */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
               <DollarSign size={14} className="inline mr-2" />
               {t('admin_offers_old_price')}
             </label>
@@ -394,7 +394,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
 
           {/* New Price */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
               <DollarSign size={14} className="inline mr-2" />
               {t('admin_offers_new_price')}
             </label>
@@ -416,7 +416,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
 
         {/* Reference */}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+          <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
             <Hash size={14} className="inline mr-2" />
             {t('admin_offers_reference')}
           </label>
@@ -435,7 +435,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
 
         {/* Description */}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+          <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
             <FileText size={14} className="inline mr-2" />
             {t('admin_offers_description')}
           </label>
@@ -454,7 +454,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
 
         {/* Big Description */}
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+          <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
             <FileText size={14} className="inline mr-2" />
             {t('admin_offers_big_description')}
           </label>
@@ -473,7 +473,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Main Photo */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
               <Image size={14} className="inline mr-2" />
               {t('admin_offers_main_photo')}
             </label>
@@ -503,8 +503,8 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
                   </div>
                 ) : (
                   <div>
-                    <Upload size={32} className="mx-auto text-green-400 mb-2" />
-                    <p className="text-green-300/70">{t('admin_photos_click_to_select')}</p>
+                    <Upload size={32} className="mx-auto text-gray-500 mb-2" />
+                    <p className="text-black">{t('admin_photos_click_to_select')}</p>
                   </div>
                 )}
               </label>
@@ -514,7 +514,7 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
 
           {/* Additional Photo */}
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-green-400 mb-2">
+            <label className="block text-sm font-bold uppercase tracking-wider text-black mb-2">
               <Image size={14} className="inline mr-2" />
               {t('admin_offers_additional_photo')}
             </label>
@@ -544,8 +544,8 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
                   </div>
                 ) : (
                   <div>
-                    <Upload size={32} className="mx-auto text-green-400 mb-2" />
-                    <p className="text-green-300/70">{t('admin_photos_click_to_select')}</p>
+                    <Upload size={32} className="mx-auto text-gray-500 mb-2" />
+                    <p className="text-black">{t('admin_photos_click_to_select')}</p>
                   </div>
                 )}
               </label>
@@ -578,4 +578,3 @@ const OfferForm = ({ onSubmit, onCancel, isEditing = false, initialData = null }
 };
 
 export default OfferForm;
-

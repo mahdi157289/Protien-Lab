@@ -12,7 +12,7 @@ body {
 }
 
 .font-orbitron {
-  font-family: 'Orbitron', 'Ethnocentric', 'Source Sans 3', sans-serif;
+  font-family: 'Orbitron', 'Source Sans 3', sans-serif;
 }
 
 ::-webkit-scrollbar {
@@ -89,6 +89,12 @@ body.smokey-bg::before {
   0%   { --tw-angle: 0deg; }
   50%  { --tw-angle: 180deg; }
   100% { --tw-angle: 360deg; }
+}
+
+/* Protect logos from smokey background filter */
+nav img,
+footer img {
+  filter: none !important;
 }
 
 /* Custom scrollbar for filter panels */

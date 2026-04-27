@@ -4,6 +4,9 @@ const {
     cleanupUploadedFiles,
     deleteStoredPath,
 } = require('../utils/uploadHelpers');
+const cloudinary = require('../config/cloudinary');
+const { shouldUseCloudinary } = require('../config/storageUtils');
+const fs = require('fs');
 
 const adminProductController = {
     createProduct: async (req, res) => {
@@ -13,6 +16,41 @@ const adminProductController = {
             
             if (!req.files || req.files.length < 2 || req.files.length > 6) {
                 return res.status(400).json({ message: 'Between 2 and 6 product images are required' });
+            }
+
+            const useCloudinary = shouldUseCloudinary();
+
+            // Upload files to Cloudinary if enabled (bypasses signature issues)
+            if (useCloudinary && req.files && req.files.length > 0) {
+                console.log('☁️ Uploading product images to Cloudinary...');
+                for (const file of req.files) {
+                    try {
+                        const filePath = file.path;
+                        const uploadResult = await cloudinary.uploader.upload(filePath, {
+                            folder: 'protienlab/products',
+                            resource_type: 'image',
+                            transformation: [
+                                { width: 1600, height: 1600, crop: 'limit' },
+                                { quality: 'auto' }
+                            ],
+                        });
+                        
+                        // Update file object with Cloudinary info
+                        file.filename = uploadResult.public_id;
+                        file.path = uploadResult.secure_url;
+                        file.url = uploadResult.secure_url;
+                        
+                        // Delete local file after successful upload
+                        fs.unlink(filePath, (err) => {
+                            if (err) console.error(`Error deleting local file ${filePath}:`, err);
+                        });
+                        
+                        console.log(`✅ Uploaded product image to Cloudinary: ${uploadResult.secure_url}`);
+                    } catch (uploadError) {
+                        console.error(`❌ Error uploading ${file.filename} to Cloudinary:`, uploadError);
+                        // Continue with local file if Cloudinary upload fails
+                    }
+                }
             }
 
             const imagePaths = req.files.map(file => buildFileUrl('products', file));
@@ -116,7 +154,11 @@ const adminProductController = {
             if (updateData.flavors) updateData.flavors = Array.isArray(updateData.flavors) ? updateData.flavors : JSON.parse(updateData.flavors);
             if (updateData.weights) updateData.weights = Array.isArray(updateData.weights) ? updateData.weights : JSON.parse(updateData.weights);
             if (updateData.benefits) updateData.benefits = Array.isArray(updateData.benefits) ? updateData.benefits : JSON.parse(updateData.benefits);
-            if (updateData.isNew !== undefined) updateData.isNew = updateData.isNew === 'true' || updateData.isNew === true;
+            if (updateData.isNewProduct !== undefined) updateData.isNewProduct = updateData.isNewProduct === 'true' || updateData.isNewProduct === true;
+            if (updateData.isNew !== undefined) {
+                 updateData.isNewProduct = updateData.isNew === 'true' || updateData.isNew === true;
+                 delete updateData.isNew;
+            }
             if (updateData.fastDelivery !== undefined) updateData.fastDelivery = updateData.fastDelivery === 'true' || updateData.fastDelivery === true;
             if (updateData.limitedStockNotice === undefined) updateData.limitedStockNotice = '';
             if (updateData.brand !== undefined) updateData.brand = updateData.brand || '';

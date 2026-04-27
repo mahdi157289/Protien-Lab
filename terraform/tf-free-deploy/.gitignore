@@ -1,0 +1,27 @@
+# ==============================================================================
+# .gitignore — Files that must NEVER be committed to version control
+# ==============================================================================
+
+# Your actual secret values (contains passwords, API keys, domain names)
+terraform.tfvars
+
+# Auto-generated SSH private key — your only way to SSH into the server
+keys/
+*.pem
+
+# Terraform working files (auto-generated, not needed in git)
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.info
+crash.log
+
+# Override files (local developer customizations)
+override.tf
+override.tf.json
+*_override.tf
+
+# Environment files
+.env
+.env.*

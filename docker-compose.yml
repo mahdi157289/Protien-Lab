@@ -1,15 +1,23 @@
 version: "3.9"
 services:
   backend:
-    image: docker.io/yourusername/protienlab-backend:latest
+    build: ./backend
+    image: docker.io/mahdi157/protienlab-backend:latest
     ports:
       - "5000:5000"
+    env_file:
+      - ./backend/.env
     environment:
       - MONGO_URI=mongodb+srv://baccarmahdi09:QGOXemXdJ5CigQ09@cluster0.ygb4b3i.mongodb.net/nutrition_store?retryWrites=true&w=majority&appName=Cluster0&tls=true&ssl=true
     restart: always
 
   frontend:
-    image: docker.io/yourusername/protienlab-frontend:latest
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=http://localhost:5000/api
+        - VITE_IMAGE_URL=http://localhost:5000
+    image: docker.io/mahdi157/protienlab-frontend:latest
     ports:
       - "3000:80"
     restart: always

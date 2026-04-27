@@ -1,0 +1,63 @@
+> ## Documentation Index
+> Fetch the complete documentation index at: https://docs.brandfetch.com/llms.txt
+> Use this file to discover all available pages before exploring further.
+
+# Logo API Usage Guidelines
+
+> Instantly add any company logos to your app or website
+
+<Tip>
+  Logo API is free to use and <u>we don't ask for any attribution</u>.
+</Tip>
+
+## Authentication
+
+**To use Logo API, you must include your client ID with every request.**
+
+Adding your client ID provides reliable access, supports fair usage, and keeps consistent performance across all requests.
+
+[Create a free account](https://developers.brandfetch.com/register) and access your client ID from the developer portal.
+
+Include your client ID in each request as shown in the example below:
+
+```html  theme={null}
+<img
+  src="https://cdn.brandfetch.io/:domain?c=BRANDFETCH_CLIENT_ID"
+  alt="Logos by Brandfetch"
+/>
+```
+
+## Hotlinking
+
+**We require logo links to be directly embedded in your applications.**
+
+Embedding logo links directly within your HTML image tags guarantees that the logo remains up-to-date at all times. It also ensures a faster and more reliable implementation.
+
+<Info>
+  When embedding a logo link, HTTP requests must include the `Referer` header
+  with the request origin. Your HTTP `Referrer-Policy` header must be set to one
+  of: `origin`, `origin-when-cross-origin`, `strict-origin`,
+  `strict-origin-when-cross-origin` (browser default), or `unsafe-url`.
+</Info>
+
+<Warning>
+  <b>Programmatic access</b> to logo images is not permitted and may result in
+  rate limiting or blocking. Scraping logos will also lead to a block.
+</Warning>
+
+If your use case requires caching, please [contact us](https://brandfetch.com/developers/contact/sales) for a custom setup.
+
+## Replicating Brandfetch
+
+**You cannot replicate the core user experience of Brandfetch.**
+
+The best way to ensure that your application doesn’t violate this guideline is by integrating Brandfetch into an existing app that offers more value than just the Brandfetch integration.
+
+Some examples:
+
+* ✅ The [Typeform integration](https://brandfetch.com/developers/customers/typeform) improves the user’s onboarding by presenting brand logos. Without this integration, the app still has a lot of value to its users.
+* ✅ The [Pitch integration](https://brandfetch.com/developers/customers/pitch) brings brand logos inside Pitch’s editor to streamline the creation of presentations. Without this integration, the app still has a lot of value to its users.
+* 🚫 A logo search that only returns logos from Logo API. Without the integration, the app has no content and no value to users.
+* 🚫 An unofficial Logo API that allows users to access brand logos via Logo API. Without the API, the app has no content and no value to users.
+
+If you're unsure about your use case, please [contact us](https://brandfetch.com/developers/contact).

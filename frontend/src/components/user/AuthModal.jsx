@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { UserIcon, EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
+import { User, Mail, Lock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import signUpImage from '../../assets/images/common/signup.jpg'
 import signInImage from '../../assets/images/common/signin.jpg'
-import  {useAuth} from '../../contexts/AuthContext'
+import { useAuth } from '../../contexts/AuthContext'
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -103,7 +103,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
           const loginResp = await login(formData.email, formData.password);
           if (loginResp.success) {
             onClose();
-            try { window.dispatchEvent(new Event('auth-success')); } catch {}
+            try { window.dispatchEvent(new Event('auth-success')); } catch { }
           } else {
             setIsSignUp(false);
             setError(t('auth_success_signup'));
@@ -116,7 +116,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
 
         if (response.success) {
           onClose();
-          try { window.dispatchEvent(new Event('auth-success')); } catch {}
+          try { window.dispatchEvent(new Event('auth-success')); } catch { }
         } else {
           setError(response.error);
         }
@@ -133,11 +133,10 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className={`p-2 mb-4 text-sm text-center rounded ${
-          error.includes(t('auth_success_signup')) 
-            ? 'text-green-500 bg-green-100'
-            : '#40ee45 bg-red-100'
-        }`}
+        className={`p-2 mb-4 text-sm text-center rounded ${error.includes(t('auth_success_signup'))
+          ? 'text-green-500 bg-green-100'
+          : '#40ee45 bg-red-100'
+          }`}
       >
         {error}
       </motion.div>
@@ -161,7 +160,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.5}}
+            transition={{ duration: 0.5 }}
           >
             {/* Close Button */}
             <motion.button
@@ -190,10 +189,10 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                   >
                     <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">{t('auth_signup_title')}</h2>
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
-                    <StatusMessage />
+                      <StatusMessage />
                       <div className="grid grid-cols-1 gap-2 sm:gap-4 sm:grid-cols-2">
                         <div className="relative">
-                          <UserIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
+                          <User className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                           <input
                             type="text"
                             id="firstName"
@@ -205,7 +204,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                           />
                         </div>
                         <div className="relative">
-                          <UserIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
+                          <User className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                           <input
                             type="text"
                             id="lastName"
@@ -218,7 +217,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         </div>
                       </div>
                       <div className="relative">
-                        <EnvelopeIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
+                        <Mail className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="email"
                           id="email"
@@ -230,7 +229,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         />
                       </div>
                       <div className="relative">
-                        <LockClosedIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
+                        <Lock className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="password"
                           id="password"
@@ -242,7 +241,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         />
                       </div>
                       <div className="relative">
-                        <LockClosedIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
+                        <Lock className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="password"
                           id="confirm-password"
@@ -275,9 +274,9 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                   >
                     <h2 className="mb-6 text-2xl font-bold text-center lg:text-3xl text-accent">{t('auth_signin_title')}</h2>
                     <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-4">
-                    <StatusMessage />
+                      <StatusMessage />
                       <div className="relative">
-                        <EnvelopeIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
+                        <Mail className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="email"
                           id="email"
@@ -289,7 +288,7 @@ const AuthModal = ({ isOpen, onClose, authType }) => {
                         />
                       </div>
                       <div className="relative">
-                        <LockClosedIcon className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
+                        <Lock className="absolute w-5 h-5 transform -translate-y-1/2 left-3 top-1/2 text-accent" />
                         <input
                           type="password"
                           id="password"

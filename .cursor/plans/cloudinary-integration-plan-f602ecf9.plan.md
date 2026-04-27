@@ -1,4 +1,9 @@
-<!-- f602ecf9-28dc-4455-bfeb-01ed81fdfb0a 2b69ac3f-83f3-4d16-936f-4fe90631c54a -->
+---
+name: Configure nginx for React Router SPA Routing
+overview: ""
+todos: []
+---
+
 # Configure nginx for React Router SPA Routing
 
 ## Problem

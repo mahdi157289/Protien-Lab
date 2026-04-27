@@ -26,15 +26,13 @@ const ExerciseDetailModal = ({ exercise, onClose }) => {
             <Play className="#40ee45" size={20} />
             <p className="text-gray-300">{t('workout_recommended')}</p>
           </div>
-          <a 
-            href={`/exercises/${exercise._id}`}
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center justify-center w-full py-2 text-white transition-colors bg-green-500 rounded hover:bg-green-600"
+          {/* Exercise link removed - Exercises page has been deleted */}
+          <div 
+            className="flex items-center justify-center w-full py-2 text-white transition-colors bg-gray-500 rounded cursor-not-allowed opacity-50"
           >
             <CheckCircle className="mr-2" size={20} />
             {t('workout_view_exercise_details')}
-          </a>
+          </div>
         </div>
       </div>
     </div>

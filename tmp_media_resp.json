@@ -1,0 +1,65 @@
+{
+  "success": true,
+  "data": [
+    {
+      "offerData": {
+        "additionalPhotos": [],
+        "displaySection": "Best Offers"
+      },
+      "_id": "699280d443deccd2644b5acf",
+      "mediaSlot": 1,
+      "category": "Media",
+      "__v": 0,
+      "createdAt": "2026-02-16T02:28:36.235Z",
+      "filename": "photo-1773265753604-992548280.jpg",
+      "isActive": true,
+      "slides": [
+        {
+          "filename": "photo-1773265753604-992548280.jpg",
+          "url": "/uploads/photos/photo-1773265753604-992548280.jpg",
+          "_id": "69b1e35988dc56244dd2d861"
+        },
+        {
+          "filename": "photo-1773265753623-918469164.jpg",
+          "url": "/uploads/photos/photo-1773265753623-918469164.jpg",
+          "_id": "69b1e35988dc56244dd2d862"
+        }
+      ],
+      "updatedAt": "2026-03-11T21:49:13.648Z",
+      "uploadDate": "2026-02-16T02:28:36.243Z",
+      "url": "/uploads/photos/photo-1773265753604-992548280.jpg",
+      "transitionEffect": "blur"
+    },
+    {
+      "offerData": {
+        "additionalPhotos": [],
+        "displaySection": "Best Offers"
+      },
+      "_id": "69948ccc43deccd2644b610b",
+      "mediaSlot": 2,
+      "category": "Media",
+      "__v": 0,
+      "createdAt": "2026-02-17T15:44:14.779Z",
+      "filename": "vy8zmxip6fxgux1eg3pw",
+      "isActive": true,
+      "slides": [
+        {
+          "filename": "photo-1773265796150-700339037.jpg",
+          "url": "/uploads/photos/photo-1773265796150-700339037.jpg",
+          "_id": "69b1e38488dc56244dd2d86e"
+        },
+        {
+          "filename": "photo-1773265796172-306798946.jpg",
+          "url": "/uploads/photos/photo-1773265796172-306798946.jpg",
+          "_id": "69b1e38488dc56244dd2d86f"
+        }
+      ],
+      "transitionEffect": "fadeOut",
+      "updatedAt": "2026-04-04T10:12:54.628Z",
+      "uploadDate": "2026-02-17T15:44:14.786Z",
+      "url": "https://res.cloudinary.com/dvl23ph5a/image/upload/v1775297574/vy8zmxip6fxgux1eg3pw.jpg"
+    }
+  ],
+  "category": "Media",
+  "count": 2
+}

@@ -1,0 +1,72 @@
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mInvalid Attribute Combination[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  with module.s3.aws_s3_bucket_lifecycle_configuration.main,
+[33m│[0m [0m  on modules\s3\main.tf line 94, in resource "aws_s3_bucket_lifecycle_configuration" "main":
+[33m│[0m [0m  94: resource "aws_s3_bucket_lifecycle_configuration" "main" [4m{[0m[0m
+[33m│[0m [0m
+[33m│[0m [0mNo attribute specified when one (and only one) of
+[33m│[0m [0m[rule[0].filter,rule[0].prefix] is required
+[33m│[0m [0m
+[33m│[0m [0mThis will be an error in a future version of the provider
+[33m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mInvalid function argument[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 43, in locals:
+[31m│[0m [0m  43:   user_data = base64encode(templatefile("${path.module}/templates/userdata.sh.tpl", [4m{[0m
+[31m│[0m [0m  44:     project_name             = var.project_name
+[31m│[0m [0m  45:     environment              = var.environment
+[31m│[0m [0m  46:     docker_image             = local.final_docker_image
+[31m│[0m [0m  47:     app_port                 = var.app_port
+[31m│[0m [0m  48:     domain_name              = var.domain_name
+[31m│[0m [0m  49:     certbot_email            = var.certbot_email
+[31m│[0m [0m  50:     aws_region               = var.aws_region
+[31m│[0m [0m  51:     log_group                = local.log_group
+[31m│[0m [0m  52:     s3_bucket                = var.enable_s3 ? local.s3_bucket_name : ""
+[31m│[0m [0m  53:     enable_cloudwatch        = var.enable_cloudwatch
+[31m│[0m [0m  54:     docker_registry_auth     = var.docker_registry_auth
+[31m│[0m [0m  55:     docker_registry_server   = var.docker_registry_server
+[31m│[0m [0m  56:     docker_registry_username = var.docker_registry_username
+[31m│[0m [0m  57:     docker_registry_password = var.docker_registry_password
+[31m│[0m [0m  58:     container_memory         = var.container_memory_limit
+[31m│[0m [0m  59:     container_cpu            = var.container_cpu_shares
+[31m│[0m [0m  60:     env_vars                 = var.app_env_vars
+[31m│[0m [0m  61:     enable_www_redirect      = var.enable_www_redirect
+[31m│[0m [0m  62:     health_check_path        = var.app_health_check_path
+[31m│[0m [0m  63:   }))[0m
+[31m│[0m [0m    [90m├────────────────[0m
+[31m│[0m [0m[0m    [90m│[0m while calling [1mtemplatefile[0m([0mpath, vars)
+[31m│[0m [0m    [90m│[0m [1mlocal.final_docker_image[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mlocal.log_group[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mlocal.s3_bucket_name[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mvar.app_health_check_path[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mvar.app_port[0m is a number
+[31m│[0m [0m[0m    [90m│[0m [1mvar.aws_region[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mvar.certbot_email[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mvar.container_cpu_shares[0m is a number
+[31m│[0m [0m[0m    [90m│[0m [1mvar.container_memory_limit[0m is a number
+[31m│[0m [0m[0m    [90m│[0m [1mvar.docker_registry_auth[0m is a bool
+[31m│[0m [0m[0m    [90m│[0m [1mvar.docker_registry_server[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mvar.domain_name[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mvar.enable_cloudwatch[0m is a bool
+[31m│[0m [0m[0m    [90m│[0m [1mvar.enable_s3[0m is a bool
+[31m│[0m [0m[0m    [90m│[0m [1mvar.enable_www_redirect[0m is a bool
+[31m│[0m [0m[0m    [90m│[0m [1mvar.environment[0m is a string
+[31m│[0m [0m[0m    [90m│[0m [1mvar.project_name[0m is a string
+[31m│[0m [0m[0m
+[31m│[0m [0mInvalid value for "vars" parameter: vars map does not contain key
+[31m│[0m [0m"variable", referenced at ./templates/userdata.sh.tpl:6,28-36.
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mInvalid for_each argument[0m
+[31m│[0m [0m
+[31m│[0m [0m[0m  on main.tf line 244, in resource "aws_ssm_parameter" "env_var":
+[31m│[0m [0m 244:   for_each = [4mvar.app_env_vars[0m[0m
+[31m│[0m [0m    [90m├────────────────[0m
+[31m│[0m [0m[0m    [90m│[0m [1mvar.app_env_vars[0m has a sensitive value
+[31m│[0m [0m[0m
+[31m│[0m [0mSensitive values, or values derived from sensitive values, cannot be used
+[31m│[0m [0mas for_each arguments. If used, the sensitive value could be exposed as a
+[31m│[0m [0mresource instance key.
+[31m╵[0m[0m

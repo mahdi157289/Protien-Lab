@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAdminAuth } from '../../contexts/AdminAuthContext';
 import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { Users, ShoppingCart, Box, FileText, Dumbbell, Utensils, Activity, ClipboardList, Package } from 'lucide-react';
+import { Users, ShoppingCart, Box, FileText, Utensils, Activity, ClipboardList, Package } from 'lucide-react';
 import PropTypes from 'prop-types';
 import { Loader } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,6 @@ const AdminDashboard = () => {
     orders: 0,
     posts: 0,
     products: 0,
-    exercises: 0,
     dietPlans: 0
   });
   const [recentOrders, setRecentOrders] = useState([]);
@@ -43,7 +42,6 @@ const AdminDashboard = () => {
           ordersRes,
           postsRes,
           products,
-          exercises,
           dietPlans,
           postAnalyticsRes
         ] = await Promise.all([
@@ -51,7 +49,6 @@ const AdminDashboard = () => {
           axios.get(getApiUrl('/admin/orders'), { headers }),
           axios.get(getApiUrl('/admin/posts'), { headers }),
           axios.get(getApiUrl('/admin/products'), { headers }),
-          axios.get(getApiUrl('/admin/exercises'), { headers }),
           axios.get(getApiUrl('/admin/diet-plans'), { headers }),
           axios.get(getApiUrl('/admin/posts/analytics'), { headers })
         ]);
@@ -61,7 +58,6 @@ const AdminDashboard = () => {
           orders: ordersRes.data.totalOrders || 0,
           posts: postsRes.data.totalPosts || 0,
           products: products.data.totalProducts || 0,
-          exercises: exercises.data.length,
           dietPlans: dietPlans.data.count || 0
         });
 
@@ -112,7 +108,6 @@ const AdminDashboard = () => {
         case t('admin_dashboard_total_orders'): return <ShoppingCart className="w-5 h-5" />;
         case t('admin_dashboard_total_products'): return <Box className="w-5 h-5" />;
         case t('admin_dashboard_total_posts'): return <FileText className="w-5 h-5" />;
-        case t('admin_dashboard_total_exercises'): return <Dumbbell className="w-5 h-5" />;
         case t('admin_dashboard_total_diet_plans'): return <Utensils className="w-5 h-5" />;
         default: return null;
       }
@@ -160,12 +155,11 @@ const AdminDashboard = () => {
         <h1 className="mb-8 text-3xl font-bold text-black font-orbitron">{t('admin_dashboard_title')}</h1>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        <div className="grid grid-cols-1 gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           <StatBox title={t('admin_dashboard_total_users')} value={counts.users} />
           <StatBox title={t('admin_dashboard_total_orders')} value={counts.orders} />
           <StatBox title={t('admin_dashboard_total_products')} value={counts.products} />
           <StatBox title={t('admin_dashboard_total_posts')} value={counts.posts} />
-          <StatBox title={t('admin_dashboard_total_exercises')} value={counts.exercises} />
           <StatBox title={t('admin_dashboard_total_diet_plans')} value={counts.dietPlans} />
         </div>
 

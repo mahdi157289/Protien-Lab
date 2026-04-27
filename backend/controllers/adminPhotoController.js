@@ -31,9 +31,11 @@ const adminPhotoController = {
                 });
             }
 
-            const { category, brandName, offerData, mediaSlot } = req.body;
+            const { category, brandName, offerData, mediaSlot, transitionEffect } = req.body;
             console.log('✅ Extracted category:', category);
             console.log('✅ Extracted brandName:', brandName);
+            const validEffects = ['fade', 'blur', 'fadeOut'];
+            const normalizedEffect = validEffects.includes(transitionEffect) ? transitionEffect : 'fade';
             
             if (!category) {
                 return res.status(400).json({ 
@@ -211,6 +213,7 @@ const adminPhotoController = {
                     category,
                     mediaSlot: parsedMediaSlot,
                     slides,
+                    transitionEffect: normalizedEffect,
                     isActive: true
                 };
 
@@ -227,7 +230,8 @@ const adminPhotoController = {
                     const photoData = {
                         filename: file.filename,
                         url: buildFileUrl('photos', file),
-                        category: category
+                        category: category,
+                        transitionEffect: normalizedEffect
                     };
                     
                     // Add brandName if category is Nos Marque
@@ -504,7 +508,7 @@ const adminPhotoController = {
     // Update photo
     updatePhoto: async (req, res) => {
         try {
-            const { category, brandName, isActive } = req.body;
+            const { category, brandName, isActive, offerData, transitionEffect } = req.body;
             const photo = await Photo.findById(req.params.id);
 
             if (!photo) {
@@ -516,7 +520,7 @@ const adminPhotoController = {
 
             // Validate category
             if (category) {
-                const validCategories = ['Welcome', 'Nos Marque', 'Best Offers'];
+                const validCategories = ['Welcome', 'Nos Marque', 'Best Offers', 'Media'];
                 if (!validCategories.includes(category)) {
                     return res.status(400).json({ 
                         success: false,
@@ -538,6 +542,80 @@ const adminPhotoController = {
             if (category) updateData.category = category;
             if (brandName) updateData.brandName = brandName;
             if (isActive !== undefined) updateData.isActive = isActive;
+            
+            let finalOfferData = photo.offerData;
+            if (offerData) {
+                finalOfferData = JSON.parse(offerData);
+                updateData.offerData = finalOfferData;
+            }
+            
+            if (transitionEffect) {
+                const validEffects = ['fade', 'blur', 'fadeOut'];
+                if (validEffects.includes(transitionEffect)) {
+                    updateData.transitionEffect = transitionEffect;
+                }
+            }
+
+            // Sync with Product collection if it's an offer
+            if (finalCategory === 'Best Offers' && finalOfferData) {
+                const upsertData = {
+                    name: finalOfferData.name,
+                    descriptionShort: finalOfferData.description,
+                    descriptionFull: finalOfferData.bigDescription || finalOfferData.description,
+                    price: finalOfferData.newPrice,
+                    brand: finalOfferData.brand,
+                    reference: finalOfferData.reference,
+                    // If image is updated below, it will be handled. Otherwise use existing.
+                    stock: 9999, // Set high stock as per "no limit" requirement
+                    isActive: true
+                };
+
+                let productIdToLink = finalOfferData.productId;
+                if (productIdToLink) {
+                    await Product.findByIdAndUpdate(productIdToLink, upsertData);
+                } else {
+                    const created = await Product.create(upsertData);
+                    productIdToLink = created._id;
+                }
+                
+                if (updateData.offerData) {
+                    updateData.offerData.productId = productIdToLink;
+                } else {
+                    updateData['offerData.productId'] = productIdToLink;
+                }
+            }
+
+            // Handle file upload if new photo provided
+            if (req.files && req.files.length > 0) {
+                const file = req.files[0];
+                const useCloudinary = shouldUseCloudinary();
+                
+                // Delete old file
+                await deleteUploadedFile({ filename: photo.filename, path: photo.url }, 'photos');
+
+                if (useCloudinary) {
+                    try {
+                        const uploadResult = await cloudinary.uploader.upload(file.path, {
+                            upload_preset: 'protienlab_photos',
+                            resource_type: 'image',
+                        });
+                        
+                        updateData.filename = uploadResult.public_id;
+                        updateData.url = uploadResult.secure_url;
+                        
+                        // Clean up local temp file
+                        fs.unlink(file.path, (err) => {
+                            if (err) console.error(`Error deleting local file ${file.path}:`, err);
+                        });
+                    } catch (uploadError) {
+                        console.error(`❌ Error uploading to Cloudinary:`, uploadError);
+                        // Fallback or error handling
+                    }
+                } else {
+                    updateData.filename = file.filename;
+                    updateData.url = buildFileUrl('photos', file);
+                }
+            }
 
             const updatedPhoto = await Photo.findByIdAndUpdate(
                 req.params.id,
@@ -552,6 +630,7 @@ const adminPhotoController = {
             });
 
         } catch (error) {
+            console.error('Update error:', error);
             res.status(400).json({ 
                 success: false,
                 message: error.message 
@@ -629,4 +708,3 @@ const adminPhotoController = {
 };
 
 module.exports = adminPhotoController;
-

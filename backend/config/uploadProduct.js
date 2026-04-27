@@ -1,10 +1,8 @@
 const multer = require('multer');
 const path = require('path');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('./cloudinary');
-const { shouldUseCloudinary, ensureUploadDir } = require('./storageUtils');
-
-const useCloudinary = shouldUseCloudinary();
+// Always use local storage - we'll upload to Cloudinary directly in the controller
+// This bypasses signature issues with multer-storage-cloudinary
+const { ensureUploadDir } = require('./storageUtils');
 
 const localStorage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -15,19 +13,7 @@ const localStorage = multer.diskStorage({
     }
 });
 
-const cloudinaryStorage = new CloudinaryStorage({
-    cloudinary,
-    params: async () => ({
-        folder: 'protienlab/products',
-        resource_type: 'image',
-        transformation: [
-            { width: 1600, height: 1600, crop: 'limit' },
-            { quality: 'auto' }
-        ],
-    }),
-});
-
-const storage = useCloudinary ? cloudinaryStorage : localStorage;
+const storage = localStorage;
 
 const fileFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
